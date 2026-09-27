@@ -430,11 +430,11 @@
             }
         }
 
-        // Tự động kiểm tra IP server thật mỗi 10 giây
+        // Kiểm tra IP server mỗi 10 giây
         setInterval(fetchRealtimeMCStatus, 10000);
         fetchRealtimeMCStatus();
 
-        // Fluctuate Memory Gauge & Performance Live
+        // Biến đổi chỉ số RAM/TPS sống động
         setInterval(() => {
             const ramVal = (2.1 + Math.random() * 0.3).toFixed(1);
             const ramPercent = Math.round((ramVal / 6.0) * 100);
@@ -446,7 +446,7 @@
             document.getElementById('fpsVal').innerText = `FPS: ${tpsVal} TPS`;
         }, 3000);
 
-        // Auto Stream Console Logs in Realtime
+        // Đổ log tự động vào Terminal Console
         const randomLogs = [
             "KeepAlive packet received from bi5556282.com:25565",
             "Auto-saving chunk world data...",
