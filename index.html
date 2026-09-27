@@ -1,92 +1,514 @@
-import http.server
-import json
-import socket
-import struct
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bi5556282.com | Minecraft Protocol Gateway 26.1.2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#0a0c10',
+                        bedrock: '#12161f',
+                        redstone: '#ff2a2a',
+                        emeraldGlow: '#00ff66',
+                        diamond: '#42f5e3',
+                        mcGold: '#ffaa00'
+                    },
+                    fontFamily: {
+                        pixel: ['VT323', 'monospace'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #06080c;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(0, 255, 102, 0.08) 0%, transparent 60%),
+                linear-gradient(rgba(18, 22, 31, 0.7) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(18, 22, 31, 0.7) 1px, transparent 1px);
+            background-size: 100% 100%, 32px 32px, 32px 32px;
+            color: #e0e6ed;
+        }
 
-RCON_HOST = '127.0.0.1'
-RCON_PORT = 25575
-RCON_PASS = 'skibidi'  # Mật khẩu RCON đã cài trong server.properties
+        .glow-emerald {
+            box-shadow: 0 0 25px rgba(0, 255, 102, 0.25);
+        }
 
+        .console-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .console-scroll::-webkit-scrollbar-track {
+            background: #0a0c10;
+        }
+        .console-scroll::-webkit-scrollbar-thumb {
+            background: #1e2638;
+            border-radius: 3px;
+        }
+        .console-scroll::-webkit-scrollbar-thumb:hover {
+            background: #00ff66;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-3 sm:p-6 font-sans selection:bg-emerald-500 selection:text-black">
 
-def send_rcon_command(cmd):
-  try:
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.settimeout(5)
-    s.connect((RCON_HOST, RCON_PORT))
+    <!-- HEADER / BRANDING BANNER -->
+    <header class="max-w-6xl mx-auto w-full mb-6">
+        <div class="bg-bedrock/90 border border-emerald-500/30 rounded-2xl p-4 sm:p-6 backdrop-blur-md glow-emerald relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
+                
+                <div class="flex items-center gap-4 text-center lg:text-left">
+                    <div class="w-14 h-14 bg-obsidian border-2 border-emerald-400 rounded-xl flex items-center justify-center text-emerald-400 text-2xl shadow-lg shadow-emerald-500/20 shrink-0">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-center lg:justify-start gap-2">
+                            <h1 class="text-3xl sm:text-4xl font-pixel tracking-wider text-white font-bold drop-shadow">
+                                bi5556282.com
+                            </h1>
+                            <span class="px-2 py-0.5 text-xs font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/40 rounded">
+                                PORTAL 26.1.2
+                            </span>
+                        </div>
+                        <p class="text-xs font-mono text-gray-400 mt-1 flex items-center justify-center lg:justify-start gap-2">
+                            <span id="serverPingDot" class="inline-block w-2 h-2 rounded-full bg-red-500"></span>
+                            <span id="serverBridgeStatus">Đang quét Server...</span>
+                            <span class="text-gray-600">|</span>
+                            <span id="serverVersion" class="text-emerald-300">Purpur 26.1.2</span>
+                        </p>
+                    </div>
+                </div>
 
-    # Auth packet (type 3)
-    auth_pkt = (
-        struct.pack('<iii', 10 + len(RCON_PASS), 1, 3)
-        + RCON_PASS.encode('utf-8')
-        + b'\x00\x00'
-    )
-    s.sendall(auth_pkt)
-    s.recv(4096)
+                <div class="flex flex-wrap items-center justify-center lg:justify-end gap-3 w-full lg:w-auto">
+                    <button onclick="copyServerIP()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-black font-bold rounded-xl text-sm transition-all duration-200 flex items-center gap-2 shadow-lg shadow-emerald-600/30 active:scale-95">
+                        <i class="fa-solid fa-copy"></i>
+                        <span>Sao chép IP Server</span>
+                    </button>
+                    
+                    <a id="launchMcBtn" href="minecraft://carolyn-xr.tun.ply.gg" class="px-4 py-2.5 bg-bedrock hover:bg-obsidian text-emerald-400 border border-emerald-500/50 hover:border-emerald-400 font-bold rounded-xl text-sm transition-all duration-200 flex items-center gap-2 active:scale-95">
+                        <i class="fa-solid fa-gamepad"></i>
+                        <span>Mở Minecraft</span>
+                    </a>
+                </div>
 
-    # Command packet (type 2)
-    cmd_pkt = (
-        struct.pack('<iii', 10 + len(cmd), 2, 2)
-        + cmd.encode('utf-8')
-        + b'\x00\x00'
-    )
-    s.sendall(cmd_pkt)
+            </div>
+        </div>
+    </header>
 
-    # Receive response
-    resp = s.recv(4096)
-    s.close()
+    <!-- RESTRICTION NOTICE BANNER -->
+    <section class="max-w-6xl mx-auto w-full mb-6">
+        <div class="bg-redstone/10 border border-redstone/40 rounded-xl p-4 flex items-start gap-4">
+            <div class="p-2.5 bg-redstone/20 text-redstone rounded-lg shrink-0 mt-0.5">
+                <i class="fa-solid fa-shield-halved text-xl"></i>
+            </div>
+            <div class="flex-1">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-sm font-bold text-red-400 uppercase tracking-wider font-mono">
+                        Protocol Restriction Active
+                    </h2>
+                    <span class="text-[10px] font-mono bg-red-950/80 text-red-300 border border-red-800 px-2 py-0.5 rounded">
+                        VER 26.1.2
+                    </span>
+                </div>
+                <p class="text-xs text-gray-300 mt-1 leading-relaxed">
+                    Địa chỉ web <strong class="text-white font-mono">bi5556282.com</strong> tối ưu hóa cho giao thức TCP Minecraft. Để kết nối trực tiếp, hãy nhập IP <span class="text-emerald-400 font-mono font-bold" id="currentHostDisplay">carolyn-xr.tun.ply.gg</span> vào Minecraft Client (v26.1.2).
+                </p>
+            </div>
+        </div>
+    </section>
 
-    if len(resp) >= 12:
-      payload = resp[12:-2].decode('utf-8', errors='ignore').strip()
-      return {
-          'success': True,
-          'response': payload if payload else 'Đã thực thi lệnh thành công!',
-      }
-    return {'success': True, 'response': 'Đã gửi lệnh thành công!'}
-  except Exception as e:
-    return {
-        'success': False,
-        'error': f'Lỗi kết nối RCON (Server Minecraft chưa mở cổng 25575?): {str(e)}',
-    }
+    <!-- MAIN DASHBOARD -->
+    <main class="max-w-6xl mx-auto w-full flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6">
 
+        <!-- LEFT COLUMN: TELEMETRY & CONFIG -->
+        <div class="space-y-6 lg:col-span-1">
+            
+            <!-- Live Telemetry Card -->
+            <div class="bg-bedrock/80 border border-gray-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
+                <div class="flex items-center justify-between mb-4 pb-2 border-b border-gray-800">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-emerald-400 font-mono flex items-center gap-2">
+                        <i class="fa-solid fa-gauge-high"></i> Live Telemetry
+                    </h3>
+                    <span id="fpsVal" class="text-xs font-mono text-gray-400">TPS: 20.0</span>
+                </div>
 
-class RequestHandler(http.server.BaseHTTPRequestHandler):
+                <div class="mb-4">
+                    <div class="flex justify-between text-xs font-mono mb-1.5">
+                        <span class="text-gray-400">Hiệu năng Server</span>
+                        <span id="tpsValText" class="text-emerald-400 font-bold">20.0 / 20.0 TPS</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-obsidian rounded-full overflow-hidden p-0.5 border border-gray-800">
+                        <div id="tpsBar" class="h-full bg-emerald-400 rounded-full shadow-sm shadow-emerald-400 transition-all duration-500" style="width: 100%"></div>
+                    </div>
+                </div>
 
-  def do_OPTIONS(self):
-    self.send_response(200)
-    self.send_header('Access-Control-Allow-Origin', '*')
-    self.send_header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS')
-    self.send_header('Access-Control-Allow-Headers', 'Content-Type')
-    self.end_headers()
+                <div class="mb-4">
+                    <div class="flex justify-between text-xs font-mono mb-1.5">
+                        <span class="text-gray-400">RAM Sử dụng (Purpur)</span>
+                        <span id="ramUsageText" class="text-diamond font-bold">2.1 GB / 6.0 GB</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-obsidian rounded-full overflow-hidden p-0.5 border border-gray-800">
+                        <div id="ramUsageBar" class="h-full bg-diamond rounded-full transition-all duration-500" style="width: 35%"></div>
+                    </div>
+                </div>
 
-  def do_POST(self):
-    if self.path == '/api/rcon':
-      length = int(self.headers.get('Content-Length', 0))
-      body = self.rfile.read(length).decode('utf-8')
-      try:
-        data = json.loads(body)
-        cmd = data.get('command', '')
-        pwd = data.get('password', '')
+                <div>
+                    <div class="flex justify-between text-xs font-mono mb-1.5">
+                        <span class="text-gray-400">Người chơi Online</span>
+                        <span id="playerCountText" class="text-mcGold font-bold">0 / 20 Online</span>
+                    </div>
+                    <div class="w-full h-2.5 bg-obsidian rounded-full overflow-hidden p-0.5 border border-gray-800">
+                        <div id="playerProgressBar" class="h-full bg-mcGold rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
 
-        if pwd not in ['skibidi', '5556282', 'admin']:
-          res = {'success': False, 'error': 'Sai mật khẩu Admin!'}
-        else:
-          res = send_rcon_command(cmd)
+            <!-- PLAY.GG / HOST TUNNEL BINDING -->
+            <div class="bg-bedrock/80 border border-gray-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-emerald-400 font-mono mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-network-wired"></i> Cấu hình Playit.gg / Tunnel IP
+                </h3>
+                <div class="space-y-2">
+                    <input type="text" id="customHostInput" placeholder="Ví dụ: xxx.ply.gg:12345" class="w-full bg-obsidian border border-gray-800 rounded-xl px-3 py-2 text-xs font-mono text-white focus:border-emerald-400 focus:outline-none">
+                    <div class="flex gap-2">
+                        <button onclick="updateServerHost()" class="flex-1 py-2 bg-emerald-600 hover:bg-emerald-500 text-black font-bold text-xs font-mono rounded-xl transition">
+                            Cập nhật IP
+                        </button>
+                        <button onclick="resetServerHost()" class="px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 font-bold text-xs font-mono rounded-xl border border-gray-700 transition" title="Đặt lại IP mặc định">
+                            <i class="fa-solid fa-rotate"></i> Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-        self.send_response(200)
-        self.send_header('Content-Type', 'application/json')
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.end_headers()
-        self.wfile.write(json.dumps(res).encode('utf-8'))
-      except Exception as e:
-        self.send_response(500)
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.end_headers()
-        self.wfile.write(json.dumps({'error': str(e)}).encode('utf-8'))
+            <!-- RCON BRIDGE API CONFIG -->
+            <div class="bg-bedrock/80 border border-emerald-500/40 rounded-2xl p-5 shadow-xl backdrop-blur-sm relative overflow-hidden">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-diamond font-mono mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-plug"></i> URL RCON Bridge (Port 3000)
+                </h3>
+                <div class="space-y-2">
+                    <input type="text" id="rconBridgeInput" placeholder="Dán https://...-3000.app.github.dev vào đây" class="w-full bg-obsidian border border-gray-800 rounded-xl px-3 py-2 text-xs font-mono text-white focus:border-diamond focus:outline-none">
+                    <button onclick="saveRconBridgeUrl()" class="w-full py-2 bg-diamond hover:bg-emerald-400 text-black font-bold text-xs font-mono rounded-xl transition shadow-lg shadow-diamond/20">
+                        Lưu Cấu Hình RCON
+                    </button>
+                    <p class="text-[10px] font-mono text-gray-400 text-center mt-1">Lấy từ Forwarded Address của Port 3000 trên Codespaces</p>
+                </div>
+            </div>
 
+            <!-- ADMIN AUTH LOCK -->
+            <div id="authBox" class="bg-bedrock/80 border border-gray-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-mcGold font-mono mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-lock"></i> Khóa Bảng Điều Khiển Admin
+                </h3>
+                <div class="space-y-2">
+                    <input type="password" id="adminPasscode" placeholder="Nhập Mật Khẩu Admin (7346575tu)..." class="w-full bg-obsidian border border-gray-800 rounded-xl px-3 py-2 text-xs font-mono text-white focus:border-emerald-400 focus:outline-none">
+                    <button onclick="unlockAdminConsole()" class="w-full py-2 bg-gray-800 hover:bg-gray-700 text-emerald-300 font-bold text-xs font-mono rounded-xl border border-gray-700 transition">
+                        Xác Thực Admin
+                    </button>
+                    <p id="authMessage" class="text-[10px] font-mono text-gray-500 text-center mt-1"></p>
+                </div>
+            </div>
 
-if __name__ == '__main__':
-  print('====================================================')
-  print('RCON Bridge Server đang chạy tại Cổng 3000...')
-  print('====================================================')
-  server = http.server.HTTPServer(('0.0.0.0', 3000), RequestHandler)
-  server.serve_forever()
+        </div>
+
+        <!-- RIGHT COLUMN: ADMIN CONTROL PANEL & CONSOLE -->
+        <div class="lg:col-span-2 flex flex-col h-full space-y-6">
+
+            <!-- ADMIN CONTROL PANEL -->
+            <div id="adminPanel" class="hidden bg-bedrock/90 border-2 border-emerald-500/60 rounded-2xl p-5 shadow-2xl backdrop-blur-md">
+                <div class="flex items-center justify-between pb-3 border-b border-emerald-500/30 mb-4">
+                    <h3 class="text-sm font-bold uppercase font-mono text-emerald-300 flex items-center gap-2">
+                        <i class="fa-solid fa-user-shield text-emerald-400"></i> Bảng Quản Trị Server (Real RCON Active)
+                    </h3>
+                    <span class="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-700 px-2 py-0.5 rounded font-mono">
+                        RCON AUTHENTICATED
+                    </span>
+                </div>
+
+                <!-- Thao tác Server Nhanh -->
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-4">
+                    <button onclick="executeAdminCmd('stop')" class="p-2.5 bg-red-700 hover:bg-red-600 border border-red-500 rounded-xl font-mono text-xs text-white font-bold transition flex items-center justify-center gap-1.5 shadow-lg shadow-red-700/30">
+                        <i class="fa-solid fa-power-off"></i> <span>Tắt Server</span>
+                    </button>
+                    <button onclick="executeAdminCmd('reload')" class="p-2.5 bg-emerald-950/60 hover:bg-emerald-900 border border-emerald-700/50 rounded-xl font-mono text-xs text-emerald-200 transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-rotate-right"></i> Reload
+                    </button>
+                    <button onclick="executeAdminCmd('kill @e[type=item]')" class="p-2.5 bg-red-950/60 hover:bg-red-900 border border-red-700/50 rounded-xl font-mono text-xs text-red-200 transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-broom"></i> Clear Lag
+                    </button>
+                    <button onclick="executeAdminCmd('time set day')" class="p-2.5 bg-amber-950/60 hover:bg-amber-900 border border-amber-700/50 rounded-xl font-mono text-xs text-amber-200 transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-sun"></i> Set Ngày
+                    </button>
+                    <button onclick="executeAdminCmd('weather clear')" class="p-2.5 bg-blue-950/60 hover:bg-blue-900 border border-blue-700/50 rounded-xl font-mono text-xs text-blue-200 transition flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-cloud-sun"></i> Tắt Mưa
+                    </button>
+                </div>
+
+                <!-- Quản lý Player -->
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <input type="text" id="targetPlayer" placeholder="Nhập tên người chơi..." class="flex-1 bg-obsidian border border-gray-800 rounded-xl px-3 py-2 text-xs font-mono text-white focus:border-emerald-400 focus:outline-none">
+                    <div class="flex gap-1.5">
+                        <button onclick="actionPlayer('op')" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-black font-bold font-mono text-xs rounded-xl transition">
+                            + Trao OP
+                        </button>
+                        <button onclick="actionPlayer('kick')" class="px-3 py-2 bg-yellow-600 hover:bg-yellow-500 text-black font-bold font-mono text-xs rounded-xl transition">
+                            Kick
+                        </button>
+                        <button onclick="actionPlayer('ban')" class="px-3 py-2 bg-red-600 hover:bg-red-500 text-white font-bold font-mono text-xs rounded-xl transition">
+                            Ban
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CONSOLE TERMINAL STREAM -->
+            <div class="bg-bedrock/80 border border-gray-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm flex-1 flex flex-col min-h-[400px]">
+                
+                <div class="flex items-center justify-between pb-3 border-b border-gray-800 mb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
+                        <span class="ml-2 text-xs font-mono text-gray-400">Realtime RCON Terminal Stream</span>
+                    </div>
+                    <span id="consoleStreamBadge" class="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800 px-2 py-0.5 rounded">
+                        CONNECTED
+                    </span>
+                </div>
+
+                <div id="terminalStream" class="console-scroll flex-1 bg-obsidian/90 border border-gray-900 rounded-xl p-4 font-mono text-xs space-y-2 overflow-y-auto leading-relaxed">
+                    <div class="text-gray-500">[00:00:00 NETWORK]: Binding TCP Socket to Port 25565...</div>
+                    <div class="text-emerald-400">[00:00:01 INFO]: [Purpur] Minecraft Server Protocol 26.1.2 Ready.</div>
+                    <div class="text-diamond">[00:00:02 INFO]: Sẵn sàng nhận lệnh RCON thực tế.</div>
+                </div>
+
+                <form onsubmit="handleCommand(event)" class="mt-4 flex gap-2">
+                    <div class="relative flex-1">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-emerald-400 font-mono text-xs">&gt;</span>
+                        <input type="text" id="cmdInput" placeholder="Nhập lệnh console (ví dụ: list, help, time set day)..." class="w-full bg-obsidian border border-gray-800 rounded-xl pl-7 pr-3 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-emerald-400 placeholder:text-gray-600">
+                    </div>
+                    <button type="submit" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-black font-bold text-xs font-mono rounded-xl transition flex items-center gap-1.5 shadow-md shadow-emerald-600/20">
+                        <span>Gửi Lệnh</span>
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="max-w-6xl mx-auto w-full mt-6 text-center border-t border-gray-800/60 pt-4">
+        <p class="text-xs font-mono text-gray-500">
+            &copy; 2026 bi5556282.com &bull; Dedicated Minecraft Portal &bull; Purpur 26.1.2
+        </p>
+    </footer>
+
+    <script>
+        const DEFAULT_HOST = 'carolyn-xr.tun.ply.gg';
+        const MASTER_ADMIN_PASS = '7346575tu'; // Mật khẩu Admin duy nhất
+        
+        let savedHost = localStorage.getItem('MC_SERVER_HOST');
+        if (!savedHost || savedHost === 'bi5556282.ply.gg') {
+            savedHost = DEFAULT_HOST;
+            localStorage.setItem('MC_SERVER_HOST', DEFAULT_HOST);
+        }
+        
+        let SERVER_ADDRESS = savedHost;
+        let RCON_BRIDGE_URL = localStorage.getItem('RCON_BRIDGE_URL') || '';
+        let IS_ADMIN = false;
+
+        function renderHostUI() {
+            document.getElementById('currentHostDisplay').innerText = SERVER_ADDRESS;
+            document.getElementById('customHostInput').value = SERVER_ADDRESS;
+            document.getElementById('launchMcBtn').href = `minecraft://${SERVER_ADDRESS}`;
+            document.getElementById('rconBridgeInput').value = RCON_BRIDGE_URL;
+        }
+
+        renderHostUI();
+
+        function saveRconBridgeUrl() {
+            const url = document.getElementById('rconBridgeInput').value.trim().replace(/\/$/, "");
+            RCON_BRIDGE_URL = url;
+            localStorage.setItem('RCON_BRIDGE_URL', url);
+            alertNotification("Đã lưu URL RCON Bridge!");
+            appendLog("Đã cấu hình URL RCON Bridge: " + url, "success");
+        }
+
+        function updateServerHost() {
+            const newHost = document.getElementById('customHostInput').value.trim();
+            if (newHost) {
+                SERVER_ADDRESS = newHost;
+                localStorage.setItem('MC_SERVER_HOST', newHost);
+                renderHostUI();
+                alertNotification("Đã cập nhật IP: " + newHost);
+                fetchRealtimeMCStatus();
+            }
+        }
+
+        function resetServerHost() {
+            localStorage.removeItem('MC_SERVER_HOST');
+            SERVER_ADDRESS = DEFAULT_HOST;
+            localStorage.setItem('MC_SERVER_HOST', DEFAULT_HOST);
+            renderHostUI();
+            alertNotification("Đã reset IP về mặc định!");
+            fetchRealtimeMCStatus();
+        }
+
+        function copyServerIP() {
+            navigator.clipboard.writeText(SERVER_ADDRESS);
+            alertNotification("Đã copy IP: " + SERVER_ADDRESS);
+        }
+
+        function alertNotification(msg) {
+            const toast = document.createElement("div");
+            toast.className = "fixed bottom-5 right-5 bg-emerald-500 text-black font-mono font-bold text-xs px-4 py-3 rounded-xl shadow-2xl z-50 animate-bounce";
+            toast.innerText = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        }
+
+        function appendLog(text, type = 'info') {
+            const stream = document.getElementById('terminalStream');
+            const now = new Date().toLocaleTimeString('en-US', { hour12: false });
+            const line = document.createElement('div');
+
+            if (type === 'cmd') {
+                line.className = 'text-yellow-400';
+                line.innerText = `[${now} EXEC]: > ${text}`;
+            } else if (type === 'error') {
+                line.className = 'text-red-400 font-bold';
+                line.innerText = `[${now} ERROR]: ${text}`;
+            } else if (type === 'success') {
+                line.className = 'text-emerald-300 font-bold';
+                line.innerText = `[${now} RCON RESPONSE]: ${text}`;
+            } else {
+                line.className = 'text-gray-300';
+                line.innerText = `[${now} INFO]: ${text}`;
+            }
+
+            stream.appendChild(line);
+            stream.scrollTop = stream.scrollHeight;
+        }
+
+        function unlockAdminConsole() {
+            const code = document.getElementById('adminPasscode').value.trim();
+            const msg = document.getElementById('authMessage');
+
+            // Chỉ chấp nhận mật khẩu duy nhất 7346575tu
+            if (code === MASTER_ADMIN_PASS) {
+                IS_ADMIN = true;
+                msg.className = "text-[10px] font-mono text-emerald-400 text-center mt-1";
+                msg.innerText = "XÁC THỰC ADMIN THÀNH CÔNG!";
+                document.getElementById('adminPanel').classList.remove('hidden');
+                appendLog("Đã đăng nhập thành công Admin Console!", 'success');
+                alertNotification("Admin Control Unlocked!");
+            } else {
+                msg.className = "text-[10px] font-mono text-red-400 text-center mt-1";
+                msg.innerText = "Mật khẩu Admin không chính xác!";
+                appendLog("Nỗ lực đăng nhập thất bại. Sai mật khẩu!", 'error');
+            }
+        }
+
+        async function executeAdminCmd(cmd) {
+            if (!IS_ADMIN) {
+                alertNotification("Bạn chưa đăng nhập Admin!");
+                return;
+            }
+            if (!RCON_BRIDGE_URL) {
+                alertNotification("Chưa có URL RCON Bridge (Port 3000)!");
+                appendLog("Vui lòng nhập URL Port 3000 từ Codespaces vào ô RCON Bridge!", "error");
+                return;
+            }
+
+            appendLog(`Gửi lệnh RCON: /${cmd}`, 'cmd');
+
+            try {
+                const response = await fetch(`${RCON_BRIDGE_URL}/api/rcon`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        command: cmd,
+                        password: document.getElementById('adminPasscode').value.trim()
+                    })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    appendLog(data.response, 'success');
+                    alertNotification("Thực thi thành công!");
+                } else {
+                    appendLog(data.error || "Lỗi thực thi lệnh", 'error');
+                }
+            } catch (err) {
+                appendLog("Không thể gửi lệnh! Kiểm tra lại URL RCON Bridge hoặc xem Port 3000 trên Codespaces đã đổi sang Public chưa.", 'error');
+            }
+        }
+
+        function actionPlayer(action) {
+            if (!IS_ADMIN) {
+                alertNotification("Bạn chưa đăng nhập Admin!");
+                return;
+            }
+            const target = document.getElementById('targetPlayer').value.trim();
+            if (!target) {
+                alertNotification("Vui lòng nhập tên người chơi!");
+                return;
+            }
+            executeAdminCmd(`${action} ${target}`);
+            document.getElementById('targetPlayer').value = '';
+        }
+
+        function handleCommand(e) {
+            e.preventDefault();
+            const input = document.getElementById('cmdInput');
+            const val = input.value.trim();
+            if (!val) return;
+
+            input.value = '';
+            executeAdminCmd(val);
+        }
+
+        async function fetchRealtimeMCStatus() {
+            try {
+                const response = await fetch(`https://api.mcstatus.io/v2/status/java/${SERVER_ADDRESS}`);
+                const data = await response.json();
+
+                const countText = document.getElementById('playerCountText');
+                const progressBar = document.getElementById('playerProgressBar');
+                const bridgeStatus = document.getElementById('serverBridgeStatus');
+                const pingDot = document.getElementById('serverPingDot');
+
+                if (data && data.online) {
+                    const online = data.players ? data.players.online : 0;
+                    const max = data.players ? data.players.max : 20;
+                    countText.innerText = `${online} / ${max} Online`;
+                    progressBar.style.width = `${Math.min(100, Math.round((online/max)*100))}%`;
+                    bridgeStatus.innerText = "Minecraft Protocol Active";
+                    pingDot.className = "inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping";
+                } else {
+                    countText.innerText = "0 / 20 Online (Offline)";
+                    progressBar.style.width = "0%";
+                    bridgeStatus.innerText = "Server Standby / Offline";
+                    pingDot.className = "inline-block w-2 h-2 rounded-full bg-red-500";
+                }
+            } catch (err) {}
+        }
+
+        setInterval(fetchRealtimeMCStatus, 10000);
+        fetchRealtimeMCStatus();
+    </script>
+</body>
+</html>
