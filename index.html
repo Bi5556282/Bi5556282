@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bi5556282.com | Minecraft Protocol Gateway</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#0a0c10',
+                        bedrock: '#12161f',
+                        redstone: '#ff2a2a',
+                        emeraldGlow: '#00ff66',
+                        diamond: '#42f5e3',
+                        mcGold: '#ffaa00'
+                    },
+                    fontFamily: {
+                        pixel: ['VT323', 'monospace'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #06080c;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(0, 255, 102, 0.08) 0%, transparent 60%),
+                linear-gradient(rgba(18, 22, 31, 0.7) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(18, 22, 31, 0.7) 1px, transparent 1px);
+            background-size: 100% 100%, 32px 32px, 32px 32px;
+            color: #e0e6ed;
+        }
+        .glow-emerald { box-shadow: 0 0 25px rgba(0, 255, 102, 0.25); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-3 sm:p-6 font-sans selection:bg-emerald-500 selection:text-black">
+    <header class="max-w-6xl mx-auto w-full mb-6">
+        <div class="bg-bedrock/90 border border-emerald-500/30 rounded-2xl p-4 sm:p-6 backdrop-blur-md glow-emerald relative overflow-hidden">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-4 text-center lg:text-left">
+                    <div class="w-14 h-14 bg-obsidian border-2 border-emerald-400 rounded-xl flex items-center justify-center text-emerald-400 text-2xl shadow-lg shadow-emerald-500/20 shrink-0">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center justify-center lg:justify-start gap-2">
+                            <h1 class="text-3xl sm:text-4xl font-pixel tracking-wider text-white font-bold drop-shadow">
+                                bi5556282.com
+                            </h1>
+                            <span class="px-2 py-0.5 text-xs font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/40 rounded">
+                                PORT 25565
+                            </span>
+                        </div>
+                        <p class="text-xs font-mono text-gray-400 mt-1 flex items-center justify-center lg:justify-start gap-2">
+                            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                            <span>Minecraft Native Protocol Bridge Active</span>
+                            <span class="text-gray-600">|</span>
+                            <span class="text-emerald-300">Purpur 1.21.4</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center justify-center lg:justify-end gap-3 w-full lg:w-auto">
+                    <button onclick="copyServerIP()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-black font-bold rounded-xl text-sm transition-all duration-200 flex items-center gap-2 shadow-lg shadow-emerald-600/30 active:scale-95">
+                        <i class="fa-solid fa-copy"></i>
+                        <span>Copy Server IP</span>
+                    </button>
+                    <a href="minecraft://bi5556282.com" class="px-4 py-2.5 bg-bedrock hover:bg-obsidian text-emerald-400 border border-emerald-500/50 hover:border-emerald-400 font-bold rounded-xl text-sm transition-all duration-200 flex items-center gap-2 active:scale-95">
+                        <i class="fa-solid fa-gamepad"></i>
+                        <span>Launch Minecraft</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto w-full flex-1 grid grid-cols-1 gap-6 text-center">
+        <div class="bg-bedrock/80 border border-gray-800 rounded-2xl p-8 backdrop-blur-sm">
+            <h2 class="text-xl font-mono text-emerald-400 mb-2">Dedicated Minecraft Server Online</h2>
+            <p class="text-sm text-gray-400 font-mono">Connect directly using IP: <span class="text-white font-bold">bi5556282.com</span></p>
+        </div>
+    </main>
+
+    <footer class="max-w-6xl mx-auto w-full mt-6 text-center border-t border-gray-800/60 pt-4">
+        <p class="text-xs font-mono text-gray-500">&copy; 2026 bi5556282.com &bull; Purpur 1.21.4</p>
+    </footer>
+
+    <script>
+        function copyServerIP() {
+            navigator.clipboard.writeText("bi5556282.com");
+            alert("Copied Server IP: bi5556282.com");
+        }
+    </script>
+</body>
+</html>
