@@ -44,25 +44,8 @@
             color: #e0e6ed;
         }
 
-        .pixel-border {
-            box-shadow: 
-                0 0 0 2px #12161f,
-                0 0 0 4px rgba(0, 255, 102, 0.2);
-        }
-
         .glow-emerald {
             box-shadow: 0 0 25px rgba(0, 255, 102, 0.25);
-        }
-
-        .scanline {
-            background: linear-gradient(
-                to bottom,
-                rgba(255,255,255,0),
-                rgba(255,255,255,0) 50%,
-                rgba(0, 0, 0, 0.3) 50%,
-                rgba(0, 0, 0, 0.3)
-            );
-            background-size: 100% 4px;
         }
 
         .console-scroll::-webkit-scrollbar {
@@ -82,7 +65,7 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between p-3 sm:p-6 font-sans selection:bg-emerald-500 selection:text-black">
 
-    <!-- TOP HEADER / BRANDING BANNER -->
+    <!-- HEADER / BRANDING BANNER -->
     <header class="max-w-6xl mx-auto w-full mb-6">
         <div class="bg-bedrock/90 border border-emerald-500/30 rounded-2xl p-4 sm:p-6 backdrop-blur-md glow-emerald relative overflow-hidden">
             <div class="absolute -right-10 -top-10 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -129,7 +112,7 @@
         </div>
     </header>
 
-    <!-- GATEKEEPER / PROTOCOL NOTICE BANNER -->
+    <!-- RESTRICTION NOTICE BANNER -->
     <section class="max-w-6xl mx-auto w-full mb-6">
         <div class="bg-redstone/10 border border-redstone/40 rounded-xl p-4 flex items-start gap-4">
             <div class="p-2.5 bg-redstone/20 text-redstone rounded-lg shrink-0 mt-0.5">
@@ -151,13 +134,13 @@
         </div>
     </section>
 
-    <!-- MAIN CONTENT DASHBOARD GRID -->
+    <!-- MAIN DASHBOARD -->
     <main class="max-w-6xl mx-auto w-full flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-        <!-- LEFT COLUMN: SERVER METRICS & PLUGIN TELEMETRY -->
+        <!-- LEFT COLUMN: TELEMETRY & PLUGINS -->
         <div class="space-y-6 lg:col-span-1">
             
-            <!-- Realtime Performance Card -->
+            <!-- Live Telemetry Card -->
             <div class="bg-bedrock/80 border border-gray-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
                 <div class="flex items-center justify-between mb-4 pb-2 border-b border-gray-800">
                     <h3 class="text-xs font-bold uppercase tracking-widest text-emerald-400 font-mono flex items-center gap-2">
@@ -166,7 +149,7 @@
                     <span id="fpsVal" class="text-xs font-mono text-gray-400">FPS: 20.0 TPS</span>
                 </div>
 
-                <!-- TPS Bar -->
+                <!-- TPS -->
                 <div class="mb-4">
                     <div class="flex justify-between text-xs font-mono mb-1.5">
                         <span class="text-gray-400">Server Performance</span>
@@ -177,7 +160,7 @@
                     </div>
                 </div>
 
-                <!-- RAM Bar -->
+                <!-- RAM -->
                 <div class="mb-4">
                     <div class="flex justify-between text-xs font-mono mb-1.5">
                         <span class="text-gray-400">Memory Load (Purpur)</span>
@@ -188,7 +171,7 @@
                     </div>
                 </div>
 
-                <!-- Online Players Bar -->
+                <!-- Players Online -->
                 <div>
                     <div class="flex justify-between text-xs font-mono mb-1.5">
                         <span class="text-gray-400">Connected Players</span>
@@ -200,7 +183,7 @@
                 </div>
             </div>
 
-            <!-- Verified Plugin Engine -->
+            <!-- Loaded Plugins -->
             <div class="bg-bedrock/80 border border-gray-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
                 <div class="flex items-center justify-between mb-4 pb-2 border-b border-gray-800">
                     <h3 class="text-xs font-bold uppercase tracking-widest text-emerald-400 font-mono flex items-center gap-2">
@@ -210,7 +193,6 @@
                 </div>
 
                 <div class="space-y-2 font-mono text-xs">
-                    <!-- Plugin Items -->
                     <div class="flex items-center justify-between p-2 rounded-lg bg-obsidian/60 border border-gray-800">
                         <span class="text-emerald-300 font-semibold">EssentialsX</span>
                         <span class="text-gray-500 text-[10px]">v2.20.1 (Core)</span>
@@ -234,7 +216,7 @@
                 </div>
             </div>
 
-            <!-- Admin Passcode Gatekeeper -->
+            <!-- Admin Gatekeeper -->
             <div class="bg-bedrock/80 border border-gray-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
                 <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 font-mono mb-3 flex items-center gap-2">
                     <i class="fa-solid fa-key text-mcGold"></i> Admin Gatekeeper Unlock
@@ -250,7 +232,7 @@
 
         </div>
 
-        <!-- RIGHT COLUMN: MINECRAFT CONSOLE / PROTOCOL TERMINAL -->
+        <!-- RIGHT COLUMN: MINECRAFT CONSOLE -->
         <div class="lg:col-span-2 flex flex-col h-full">
             <div class="bg-bedrock/80 border border-gray-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm flex-1 flex flex-col min-h-[460px]">
                 
@@ -267,7 +249,7 @@
                     </span>
                 </div>
 
-                <!-- Console Output Stream -->
+                <!-- Console Terminal Stream -->
                 <div id="terminalStream" class="console-scroll flex-1 bg-obsidian/90 border border-gray-900 rounded-xl p-4 font-mono text-xs space-y-2 overflow-y-auto leading-relaxed">
                     <div class="text-gray-500">[00:00:00 NETWORK]: Binding TCP Socket to bi5556282.com:25565...</div>
                     <div class="text-emerald-400">[00:00:01 INFO]: [Purpur] Minecraft Server Protocol 1.21.4 Ready.</div>
@@ -277,7 +259,7 @@
                     <div class="text-gray-400">[00:00:04 SYSTEM]: Browser request intercepted. HTTP gatekeeper engaged.</div>
                 </div>
 
-                <!-- Command Trigger Input -->
+                <!-- Input Console Command -->
                 <form onsubmit="handleCommand(event)" class="mt-4 flex gap-2">
                     <div class="relative flex-1">
                         <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-emerald-400 font-mono text-xs">&gt;</span>
@@ -301,10 +283,15 @@
         </p>
     </footer>
 
+    <!-- LOGIC SCRIPT CONNECTIVITY -->
     <script>
-        // Copy IP to Clipboard
+        // CẤU HÌNH TÊN MIỀN / CODESPACE CỦA BẠN TẠI ĐÂY
+        // Nếu dùng Codespace: Thay bằng link public Port 25565 (ví dụ: 'xyz-25565.app.github.dev')
+        // Nếu đã trỏ domain: Giữ nguyên 'bi5556282.com'
+        const SERVER_ADDRESS = 'bi5556282.com';
+
         function copyServerIP() {
-            const ip = "bi5556282.com";
+            const ip = SERVER_ADDRESS;
             const tempInput = document.createElement("input");
             tempInput.value = ip;
             document.body.appendChild(tempInput);
@@ -312,8 +299,7 @@
             document.execCommand("copy");
             document.body.removeChild(tempInput);
 
-            // Visual Notification
-            alertNotification("Server Address Copied: bi5556282.com");
+            alertNotification("Server Address Copied: " + ip);
         }
 
         function alertNotification(msg) {
@@ -324,7 +310,6 @@
             setTimeout(() => toast.remove(), 2500);
         }
 
-        // Terminal Log Helper
         function appendLog(text, type = 'info') {
             const stream = document.getElementById('terminalStream');
             const now = new Date().toLocaleTimeString('en-US', { hour12: false });
@@ -348,7 +333,6 @@
             stream.scrollTop = stream.scrollHeight;
         }
 
-        // Handle Console Form
         function handleCommand(e) {
             e.preventDefault();
             const input = document.getElementById('cmdInput');
@@ -363,18 +347,17 @@
                 if (cmd === 'help') {
                     appendLog("Available commands: status, ping, plugins, connect");
                 } else if (cmd === 'status' || cmd === 'ping') {
-                    appendLog("bi5556282.com status: ONLINE (20.0 TPS, 0ms ping)");
+                    appendLog(`Server status check for ${SERVER_ADDRESS}: ONLINE (20.0 TPS)`);
                 } else if (cmd === 'plugins') {
                     appendLog("Plugins: EssentialsX, EssentialsChat, EssentialsSpawn, Vault, VeinMiner");
                 } else if (cmd === 'connect') {
-                    appendLog("To connect, launch Minecraft 1.21.4 and join bi5556282.com");
+                    appendLog(`To connect, launch Minecraft 1.21.4 and join ${SERVER_ADDRESS}`);
                 } else {
                     appendLog(`HTTP Access Restricted. Command '${val}' requires in-game op or RCON key.`, 'error');
                 }
             }, 300);
         }
 
-        // Admin Unlock Gatekeeper
         function unlockAdminConsole() {
             const code = document.getElementById('adminPasscode').value;
             const msg = document.getElementById('authMessage');
@@ -382,7 +365,7 @@
             if (code === '5556282' || code === 'admin') {
                 msg.className = "text-[10px] font-mono text-emerald-400 text-center mt-1";
                 msg.innerText = "ACCESS GRANTED: Full Web Console Active.";
-                appendLog("Admin credentials verified for bi5556282.com", 'success');
+                appendLog("Admin credentials verified for " + SERVER_ADDRESS, 'success');
             } else {
                 msg.className = "text-[10px] font-mono text-red-400 text-center mt-1";
                 msg.innerText = "DENIED: Invalid Admin Passcode.";
@@ -390,13 +373,10 @@
             }
         }
 
-        // ==========================================
-        // REAL-TIME SYSTEM ENGINE (MINECRAFT LIVE STATUS)
-        // ==========================================
-
+        // TỰ ĐỘNG LẤY TRẠNG THÁI REALTIME TỪ SERVER MINECRAFT
         async function fetchRealtimeMCStatus() {
             try {
-                const response = await fetch('https://api.mcstatus.io/v2/status/java/bi5556282.com');
+                const response = await fetch(`https://api.mcstatus.io/v2/status/java/${SERVER_ADDRESS}`);
                 const data = await response.json();
 
                 const countText = document.getElementById('playerCountText');
@@ -430,11 +410,9 @@
             }
         }
 
-        // Kiểm tra IP server mỗi 10 giây
         setInterval(fetchRealtimeMCStatus, 10000);
         fetchRealtimeMCStatus();
 
-        // Biến đổi chỉ số RAM/TPS sống động
         setInterval(() => {
             const ramVal = (2.1 + Math.random() * 0.3).toFixed(1);
             const ramPercent = Math.round((ramVal / 6.0) * 100);
@@ -445,20 +423,6 @@
             document.getElementById('tpsValText').innerText = `${tpsVal} / 20.0 TPS`;
             document.getElementById('fpsVal').innerText = `FPS: ${tpsVal} TPS`;
         }, 3000);
-
-        // Đổ log tự động vào Terminal Console
-        const randomLogs = [
-            "KeepAlive packet received from bi5556282.com:25565",
-            "Auto-saving chunk world data...",
-            "User ping latency check: 12ms",
-            "Telemetry sync pulse ok (TCP handshake active)",
-            "Purpur engine health check: 100% operational"
-        ];
-
-        setInterval(() => {
-            const randomMsg = randomLogs[Math.floor(Math.random() * randomLogs.length)];
-            appendLog(randomMsg, 'info');
-        }, 8000);
     </script>
 </body>
 </html>
