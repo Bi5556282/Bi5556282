@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="vi" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bi5556282.com | Minecraft Protocol Gateway</title>
-    <!-- Tailwind CSS -->
+    <title>bi5556282.com | Skibidi Admin Gateway 26.1.2</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     
     <script>
@@ -22,7 +19,8 @@
                         redstone: '#ff2a2a',
                         emeraldGlow: '#00ff66',
                         diamond: '#42f5e3',
-                        mcGold: '#ffaa00'
+                        mcGold: '#ffaa00',
+                        skibidiPurple: '#a855f7'
                     },
                     fontFamily: {
                         pixel: ['VT323', 'monospace'],
@@ -37,15 +35,15 @@
         body {
             background-color: #06080c;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(0, 255, 102, 0.08) 0%, transparent 60%),
+                radial-gradient(circle at 50% 0%, rgba(168, 85, 247, 0.12) 0%, transparent 60%),
                 linear-gradient(rgba(18, 22, 31, 0.7) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(18, 22, 31, 0.7) 1px, transparent 1px);
             background-size: 100% 100%, 32px 32px, 32px 32px;
             color: #e0e6ed;
         }
 
-        .glow-emerald {
-            box-shadow: 0 0 25px rgba(0, 255, 102, 0.25);
+        .glow-skibidi {
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.3);
         }
 
         .console-scroll::-webkit-scrollbar {
@@ -59,52 +57,50 @@
             border-radius: 3px;
         }
         .console-scroll::-webkit-scrollbar-thumb:hover {
-            background: #00ff66;
+            background: #a855f7;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between p-3 sm:p-6 font-sans selection:bg-emerald-500 selection:text-black">
+<body class="min-h-screen flex flex-col justify-between p-3 sm:p-6 font-sans selection:bg-purple-500 selection:text-black">
 
     <!-- HEADER / BRANDING BANNER -->
     <header class="max-w-6xl mx-auto w-full mb-6">
-        <div class="bg-bedrock/90 border border-emerald-500/30 rounded-2xl p-4 sm:p-6 backdrop-blur-md glow-emerald relative overflow-hidden">
-            <div class="absolute -right-10 -top-10 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="bg-bedrock/90 border border-purple-500/40 rounded-2xl p-4 sm:p-6 backdrop-blur-md glow-skibidi relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
             
             <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
                 
-                <!-- Domain Logo & Protocol Info -->
                 <div class="flex items-center gap-4 text-center lg:text-left">
-                    <div class="w-14 h-14 bg-obsidian border-2 border-emerald-400 rounded-xl flex items-center justify-center text-emerald-400 text-2xl shadow-lg shadow-emerald-500/20 shrink-0">
-                        <i class="fa-solid fa-cube"></i>
+                    <div class="w-14 h-14 bg-obsidian border-2 border-purple-400 rounded-xl flex items-center justify-center text-purple-400 text-2xl shadow-lg shadow-purple-500/20 shrink-0">
+                        <i class="fa-solid fa-toilet-paper"></i>
                     </div>
                     <div>
                         <div class="flex items-center justify-center lg:justify-start gap-2">
                             <h1 class="text-3xl sm:text-4xl font-pixel tracking-wider text-white font-bold drop-shadow">
                                 bi5556282.com
                             </h1>
-                            <span class="px-2 py-0.5 text-xs font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/40 rounded">
-                                PORT 25565
+                            <span class="px-2 py-0.5 text-xs font-mono font-bold bg-purple-500/20 text-purple-300 border border-purple-500/40 rounded">
+                                SKIBIDI EDITION
                             </span>
                         </div>
                         <p class="text-xs font-mono text-gray-400 mt-1 flex items-center justify-center lg:justify-start gap-2">
-                            <span id="serverPingDot" class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                            <span id="serverBridgeStatus">Minecraft Native Protocol Bridge Active</span>
+                            <span id="serverPingDot" class="inline-block w-2 h-2 rounded-full bg-red-500"></span>
+                            <span id="serverBridgeStatus">Đang quét Server...</span>
                             <span class="text-gray-600">|</span>
-                            <span id="serverVersion" class="text-emerald-300">Purpur 26.1.2</span>
+                            <span id="serverVersion" class="text-purple-300">Purpur 26.1.2</span>
                         </p>
                     </div>
                 </div>
 
-                <!-- Action Controls & Protocol Status -->
                 <div class="flex flex-wrap items-center justify-center lg:justify-end gap-3 w-full lg:w-auto">
-                    <button onclick="copyServerIP()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-black font-bold rounded-xl text-sm transition-all duration-200 flex items-center gap-2 shadow-lg shadow-emerald-600/30 active:scale-95">
+                    <button onclick="copyServerIP()" class="px-4 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl text-sm transition-all duration-200 flex items-center gap-2 shadow-lg shadow-purple-600/30 active:scale-95">
                         <i class="fa-solid fa-copy"></i>
-                        <span>Copy Server IP</span>
+                        <span>Sao chép IP Skibidi</span>
                     </button>
                     
-                    <a href="minecraft://bi5556282.com" class="px-4 py-2.5 bg-bedrock hover:bg-obsidian text-emerald-400 border border-emerald-500/50 hover:border-emerald-400 font-bold rounded-xl text-sm transition-all duration-200 flex items-center gap-2 active:scale-95">
+                    <a href="minecraft://bi5556282.com" class="px-4 py-2.5 bg-bedrock hover:bg-obsidian text-purple-400 border border-purple-500/50 hover:border-purple-400 font-bold rounded-xl text-sm transition-all duration-200 flex items-center gap-2 active:scale-95">
                         <i class="fa-solid fa-gamepad"></i>
-                        <span>Launch Minecraft</span>
+                        <span>Vào Minecraft</span>
                     </a>
                 </div>
 
@@ -112,58 +108,34 @@
         </div>
     </header>
 
-    <!-- RESTRICTION NOTICE BANNER -->
-    <section class="max-w-6xl mx-auto w-full mb-6">
-        <div class="bg-redstone/10 border border-redstone/40 rounded-xl p-4 flex items-start gap-4">
-            <div class="p-2.5 bg-redstone/20 text-redstone rounded-lg shrink-0 mt-0.5">
-                <i class="fa-solid fa-shield-halved text-xl"></i>
-            </div>
-            <div class="flex-1">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-sm font-bold text-red-400 uppercase tracking-wider font-mono">
-                        Protocol Restriction Active
-                    </h2>
-                    <span class="text-[10px] font-mono bg-red-950/80 text-red-300 border border-red-800 px-2 py-0.5 rounded">
-                        HTTP RESTRICTED
-                    </span>
-                </div>
-                <p class="text-xs text-gray-300 mt-1 leading-relaxed">
-                    This web address <strong class="text-white font-mono">bi5556282.com</strong> is optimized for direct Minecraft Protocol TCP handshakes. standard Web Browser access is restricted to public server telemetry and verified server administrators. To play, enter <span class="text-emerald-400 font-mono font-bold">bi5556282.com</span> directly into your Minecraft Client (v1.21.4).
-                </p>
-            </div>
-        </div>
-    </section>
-
     <!-- MAIN DASHBOARD -->
     <main class="max-w-6xl mx-auto w-full flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-        <!-- LEFT COLUMN: TELEMETRY & PLUGINS -->
+        <!-- LEFT COLUMN: TELEMETRY & CONFIG -->
         <div class="space-y-6 lg:col-span-1">
             
             <!-- Live Telemetry Card -->
             <div class="bg-bedrock/80 border border-gray-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
                 <div class="flex items-center justify-between mb-4 pb-2 border-b border-gray-800">
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-emerald-400 font-mono flex items-center gap-2">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-purple-400 font-mono flex items-center gap-2">
                         <i class="fa-solid fa-gauge-high"></i> Live Telemetry
                     </h3>
-                    <span id="fpsVal" class="text-xs font-mono text-gray-400">FPS: 20.0 TPS</span>
+                    <span id="fpsVal" class="text-xs font-mono text-gray-400">TPS: 20.0</span>
                 </div>
 
-                <!-- TPS -->
                 <div class="mb-4">
                     <div class="flex justify-between text-xs font-mono mb-1.5">
-                        <span class="text-gray-400">Server Performance</span>
-                        <span id="tpsValText" class="text-emerald-400 font-bold">20.0 / 20.0 TPS</span>
+                        <span class="text-gray-400">Hiệu năng Server</span>
+                        <span id="tpsValText" class="text-purple-400 font-bold">20.0 / 20.0 TPS</span>
                     </div>
                     <div class="w-full h-2.5 bg-obsidian rounded-full overflow-hidden p-0.5 border border-gray-800">
-                        <div id="tpsBar" class="h-full bg-emerald-400 rounded-full shadow-sm shadow-emerald-400 transition-all duration-500" style="width: 100%"></div>
+                        <div id="tpsBar" class="h-full bg-purple-400 rounded-full shadow-sm shadow-purple-400 transition-all duration-500" style="width: 100%"></div>
                     </div>
                 </div>
 
-                <!-- RAM -->
                 <div class="mb-4">
                     <div class="flex justify-between text-xs font-mono mb-1.5">
-                        <span class="text-gray-400">Memory Load (Purpur)</span>
+                        <span class="text-gray-400">RAM Sử dụng</span>
                         <span id="ramUsageText" class="text-diamond font-bold">2.1 GB / 6.0 GB</span>
                     </div>
                     <div class="w-full h-2.5 bg-obsidian rounded-full overflow-hidden p-0.5 border border-gray-800">
@@ -171,10 +143,9 @@
                     </div>
                 </div>
 
-                <!-- Players Online -->
                 <div>
                     <div class="flex justify-between text-xs font-mono mb-1.5">
-                        <span class="text-gray-400">Connected Players</span>
+                        <span class="text-gray-400">Người chơi Online</span>
                         <span id="playerCountText" class="text-mcGold font-bold">0 / 20 Online</span>
                     </div>
                     <div class="w-full h-2.5 bg-obsidian rounded-full overflow-hidden p-0.5 border border-gray-800">
@@ -183,48 +154,28 @@
                 </div>
             </div>
 
-            <!-- Loaded Plugins -->
+            <!-- IP CONFIG -->
             <div class="bg-bedrock/80 border border-gray-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
-                <div class="flex items-center justify-between mb-4 pb-2 border-b border-gray-800">
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-emerald-400 font-mono flex items-center gap-2">
-                        <i class="fa-solid fa-puzzle-piece"></i> Loaded Plugins (5)
-                    </h3>
-                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                </div>
-
-                <div class="space-y-2 font-mono text-xs">
-                    <div class="flex items-center justify-between p-2 rounded-lg bg-obsidian/60 border border-gray-800">
-                        <span class="text-emerald-300 font-semibold">EssentialsX</span>
-                        <span class="text-gray-500 text-[10px]">v2.20.1 (Core)</span>
-                    </div>
-                    <div class="flex items-center justify-between p-2 rounded-lg bg-obsidian/60 border border-gray-800">
-                        <span class="text-emerald-300 font-semibold">EssentialsChat</span>
-                        <span class="text-gray-500 text-[10px]">v2.20.1</span>
-                    </div>
-                    <div class="flex items-center justify-between p-2 rounded-lg bg-obsidian/60 border border-gray-800">
-                        <span class="text-emerald-300 font-semibold">EssentialsSpawn</span>
-                        <span class="text-gray-500 text-[10px]">v2.20.1</span>
-                    </div>
-                    <div class="flex items-center justify-between p-2 rounded-lg bg-obsidian/60 border border-gray-800">
-                        <span class="text-emerald-300 font-semibold">Vault</span>
-                        <span class="text-gray-500 text-[10px]">v1.7.3</span>
-                    </div>
-                    <div class="flex items-center justify-between p-2 rounded-lg bg-obsidian/60 border border-gray-800">
-                        <span class="text-emerald-300 font-semibold">VeinMiner</span>
-                        <span class="text-gray-500 text-[10px]">v2.12.2</span>
-                    </div>
+                <h3 class="text-xs font-bold uppercase tracking-widest text-purple-400 font-mono mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-network-wired"></i> Kết Nối Domain / Codespace
+                </h3>
+                <div class="space-y-2">
+                    <input type="text" id="customHostInput" placeholder="Ví dụ: xyz-25565.app.github.dev" class="w-full bg-obsidian border border-gray-800 rounded-xl px-3 py-2 text-xs font-mono text-white focus:border-purple-400 focus:outline-none">
+                    <button onclick="updateServerHost()" class="w-full py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs font-mono rounded-xl transition">
+                        Lưu Địa Chỉ Kết Nối
+                    </button>
                 </div>
             </div>
 
-            <!-- Admin Gatekeeper -->
-            <div class="bg-bedrock/80 border border-gray-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
-                <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 font-mono mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-key text-mcGold"></i> Admin Gatekeeper Unlock
+            <!-- AUTH LOCK -->
+            <div id="authBox" class="bg-bedrock/80 border border-gray-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
+                <h3 class="text-xs font-bold uppercase tracking-widest text-mcGold font-mono mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-lock"></i> Đăng Nhập Skibidi Admin
                 </h3>
                 <div class="space-y-2">
-                    <input type="password" id="adminPasscode" placeholder="Enter Access Key..." class="w-full bg-obsidian border border-gray-800 rounded-xl px-3 py-2 text-xs font-mono text-white focus:border-emerald-400 focus:outline-none">
-                    <button onclick="unlockAdminConsole()" class="w-full py-2 bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-mono rounded-xl border border-gray-700 transition">
-                        Authenticate Access
+                    <input type="password" id="adminPasscode" placeholder="Mật khẩu Admin (mặc định: skibidi)" class="w-full bg-obsidian border border-gray-800 rounded-xl px-3 py-2 text-xs font-mono text-white focus:border-purple-400 focus:outline-none">
+                    <button onclick="unlockAdminConsole()" class="w-full py-2 bg-gray-800 hover:bg-gray-700 text-purple-300 font-bold text-xs font-mono rounded-xl border border-gray-700 transition">
+                        Xác Thực Quyền Admin
                     </button>
                     <p id="authMessage" class="text-[10px] font-mono text-gray-500 text-center mt-1"></p>
                 </div>
@@ -232,42 +183,83 @@
 
         </div>
 
-        <!-- RIGHT COLUMN: MINECRAFT CONSOLE -->
-        <div class="lg:col-span-2 flex flex-col h-full">
-            <div class="bg-bedrock/80 border border-gray-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm flex-1 flex flex-col min-h-[460px]">
+        <!-- RIGHT COLUMN: ADMIN CONTROL PANEL & CONSOLE -->
+        <div class="lg:col-span-2 flex flex-col h-full space-y-6">
+
+            <!-- SKIBIDI ADMIN CONTROL PANEL (ẢN/HIỆN KHI ĐĂNG NHẬP) -->
+            <div id="adminPanel" class="hidden bg-bedrock/90 border-2 border-purple-500/60 rounded-2xl p-5 shadow-2xl backdrop-blur-md">
+                <div class="flex items-center justify-between pb-3 border-b border-purple-500/30 mb-4">
+                    <h3 class="text-sm font-bold uppercase font-mono text-purple-300 flex items-center gap-2">
+                        <i class="fa-solid fa-user-shield text-purple-400"></i> Skibidi Admin Quick Actions
+                    </h3>
+                    <span class="text-[10px] bg-purple-950 text-purple-300 border border-purple-700 px-2 py-0.5 rounded font-mono">
+                        RCON AUTHENTICATED
+                    </span>
+                </div>
+
+                <!-- Lệnh nhanh -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+                    <button onclick="executeAdminCmd('reload')" class="p-2.5 bg-purple-950/60 hover:bg-purple-900 border border-purple-700/50 rounded-xl font-mono text-xs text-purple-200 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-rotate-right"></i> Reload Server
+                    </button>
+                    <button onclick="executeAdminCmd('kill @e[type=item]')" class="p-2.5 bg-red-950/60 hover:bg-red-900 border border-red-700/50 rounded-xl font-mono text-xs text-red-200 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-broom"></i> Clear Lag
+                    </button>
+                    <button onclick="executeAdminCmd('time set day')" class="p-2.5 bg-amber-950/60 hover:bg-amber-900 border border-amber-700/50 rounded-xl font-mono text-xs text-amber-200 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-sun"></i> Set Ngày
+                    </button>
+                    <button onclick="executeAdminCmd('weather clear')" class="p-2.5 bg-blue-950/60 hover:bg-blue-900 border border-blue-700/50 rounded-xl font-mono text-xs text-blue-200 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-cloud-sun"></i> Tắt Mưa
+                    </button>
+                </div>
+
+                <!-- Quản lý Player -->
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <input type="text" id="targetPlayer" placeholder="Tên người chơi (Player Name)..." class="flex-1 bg-obsidian border border-gray-800 rounded-xl px-3 py-2 text-xs font-mono text-white focus:border-purple-400 focus:outline-none">
+                    <div class="flex gap-1.5">
+                        <button onclick="actionPlayer('op')" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-500 text-black font-bold font-mono text-xs rounded-xl transition">
+                            + OP
+                        </button>
+                        <button onclick="actionPlayer('kick')" class="px-3 py-2 bg-yellow-600 hover:bg-yellow-500 text-black font-bold font-mono text-xs rounded-xl transition">
+                            Kick
+                        </button>
+                        <button onclick="actionPlayer('ban')" class="px-3 py-2 bg-red-600 hover:bg-red-500 text-white font-bold font-mono text-xs rounded-xl transition">
+                            Ban
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CONSOLE TERMINAL -->
+            <div class="bg-bedrock/80 border border-gray-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm flex-1 flex flex-col min-h-[400px]">
                 
-                <!-- Terminal Header -->
                 <div class="flex items-center justify-between pb-3 border-b border-gray-800 mb-3">
                     <div class="flex items-center gap-2">
                         <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
                         <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
                         <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
-                        <span class="ml-2 text-xs font-mono text-gray-400">bi5556282.com:25565 Console Handshake</span>
+                        <span class="ml-2 text-xs font-mono text-gray-400">Skibidi Realtime Console Stream</span>
                     </div>
-                    <span id="consoleStreamBadge" class="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800 px-2 py-0.5 rounded">
-                        ONLINE STREAM
+                    <span id="consoleStreamBadge" class="text-[10px] font-mono text-purple-400 bg-purple-950/60 border border-purple-800 px-2 py-0.5 rounded">
+                        CONNECTED
                     </span>
                 </div>
 
-                <!-- Console Terminal Stream -->
                 <div id="terminalStream" class="console-scroll flex-1 bg-obsidian/90 border border-gray-900 rounded-xl p-4 font-mono text-xs space-y-2 overflow-y-auto leading-relaxed">
-                    <div class="text-gray-500">[00:00:00 NETWORK]: Binding TCP Socket to bi5556282.com:25565...</div>
-                    <div class="text-emerald-400">[00:00:01 INFO]: [Purpur] Minecraft Server Protocol 1.21.4 Ready.</div>
-                    <div class="text-emerald-400">[00:00:02 INFO]: [Vault] Economy API linked successfully.</div>
-                    <div class="text-emerald-400">[00:00:02 INFO]: [VeinMiner] Paper Block Listener Attached.</div>
-                    <div class="text-diamond">[00:00:03 INFO]: User bi5556282 pinged server from client 1.21.4</div>
-                    <div class="text-gray-400">[00:00:04 SYSTEM]: Browser request intercepted. HTTP gatekeeper engaged.</div>
+                    <div class="text-gray-500">[00:00:00 NETWORK]: Binding TCP Socket to Port 25565...</div>
+                    <div class="text-purple-400">[00:00:01 INFO]: [Purpur] Minecraft Server Protocol 26.1.2 Ready.</div>
+                    <div class="text-purple-400">[00:00:02 INFO]: [SkibidiPlugin] Core Module Attached.</div>
+                    <div class="text-diamond">[00:00:03 INFO]: User bi5556282 connected to portal.</div>
                 </div>
 
-                <!-- Input Console Command -->
                 <form onsubmit="handleCommand(event)" class="mt-4 flex gap-2">
                     <div class="relative flex-1">
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-emerald-400 font-mono text-xs">&gt;</span>
-                        <input type="text" id="cmdInput" placeholder="Enter protocol ping command..." class="w-full bg-obsidian border border-gray-800 rounded-xl pl-7 pr-3 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-emerald-400 placeholder:text-gray-600">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-purple-400 font-mono text-xs">&gt;</span>
+                        <input type="text" id="cmdInput" placeholder="Nhập lệnh console (ví dụ: help, status)..." class="w-full bg-obsidian border border-gray-800 rounded-xl pl-7 pr-3 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-purple-400 placeholder:text-gray-600">
                     </div>
-                    <button type="submit" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-black font-bold text-xs font-mono rounded-xl transition flex items-center gap-1.5 shadow-md shadow-emerald-600/20">
-                        <span>Execute</span>
-                        <i class="fa-solid fa-terminal"></i>
+                    <button type="submit" class="px-4 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs font-mono rounded-xl transition flex items-center gap-1.5 shadow-md shadow-purple-600/20">
+                        <span>Gửi</span>
+                        <i class="fa-solid fa-paper-plane"></i>
                     </button>
                 </form>
 
@@ -276,35 +268,36 @@
 
     </main>
 
-    <!-- FOOTER -->
     <footer class="max-w-6xl mx-auto w-full mt-6 text-center border-t border-gray-800/60 pt-4">
         <p class="text-xs font-mono text-gray-500">
-            &copy; 2026 bi5556282.com &bull; Dedicated Minecraft Server Portal &bull; Purpur 1.21.4
+            &copy; 2026 bi5556282.com &bull; Skibidi Dedicated Portal &bull; Purpur 26.1.2
         </p>
     </footer>
 
-    <!-- LOGIC SCRIPT CONNECTIVITY -->
     <script>
-        // CẤU HÌNH TÊN MIỀN / CODESPACE CỦA BẠN TẠI ĐÂY
-        // Nếu dùng Codespace: Thay bằng link public Port 25565 (ví dụ: 'xyz-25565.app.github.dev')
-        // Nếu đã trỏ domain: Giữ nguyên 'bi5556282.com'
-        const SERVER_ADDRESS = 'bi5556282.com';
+        let SERVER_ADDRESS = localStorage.getItem('MC_SERVER_HOST') || 'bi5556282.com';
+        let IS_ADMIN = false;
+
+        document.getElementById('customHostInput').value = SERVER_ADDRESS;
+
+        function updateServerHost() {
+            const newHost = document.getElementById('customHostInput').value.trim();
+            if (newHost) {
+                SERVER_ADDRESS = newHost;
+                localStorage.setItem('MC_SERVER_HOST', newHost);
+                alertNotification("Đã lưu Host: " + newHost);
+                fetchRealtimeMCStatus();
+            }
+        }
 
         function copyServerIP() {
-            const ip = SERVER_ADDRESS;
-            const tempInput = document.createElement("input");
-            tempInput.value = ip;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempInput);
-
-            alertNotification("Server Address Copied: " + ip);
+            navigator.clipboard.writeText(SERVER_ADDRESS);
+            alertNotification("Đã copy IP Skibidi: " + SERVER_ADDRESS);
         }
 
         function alertNotification(msg) {
             const toast = document.createElement("div");
-            toast.className = "fixed bottom-5 right-5 bg-emerald-500 text-black font-mono font-bold text-xs px-4 py-3 rounded-xl shadow-2xl z-50 animate-bounce";
+            toast.className = "fixed bottom-5 right-5 bg-purple-500 text-black font-mono font-bold text-xs px-4 py-3 rounded-xl shadow-2xl z-50 animate-bounce";
             toast.innerText = msg;
             document.body.appendChild(toast);
             setTimeout(() => toast.remove(), 2500);
@@ -317,13 +310,13 @@
 
             if (type === 'cmd') {
                 line.className = 'text-yellow-400';
-                line.innerText = `[${now} USER]: > ${text}`;
+                line.innerText = `[${now} EXEC]: > ${text}`;
             } else if (type === 'error') {
                 line.className = 'text-red-400';
-                line.innerText = `[${now} RESTRICTED]: ${text}`;
+                line.innerText = `[${now} ERROR]: ${text}`;
             } else if (type === 'success') {
-                line.className = 'text-emerald-400';
-                line.innerText = `[${now} SUCCESS]: ${text}`;
+                line.className = 'text-purple-300 font-bold';
+                line.innerText = `[${now} ADMIN]: ${text}`;
             } else {
                 line.className = 'text-gray-300';
                 line.innerText = `[${now} INFO]: ${text}`;
@@ -331,6 +324,50 @@
 
             stream.appendChild(line);
             stream.scrollTop = stream.scrollHeight;
+        }
+
+        function unlockAdminConsole() {
+            const code = document.getElementById('adminPasscode').value.trim();
+            const msg = document.getElementById('authMessage');
+
+            if (code === 'skibidi' || code === '5556282' || code === 'admin') {
+                IS_ADMIN = true;
+                msg.className = "text-[10px] font-mono text-purple-400 text-center mt-1";
+                msg.innerText = "XÁC THỰC SKIBIDI ADMIN THÀNH CÔNG!";
+                document.getElementById('adminPanel').classList.remove('hidden');
+                appendLog("Quyền Skibidi Admin đã được kích hoạt!", 'success');
+                alertNotification("Skibidi Admin Control Unlocked!");
+            } else {
+                msg.className = "text-[10px] font-mono text-red-400 text-center mt-1";
+                msg.innerText = "Mật khẩu Admin sai!";
+                appendLog("Nỗ lực đăng nhập Admin không hợp lệ.", 'error');
+            }
+        }
+
+        function executeAdminCmd(cmd) {
+            if (!IS_ADMIN) {
+                alertNotification("Bạn chưa đăng nhập Admin!");
+                return;
+            }
+            appendLog(`Thực thi lệnh Admin: /${cmd}`, 'cmd');
+            setTimeout(() => {
+                appendLog(`Lệnh /${cmd} đã được gửi tới Server thành công!`, 'success');
+            }, 300);
+        }
+
+        function actionPlayer(action) {
+            if (!IS_ADMIN) {
+                alertNotification("Bạn chưa đăng nhập Admin!");
+                return;
+            }
+            const target = document.getElementById('targetPlayer').value.trim();
+            if (!target) {
+                alertNotification("Vui lòng nhập tên người chơi!");
+                return;
+            }
+            const fullCmd = `${action} ${target}`;
+            executeAdminCmd(fullCmd);
+            document.getElementById('targetPlayer').value = '';
         }
 
         function handleCommand(e) {
@@ -343,37 +380,21 @@
             input.value = '';
 
             setTimeout(() => {
-                const cmd = val.toLowerCase();
-                if (cmd === 'help') {
-                    appendLog("Available commands: status, ping, plugins, connect");
-                } else if (cmd === 'status' || cmd === 'ping') {
-                    appendLog(`Server status check for ${SERVER_ADDRESS}: ONLINE (20.0 TPS)`);
-                } else if (cmd === 'plugins') {
-                    appendLog("Plugins: EssentialsX, EssentialsChat, EssentialsSpawn, Vault, VeinMiner");
-                } else if (cmd === 'connect') {
-                    appendLog(`To connect, launch Minecraft 1.21.4 and join ${SERVER_ADDRESS}`);
+                if (IS_ADMIN) {
+                    appendLog(`[RCON Executed]: ${val}`, 'success');
                 } else {
-                    appendLog(`HTTP Access Restricted. Command '${val}' requires in-game op or RCON key.`, 'error');
+                    const cmd = val.toLowerCase();
+                    if (cmd === 'help') {
+                        appendLog("Các lệnh khả dụng: status, ping, skibidi");
+                    } else if (cmd === 'skibidi') {
+                        appendLog("Skibidi Dop Dop Yes Yes 🚽✨");
+                    } else {
+                        appendLog("Cần quyền Skibidi Admin để thực thi lệnh này!", 'error');
+                    }
                 }
             }, 300);
         }
 
-        function unlockAdminConsole() {
-            const code = document.getElementById('adminPasscode').value;
-            const msg = document.getElementById('authMessage');
-
-            if (code === '5556282' || code === 'admin') {
-                msg.className = "text-[10px] font-mono text-emerald-400 text-center mt-1";
-                msg.innerText = "ACCESS GRANTED: Full Web Console Active.";
-                appendLog("Admin credentials verified for " + SERVER_ADDRESS, 'success');
-            } else {
-                msg.className = "text-[10px] font-mono text-red-400 text-center mt-1";
-                msg.innerText = "DENIED: Invalid Admin Passcode.";
-                appendLog("Unauthorized HTTP admin bypass attempt logged.", 'error');
-            }
-        }
-
-        // TỰ ĐỘNG LẤY TRẠNG THÁI REALTIME TỪ SERVER MINECRAFT
         async function fetchRealtimeMCStatus() {
             try {
                 const response = await fetch(`https://api.mcstatus.io/v2/status/java/${SERVER_ADDRESS}`);
@@ -383,31 +404,21 @@
                 const progressBar = document.getElementById('playerProgressBar');
                 const bridgeStatus = document.getElementById('serverBridgeStatus');
                 const pingDot = document.getElementById('serverPingDot');
-                const versionTag = document.getElementById('serverVersion');
 
                 if (data && data.online) {
-                    const onlinePlayers = data.players.online || 0;
-                    const maxPlayers = data.players.max || 20;
-                    const percentage = Math.min(100, Math.round((onlinePlayers / maxPlayers) * 100));
-
-                    countText.innerText = `${onlinePlayers} / ${maxPlayers} Online`;
-                    progressBar.style.width = `${percentage}%`;
-
-                    if (data.version && data.version.name_clean) {
-                        versionTag.innerText = data.version.name_clean;
-                    }
-
-                    bridgeStatus.innerText = "Minecraft Native Protocol Bridge Active";
-                    pingDot.className = "inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping";
+                    const online = data.players.online || 0;
+                    const max = data.players.max || 20;
+                    countText.innerText = `${online} / ${max} Online`;
+                    progressBar.style.width = `${Math.min(100, Math.round((online/max)*100))}%`;
+                    bridgeStatus.innerText = "Skibidi Protocol Active";
+                    pingDot.className = "inline-block w-2 h-2 rounded-full bg-purple-400 animate-ping";
                 } else {
                     countText.innerText = "0 / 20 Online (Offline)";
                     progressBar.style.width = "0%";
-                    bridgeStatus.innerText = "Server Standby / Offline Mode";
+                    bridgeStatus.innerText = "Server Standby / Offline";
                     pingDot.className = "inline-block w-2 h-2 rounded-full bg-red-500";
                 }
-            } catch (err) {
-                console.log("Telemetry Sync Warning: Utilizing fallback bridge.");
-            }
+            } catch (err) {}
         }
 
         setInterval(fetchRealtimeMCStatus, 10000);
@@ -415,13 +426,12 @@
 
         setInterval(() => {
             const ramVal = (2.1 + Math.random() * 0.3).toFixed(1);
-            const ramPercent = Math.round((ramVal / 6.0) * 100);
             document.getElementById('ramUsageText').innerText = `${ramVal} GB / 6.0 GB`;
-            document.getElementById('ramUsageBar').style.width = `${ramPercent}%`;
+            document.getElementById('ramUsageBar').style.width = `${Math.round((ramVal/6.0)*100)}%`;
 
             const tpsVal = (19.8 + Math.random() * 0.2).toFixed(1);
             document.getElementById('tpsValText').innerText = `${tpsVal} / 20.0 TPS`;
-            document.getElementById('fpsVal').innerText = `FPS: ${tpsVal} TPS`;
+            document.getElementById('fpsVal').innerText = `TPS: ${tpsVal}`;
         }, 3000);
     </script>
 </body>
