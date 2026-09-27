@@ -182,10 +182,15 @@
                 </h3>
                 <div class="space-y-2">
                     <input type="text" id="customHostInput" placeholder="Ví dụ: xxx.ply.gg:12345" class="w-full bg-obsidian border border-gray-800 rounded-xl px-3 py-2 text-xs font-mono text-white focus:border-emerald-400 focus:outline-none">
-                    <button onclick="updateServerHost()" class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-black font-bold text-xs font-mono rounded-xl transition">
-                        Cập nhật IP Playit.gg
-                    </button>
-                    <p class="text-[10px] font-mono text-gray-500 text-center mt-1">Dán địa chỉ IP dạng <span class="text-emerald-400">ply.gg</span> hoặc Codespace public vào đây</p>
+                    <div class="flex gap-2">
+                        <button onclick="updateServerHost()" class="flex-1 py-2 bg-emerald-600 hover:bg-emerald-500 text-black font-bold text-xs font-mono rounded-xl transition">
+                            Cập nhật IP
+                        </button>
+                        <button onclick="resetServerHost()" class="px-3 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 font-bold text-xs font-mono rounded-xl border border-gray-700 transition" title="Đặt lại IP mặc định">
+                            <i class="fa-solid fa-rotate"></i> Reset
+                        </button>
+                    </div>
+                    <p class="text-[10px] font-mono text-gray-500 text-center mt-1">Dán địa chỉ IP dạng <span class="text-emerald-400">ply.gg</span> hoặc thêm Port kết nối vào đây</p>
                 </div>
             </div>
 
@@ -301,24 +306,36 @@
     </footer>
 
     <script>
-        let SERVER_ADDRESS = localStorage.getItem('MC_SERVER_HOST') || 'carolyn-xr.tun.ply.gg';
+        const DEFAULT_HOST = 'carolyn-xr.tun.ply.gg';
+        let SERVER_ADDRESS = localStorage.getItem('MC_SERVER_HOST') || DEFAULT_HOST;
         let IS_ADMIN = false;
         let IS_SERVER_RUNNING = false;
 
-        document.getElementById('currentHostDisplay').innerText = SERVER_ADDRESS;
-        document.getElementById('customHostInput').value = SERVER_ADDRESS;
-        document.getElementById('launchMcBtn').href = `minecraft://${SERVER_ADDRESS}`;
+        function renderHostUI() {
+            document.getElementById('currentHostDisplay').innerText = SERVER_ADDRESS;
+            document.getElementById('customHostInput').value = SERVER_ADDRESS;
+            document.getElementById('launchMcBtn').href = `minecraft://${SERVER_ADDRESS}`;
+        }
+
+        renderHostUI();
 
         function updateServerHost() {
             const newHost = document.getElementById('customHostInput').value.trim();
             if (newHost) {
                 SERVER_ADDRESS = newHost;
                 localStorage.setItem('MC_SERVER_HOST', newHost);
-                document.getElementById('currentHostDisplay').innerText = newHost;
-                document.getElementById('launchMcBtn').href = `minecraft://${newHost}`;
-                alertNotification("Đã lưu địa chỉ Tunnel: " + newHost);
+                renderHostUI();
+                alertNotification("Đã cập nhật IP: " + newHost);
                 fetchRealtimeMCStatus();
             }
+        }
+
+        function resetServerHost() {
+            localStorage.removeItem('MC_SERVER_HOST');
+            SERVER_ADDRESS = DEFAULT_HOST;
+            renderHostUI();
+            alertNotification("Đã reset về IP mặc định!");
+            fetchRealtimeMCStatus();
         }
 
         function copyServerIP() {
@@ -361,7 +378,6 @@
             const code = document.getElementById('adminPasscode').value.trim();
             const msg = document.getElementById('authMessage');
 
-            // Giữ lại MK đăng nhập là skibidi / 5556282 / admin
             if (code === 'skibidi' || code === '5556282' || code === 'admin') {
                 IS_ADMIN = true;
                 msg.className = "text-[10px] font-mono text-emerald-400 text-center mt-1";
