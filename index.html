@@ -307,7 +307,15 @@
 
     <script>
         const DEFAULT_HOST = 'carolyn-xr.tun.ply.gg';
-        let SERVER_ADDRESS = localStorage.getItem('MC_SERVER_HOST') || DEFAULT_HOST;
+        
+        // Tự động ghi đè bộ nhớ đệm nếu trình duyệt đang lưu địa chỉ cũ
+        let savedHost = localStorage.getItem('MC_SERVER_HOST');
+        if (!savedHost || savedHost === 'bi5556282.ply.gg') {
+            savedHost = DEFAULT_HOST;
+            localStorage.setItem('MC_SERVER_HOST', DEFAULT_HOST);
+        }
+        
+        let SERVER_ADDRESS = savedHost;
         let IS_ADMIN = false;
         let IS_SERVER_RUNNING = false;
 
@@ -333,8 +341,9 @@
         function resetServerHost() {
             localStorage.removeItem('MC_SERVER_HOST');
             SERVER_ADDRESS = DEFAULT_HOST;
+            localStorage.setItem('MC_SERVER_HOST', DEFAULT_HOST);
             renderHostUI();
-            alertNotification("Đã reset về IP mặc định!");
+            alertNotification("Đã reset về IP mới mặc định!");
             fetchRealtimeMCStatus();
         }
 
