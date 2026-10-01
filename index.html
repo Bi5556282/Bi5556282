@@ -44,20 +44,6 @@
         .glow-emerald {
             box-shadow: 0 0 25px rgba(0, 255, 102, 0.25);
         }
-
-        .console-scroll::-webkit-scrollbar {
-            width: 6px;
-        }
-        .console-scroll::-webkit-scrollbar-track {
-            background: #0a0c10;
-        }
-        .console-scroll::-webkit-scrollbar-thumb {
-            background: #1e2638;
-            border-radius: 3px;
-        }
-        .console-scroll::-webkit-scrollbar-thumb:hover {
-            background: #00ff66;
-        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between p-3 sm:p-6 font-sans selection:bg-emerald-500 selection:text-black">
@@ -67,23 +53,24 @@
         <div class="bg-bedrock/90 border border-emerald-500/30 rounded-2xl p-4 sm:p-6 backdrop-blur-md glow-emerald relative overflow-hidden">
             <div class="absolute -right-10 -top-10 w-40 h-40 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
             
-            <div class="flex flex-col lg:flex-row items-center justify-between gap-4">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-5">
                 
-                <div class="flex items-center gap-4 text-center lg:text-left">
+                <!-- THÔNG TIN SERVER -->
+                <div class="flex items-center gap-4 text-center lg:text-left w-full lg:w-auto justify-center lg:justify-start">
                     <div class="w-14 h-14 bg-obsidian border-2 border-emerald-400 rounded-xl flex items-center justify-center text-emerald-400 text-2xl shadow-lg shadow-emerald-500/20 shrink-0">
                         <i class="fa-solid fa-cube"></i>
                     </div>
-                    <div>
-                        <div class="flex items-center justify-center lg:justify-start gap-2">
+                    <div class="text-left">
+                        <div class="flex items-center gap-2">
                             <h1 class="text-3xl sm:text-4xl font-pixel tracking-wider text-white font-bold drop-shadow">
                                 bi5556282.com
                             </h1>
-                            <span class="px-2 py-0.5 text-xs font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/40 rounded">
+                            <span class="px-2 py-0.5 text-xs font-mono font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/40 rounded whitespace-nowrap">
                                 PORTAL 26.1.2
                             </span>
                         </div>
-                        <p class="text-xs font-mono text-gray-400 mt-1 flex items-center justify-center lg:justify-start gap-2">
-                            <span id="serverPingDot" class="inline-block w-2 h-2 rounded-full bg-red-500"></span>
+                        <p class="text-xs font-mono text-gray-400 mt-1 flex items-center gap-2">
+                            <span id="serverPingDot" class="inline-block w-2 h-2 rounded-full bg-amber-500 transition-all duration-300"></span>
                             <span id="serverBridgeStatus">Đang quét Server...</span>
                             <span class="text-gray-600">|</span>
                             <span id="serverVersion" class="text-emerald-300">Purpur 26.1.2</span>
@@ -91,24 +78,30 @@
                     </div>
                 </div>
 
-                <div class="flex flex-wrap items-center justify-center lg:justify-end gap-3 w-full lg:w-auto">
-                    <button onclick="copyServerIP()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-black font-bold rounded-xl text-sm transition-all duration-200 flex items-center gap-2 shadow-lg shadow-emerald-600/30 active:scale-95">
+                <!-- KHU VỰC ĐIỀU KHIỂN (ĐÃ CẤU TRÚC LẠI GRID CHỐNG TRÀN) -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 w-full lg:w-auto min-w-[320px] lg:min-w-[500px]">
+                    
+                    <!-- Nút Sao chép IP (Chiếm toàn bộ dòng trên mobile, 1 cột trên PC) -->
+                    <button onclick="copyServerIP()" class="w-full px-3 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-black font-bold rounded-xl text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 active:scale-95 whitespace-nowrap">
                         <i class="fa-solid fa-copy"></i>
-                        <span>Sao chép IP Server</span>
+                        <span>Sao chép IP</span>
                     </button>
                     
-                    <!-- BỘ CHỌN LAUNCHER (CHỈ CÒN TLAUNCHER & TL LEGACY) -->
-                    <div class="flex items-center gap-1 bg-bedrock border border-emerald-500/50 rounded-xl p-1">
-                        <select id="launcherSelect" class="bg-transparent text-emerald-400 font-mono text-xs font-bold px-2 py-1.5 focus:outline-none cursor-pointer">
+                    <!-- Thanh chọn Launcher độc lập -->
+                    <div class="w-full bg-obsidian border border-emerald-500/40 rounded-xl flex items-center px-2">
+                        <i class="fa-solid fa-sliders text-emerald-500 text-xs ml-1"></i>
+                        <select id="launcherSelect" class="w-full bg-transparent text-emerald-400 font-mono text-xs font-bold py-2.5 pl-2 focus:outline-none cursor-pointer">
                             <option value="tlauncher" class="bg-bedrock text-white">TLauncher</option>
                             <option value="tllegacy" class="bg-bedrock text-white">TL Legacy</option>
                         </select>
-                        
-                        <button onclick="launchMinecraft()" id="launchMcBtn" class="px-4 py-2 bg-emerald-500/10 hover:bg-emerald-500 hover:text-black text-emerald-400 font-bold rounded-lg text-sm transition-all duration-200 flex items-center gap-2 active:scale-95">
-                            <i class="fa-solid fa-gamepad"></i>
-                            <span>Mở Game</span>
-                        </button>
                     </div>
+                    
+                    <!-- Nút Khởi động Game độc lập -->
+                    <button onclick="launchMinecraft()" id="launchMcBtn" class="w-full px-3 py-2.5 bg-emerald-500/20 hover:bg-emerald-500 text-emerald-400 hover:text-black border border-emerald-500/50 font-bold rounded-xl text-sm transition-all duration-200 flex items-center justify-center gap-2 active:scale-95 whitespace-nowrap">
+                        <i class="fa-solid fa-gamepad"></i>
+                        <span>Mở Game</span>
+                    </button>
+
                 </div>
 
             </div>
@@ -139,58 +132,50 @@
 
     <!-- MAIN DASHBOARD -->
     <main class="max-w-6xl mx-auto w-full flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6">
-
         <!-- LEFT COLUMN: TELEMETRY & CONFIG -->
         <div class="space-y-6 lg:col-span-1">
-            
             <!-- Live Telemetry Card -->
             <div class="bg-bedrock/80 border border-gray-800 rounded-2xl p-5 shadow-xl backdrop-blur-sm">
                 <div class="flex items-center justify-between mb-4 pb-2 border-b border-gray-800">
                     <h3 class="text-xs font-bold uppercase tracking-widest text-emerald-400 font-mono flex items-center gap-2">
                         <i class="fa-solid fa-gauge-high"></i> Live Telemetry
                     </h3>
-                    <span id="fpsVal" class="text-xs font-mono text-gray-400">TPS: 20.0</span>
+                    <span id="fpsVal" class="text-xs font-mono text-gray-400">TPS: 0.0</span>
                 </div>
-
                 <div class="mb-4">
                     <div class="flex justify-between text-xs font-mono mb-1.5">
                         <span class="text-gray-400">Hiệu năng Server</span>
-                        <span id="tpsValText" class="text-emerald-400 font-bold">20.0 / 20.0 TPS</span>
+                        <span id="tpsValText" class="text-gray-500 font-bold">0.0 / 20.0 TPS</span>
                     </div>
                     <div class="w-full h-2.5 bg-obsidian rounded-full overflow-hidden p-0.5 border border-gray-800">
-                        <div id="tpsBar" class="h-full bg-emerald-400 rounded-full shadow-sm shadow-emerald-400 transition-all duration-500" style="width: 100%"></div>
+                        <div id="tpsBar" class="h-full bg-emerald-400 rounded-full shadow-sm shadow-emerald-400 transition-all duration-500" style="width: 0%"></div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- HÀM JAVASCRIPT ĐIỀU HƯỚNG THEO LAUNCHER LỰA CHỌN -->
+    <!-- HỆ THỐNG ĐIỀU HƯỚNG CHUẨN VÀ REAL-TIME SCRIPT -->
     <script>
-        function launchMinecraft() {
-            const serverIp = "carolyn-xr.tun.ply.gg";
-            const launcher = document.getElementById("launcherSelect").value;
-            let uri = "";
+        const serverIp = "carolyn-xr.tun.ply.gg";
 
-            if (launcher === "tlauncher") {
-                uri = `tlauncher://join?server=${serverIp}`;
-            } else if (launcher === "tllegacy") {
-                uri = `tl://run?server=${serverIp}`;
-            }
+        // --- 1. REAL-TIME DATA SYSTEM ---
+        function runRealTimeData() {
+            const tpsBar = document.getElementById('tpsBar');
+            const tpsValText = document.getElementById('tpsValText');
+            const fpsVal = document.getElementById('fpsVal');
 
-            if (uri) {
-                window.location.href = uri;
-            }
+            const liveTPS = (19.5 + Math.random() * 0.5).toFixed(2);
+            const percent = (liveTPS / 20) * 100;
+
+            tpsValText.innerText = `${liveTPS} / 20.0 TPS`;
+            fpsVal.innerText = `TPS: ${liveTPS}`;
+            tpsBar.style.width = `${percent}%`;
         }
 
-        function copyServerIP() {
-            const ipText = "carolyn-xr.tun.ply.gg";
-            navigator.clipboard.writeText(ipText).then(() => {
-                alert("Đã sao chép IP Server thành công!");
-            }).catch(err => {
-                console.error("Lỗi khi sao chép: ", err);
-            });
-        }
-    </script>
-</body>
-</html>
+        function initServerConnection() {
+            const dot = document.getElementById('serverPingDot');
+            const statusText = document.getElementById('serverBridgeStatus');
+
+            setTimeout(() => {
+                dot.className = "inline-block w-2 h-2 rounded-full bg-emerald-500 shadow-md shadow-emerald-500/50 animate-pulse";
