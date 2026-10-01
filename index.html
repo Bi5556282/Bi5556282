@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>bi5556282.com | Minecraft Protocol Gateway 26.1.2</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <link href="https://googleapis.com" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -97,12 +97,11 @@
                         <span>Sao chép IP Server</span>
                     </button>
                     
-                    <!-- BỘ CHỌN LAUNCHER ƯU TIÊN -->
+                    <!-- BỘ CHỌN LAUNCHER (CHỈ CÒN TLAUNCHER & TL LEGACY) -->
                     <div class="flex items-center gap-1 bg-bedrock border border-emerald-500/50 rounded-xl p-1">
                         <select id="launcherSelect" class="bg-transparent text-emerald-400 font-mono text-xs font-bold px-2 py-1.5 focus:outline-none cursor-pointer">
                             <option value="tlauncher" class="bg-bedrock text-white">TLauncher</option>
                             <option value="tllegacy" class="bg-bedrock text-white">TL Legacy</option>
-                            <option value="vanilla" class="bg-bedrock text-white">Minecraft Gốc</option>
                         </select>
                         
                         <button onclick="launchMinecraft()" id="launchMcBtn" class="px-4 py-2 bg-emerald-500/10 hover:bg-emerald-500 hover:text-black text-emerald-400 font-bold rounded-lg text-sm transition-all duration-200 flex items-center gap-2 active:scale-95">
@@ -166,7 +165,7 @@
         </div>
     </main>
 
-    <!-- HÀM XỬ LÝ KHỞI ĐỘNG GAME (JAVASCRIPT) -->
+    <!-- HÀM JAVASCRIPT ĐIỀU HƯỚNG THEO LAUNCHER LỰA CHỌN -->
     <script>
         function launchMinecraft() {
             const serverIp = "carolyn-xr.tun.ply.gg";
@@ -174,20 +173,24 @@
             let uri = "";
 
             if (launcher === "tlauncher") {
-                // Giao thức khởi chạy nhanh cho TLauncher kèm IP tự động kết nối
                 uri = `tlauncher://join?server=${serverIp}`;
             } else if (launcher === "tllegacy") {
-                // Giao thức khởi chạy của TL Legacy chính thức
                 uri = `tl://run?server=${serverIp}`;
-            } else {
-                // Giao thức Minecraft mặc định (Vanilla)
-                uri = `minecraft://${serverIp}`;
             }
 
-            // Thực hiện chuyển hướng trình duyệt để kích hoạt Launcher trên máy tính
-            window.location.href = uri;
+            if (uri) {
+                window.location.href = uri;
+            }
         }
 
         function copyServerIP() {
             const ipText = "carolyn-xr.tun.ply.gg";
             navigator.clipboard.writeText(ipText).then(() => {
+                alert("Đã sao chép IP Server thành công!");
+            }).catch(err => {
+                console.error("Lỗi khi sao chép: ", err);
+            });
+        }
+    </script>
+</body>
+</html>
