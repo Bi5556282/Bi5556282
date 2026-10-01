@@ -150,6 +150,95 @@ body.ext-contrast{--bg:#000;--card:rgba(5,5,5,.95);--red:#ff1744;--muted:#ffc0cb
 .ext-status-dot.warn{background:var(--yellow);box-shadow:0 0 8px var(--yellow)}
 @media(max-width:700px){.ext-row>*{width:100%}.ext-actions{grid-template-columns:repeat(2,1fr)}}
 </style>
+
+<style id="ultimate-css">
+/* ULTIMATE CONTROL CENTER STYLES */
+.ult-section{margin-top:28px}
+.ult-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.ult-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:18px}
+.ult-card{background:linear-gradient(145deg,rgba(17,3,7,.96),rgba(6,1,3,.94));border:1px solid rgba(255,0,51,.35);border-radius:8px;padding:17px;box-shadow:0 0 22px rgba(255,0,51,.08);position:relative;overflow:hidden}
+.ult-card:hover{border-color:rgba(255,0,51,.75);box-shadow:0 0 28px rgba(255,0,51,.12)}
+.ult-card h3{font-size:1rem;color:#fff;margin-bottom:12px;letter-spacing:.7px}
+.ult-card .sub{font-size:.72rem;color:#777;line-height:1.6}
+.ult-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ult-input,.ult-select,.ult-textarea{background:#090104;color:#fff;border:1px solid rgba(255,0,51,.35);border-radius:5px;padding:10px 11px;outline:none;width:100%}
+.ult-input:focus,.ult-select:focus,.ult-textarea:focus{border-color:var(--cyan);box-shadow:0 0 11px rgba(0,240,255,.15)}
+.ult-textarea{min-height:110px;resize:vertical}
+.ult-btn{background:rgba(255,0,51,.08);border:1px solid var(--red);color:#fff;border-radius:5px;padding:9px 12px;font-weight:700;cursor:pointer;transition:.2s}
+.ult-btn:hover{background:var(--red);transform:translateY(-1px)}
+.ult-btn.cyan{border-color:var(--cyan);color:var(--cyan)}
+.ult-btn.green{border-color:var(--green);color:var(--green)}
+.ult-btn.yellow{border-color:var(--yellow);color:var(--yellow)}
+.ult-btn.blue{border-color:var(--blue);color:var(--blue)}
+.ult-btn.danger{border-color:#ff3355;color:#ff7790}
+.ult-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ult-stat{background:rgba(255,0,51,.035);border:1px solid rgba(255,0,51,.17);padding:10px;border-radius:6px}
+.ult-stat .label{display:block;color:#777;font-size:.69rem;margin-bottom:5px}
+.ult-stat .value{display:block;color:#fff;font-size:1.15rem;font-weight:800}
+.ult-list{display:grid;gap:8px;max-height:270px;overflow:auto}
+.ult-item{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:9px;border:1px solid rgba(255,0,51,.16);border-radius:6px;background:rgba(255,0,51,.02)}
+.ult-item strong{color:#fff;font-size:.82rem}
+.ult-item small{display:block;color:#777;font-size:.68rem;margin-top:3px;line-height:1.4}
+.ult-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 7px;border-radius:4px;border:1px solid rgba(255,0,51,.35);font-size:.66rem;font-weight:700;white-space:nowrap}
+.ult-chip.on{border-color:var(--green);color:var(--green)}
+.ult-chip.off{border-color:var(--red);color:#ff7890}
+.ult-chip.warn{border-color:var(--yellow);color:var(--yellow)}
+.ult-chip.cyan{border-color:var(--cyan);color:var(--cyan)}
+.ult-check{display:flex;align-items:center;gap:9px;color:#ddd;font-size:.8rem;padding:8px 0;border-bottom:1px dashed rgba(255,0,51,.12)}
+.ult-check:last-child{border-bottom:0}
+.ult-check input{accent-color:var(--red);width:16px;height:16px}
+.ult-meter{height:7px;background:rgba(255,255,255,.06);border-radius:9px;overflow:hidden;margin-top:8px}
+.ult-meter i{height:100%;display:block;width:0;background:var(--red);box-shadow:0 0 9px var(--red);transition:width .5s}
+.ult-meter.cyan i{background:var(--cyan);box-shadow:0 0 9px var(--cyan)}
+.ult-terminal{background:#050102;border:1px solid #340610;border-radius:6px;min-height:190px;max-height:310px;overflow:auto;padding:12px;font:12px/1.65 Consolas,monospace}
+.ult-terminal-line{white-space:pre-wrap;color:#c8c8c8}
+.ult-terminal-line.ok{color:var(--green)}
+.ult-terminal-line.warn{color:var(--yellow)}
+.ult-terminal-line.err{color:#ff6b84}
+.ult-terminal-line.info{color:var(--cyan)}
+.ult-table-wrap{overflow:auto}
+.ult-table{width:100%;border-collapse:collapse;font-size:.75rem}
+.ult-table th,.ult-table td{padding:8px;border-bottom:1px solid rgba(255,0,51,.12);text-align:left;white-space:nowrap}
+.ult-table th{font-size:.67rem;color:var(--muted);letter-spacing:.5px}
+.ult-table td{color:#ddd}
+.ult-clock{font-size:2rem;color:#fff;font-weight:900;letter-spacing:2px;text-shadow:0 0 18px rgba(255,0,51,.7)}
+.ult-countdown{font:700 1.25rem/1.2 Consolas,monospace;color:var(--yellow)}
+.ult-preview{background:#080104;border:1px solid rgba(255,0,51,.25);border-radius:6px;padding:12px;min-height:80px}
+.ult-preview-title{font-weight:800;color:#fff;margin-bottom:8px}
+.ult-motd-line{font-size:.92rem;line-height:1.6;color:#ddd;word-break:break-word}
+.ult-progress-row{margin:10px 0}
+.ult-progress-head{display:flex;justify-content:space-between;font-size:.73rem;color:#aaa}
+.ult-bar{height:6px;background:rgba(255,255,255,.06);border-radius:5px;overflow:hidden;margin-top:5px}
+.ult-bar i{height:100%;display:block;width:0;background:var(--red);transition:width .5s}
+.ult-key{display:inline-block;background:#161316;border:1px solid #47313a;border-radius:4px;padding:2px 6px;font:11px Consolas,monospace;color:#ddd}
+.ult-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.ult-nav button{background:transparent;border:1px solid rgba(255,0,51,.2);color:var(--muted);padding:8px 10px;border-radius:5px;cursor:pointer;font-weight:700}
+.ult-nav button.active,.ult-nav button:hover{background:var(--red);border-color:var(--red);color:#fff}
+.ult-panel{display:none}
+.ult-panel.active{display:block}
+.ult-color-input{width:42px;height:34px;padding:0;border:1px solid rgba(255,0,51,.35);background:transparent;border-radius:4px}
+.ult-range{width:100%;accent-color:var(--red)}
+.ult-badge-large{font-size:1.2rem;font-weight:900;color:var(--cyan)}
+.ult-kbd-list{display:flex;gap:7px;flex-wrap:wrap}
+.ult-empty{padding:20px;text-align:center;color:#777;font-size:.78rem}
+.ult-notice{padding:10px;border-left:3px solid var(--red);background:rgba(255,0,51,.035);font-size:.77rem;line-height:1.6;color:#bbb}
+.ult-notice.warn{border-left-color:var(--yellow)}
+.ult-notice.ok{border-left-color:var(--green)}
+.ult-json{font:11px/1.6 Consolas,monospace;white-space:pre-wrap;word-break:break-word;color:#ccc;background:#050102;border:1px solid rgba(255,0,51,.18);border-radius:6px;padding:10px;max-height:260px;overflow:auto}
+.ult-hidden{display:none!important}
+body.ult-neon-cyan{--red:#00f0ff;--red-dim:rgba(0,240,255,.25);--glow:#4df4ff;--muted:#90fbff}
+body.ult-neon-purple{--red:#b84dff;--red-dim:rgba(184,77,255,.25);--glow:#d58cff;--muted:#e0baff}
+body.ult-neon-green{--red:#00ff66;--red-dim:rgba(0,255,102,.25);--glow:#5dff9b;--muted:#9affbe}
+body.ult-flat *{box-shadow:none!important;text-shadow:none!important}
+body.ult-compact .ult-card{padding:11px}
+body.ult-compact .ult-grid{gap:9px}
+@media(max-width:700px){
+  .ult-stats{grid-template-columns:1fr}
+  .ult-clock{font-size:1.45rem}
+  .ult-item{flex-direction:column}
+}
+</style>
+
 </head>
 <body>
 <canvas id="bg-canvas"></canvas>
@@ -1218,5 +1307,2189 @@ fetchServerStatus();
 })();
 </script>
 
+
+<section class="ult-section" id="ultimate-control-center">
+  <h2 class="section-title">🧠 Ultimate Server Control Center</h2>
+
+  <div class="ult-toolbar">
+    <button class="ult-btn" data-ult-tab="overview">Overview</button>
+    <button class="ult-btn" data-ult-tab="monitor">Monitor</button>
+    <button class="ult-btn" data-ult-tab="tools">Tools</button>
+    <button class="ult-btn" data-ult-tab="commands">Commands</button>
+    <button class="ult-btn" data-ult-tab="players">Players</button>
+    <button class="ult-btn" data-ult-tab="theme">Theme</button>
+    <button class="ult-btn" data-ult-tab="logs">Logs</button>
+    <button class="ult-btn" data-ult-tab="data">Data</button>
+  </div>
+
+  <div class="ult-panel active" id="ult-panel-overview">
+    <div class="ult-grid">
+      <div class="ult-card">
+        <h3>🛰️ Live Command Overview</h3>
+        <div class="ult-stats">
+          <div class="ult-stat"><span class="label">Server</span><span class="value" id="ult-server-name">bi5556282.com</span></div>
+          <div class="ult-stat"><span class="label">Playit</span><span class="value" id="ult-playit-host">--</span></div>
+          <div class="ult-stat"><span class="label">TPS</span><span class="value" id="ult-tps">--</span></div>
+          <div class="ult-stat"><span class="label">Ping</span><span class="value" id="ult-ping">--</span></div>
+          <div class="ult-stat"><span class="label">Players</span><span class="value" id="ult-players">--</span></div>
+          <div class="ult-stat"><span class="label">Health</span><span class="value" id="ult-health">UNKNOWN</span></div>
+        </div>
+      </div>
+
+      <div class="ult-card">
+        <h3>⏱️ Maintenance Countdown</h3>
+        <div class="ult-row">
+          <input class="ult-input" id="ult-maintenance-time" type="datetime-local">
+        </div>
+        <div style="margin-top:12px" class="ult-countdown" id="ult-maintenance-countdown">Không có lịch bảo trì.</div>
+        <div class="ult-row" style="margin-top:10px">
+          <button class="ult-btn yellow" id="ult-maintenance-start">Đặt lịch</button>
+          <button class="ult-btn danger" id="ult-maintenance-clear">Hủy</button>
+        </div>
+      </div>
+
+      <div class="ult-card">
+        <h3>🔔 Alert Center</h3>
+        <div class="ult-progress-row">
+          <div class="ult-progress-head"><span>TPS warning threshold</span><span id="ult-tps-threshold-label">18.5</span></div>
+          <input class="ult-range" id="ult-tps-threshold" type="range" min="10" max="20" step="0.1" value="18.5">
+        </div>
+        <div class="ult-progress-row">
+          <div class="ult-progress-head"><span>Ping warning threshold</span><span id="ult-ping-threshold-label">100 ms</span></div>
+          <input class="ult-range" id="ult-ping-threshold" type="range" min="20" max="500" step="5" value="100">
+        </div>
+        <div id="ult-alert-message" class="ult-notice ok">Đang theo dõi.</div>
+      </div>
+    </div>
+
+    <div class="ult-grid">
+      <div class="ult-card">
+        <h3>✅ Server Checklist</h3>
+        <label class="ult-check"><input type="checkbox" data-check="playit"> Playit tunnel đang chạy</label>
+        <label class="ult-check"><input type="checkbox" data-check="minecraft"> Minecraft/Purpur đang chạy</label>
+        <label class="ult-check"><input type="checkbox" data-check="backup"> Backup đã hoàn tất</label>
+        <label class="ult-check"><input type="checkbox" data-check="plugins"> Plugins đã kiểm tra</label>
+        <label class="ult-check"><input type="checkbox" data-check="rules"> Nội quy đã hiển thị</label>
+        <div class="ult-meter"><i id="ult-check-meter"></i></div>
+        <div class="sub" id="ult-check-label">0 / 5 hoàn tất</div>
+      </div>
+
+      <div class="ult-card">
+        <h3>📝 Quick Announcement</h3>
+        <textarea class="ult-textarea" id="ult-announcement" placeholder="Nhập thông báo cho người chơi..."></textarea>
+        <div class="ult-row" style="margin-top:9px">
+          <button class="ult-btn" data-announce="notice">Thông báo</button>
+          <button class="ult-btn cyan" data-announce="maintenance">Bảo trì</button>
+          <button class="ult-btn green" data-announce="welcome">Welcome</button>
+        </div>
+        <div class="ult-preview" style="margin-top:10px" id="ult-announcement-preview">Chưa có thông báo.</div>
+      </div>
+
+      <div class="ult-card">
+        <h3>🧮 Server Calculator</h3>
+        <div class="ult-row">
+          <input class="ult-input" id="ult-calc-a" placeholder="Số A">
+          <select class="ult-select" id="ult-calc-op">
+            <option>+</option>
+            <option>-</option>
+            <option>*</option>
+            <option>/</option>
+            <option>%</option>
+            <option>^</option>
+          </select>
+          <input class="ult-input" id="ult-calc-b" placeholder="Số B">
+        </div>
+        <button class="ult-btn cyan" style="margin-top:9px" id="ult-calc-go">Tính</button>
+        <div class="ult-preview" style="margin-top:9px"><strong id="ult-calc-result">Kết quả: --</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ult-panel" id="ult-panel-monitor">
+    <div class="ult-grid">
+      <div class="ult-card">
+        <h3>📈 TPS Monitor</h3>
+        <div class="ult-stats">
+          <div class="ult-stat"><span class="label">Current</span><span class="value" id="ult-mon-tps">--</span></div>
+          <div class="ult-stat"><span class="label">Average</span><span class="value" id="ult-mon-tps-avg">--</span></div>
+          <div class="ult-stat"><span class="label">Minimum</span><span class="value" id="ult-mon-tps-min">--</span></div>
+          <div class="ult-stat"><span class="label">Maximum</span><span class="value" id="ult-mon-tps-max">--</span></div>
+        </div>
+        <div class="ult-meter"><i id="ult-mon-tps-meter"></i></div>
+      </div>
+
+      <div class="ult-card">
+        <h3>📡 Ping Monitor</h3>
+        <div class="ult-stats">
+          <div class="ult-stat"><span class="label">Current</span><span class="value" id="ult-mon-ping">--</span></div>
+          <div class="ult-stat"><span class="label">Average</span><span class="value" id="ult-mon-ping-avg">--</span></div>
+          <div class="ult-stat"><span class="label">Minimum</span><span class="value" id="ult-mon-ping-min">--</span></div>
+          <div class="ult-stat"><span class="label">Maximum</span><span class="value" id="ult-mon-ping-max">--</span></div>
+        </div>
+        <div class="ult-meter cyan"><i id="ult-mon-ping-meter"></i></div>
+      </div>
+
+      <div class="ult-card">
+        <h3>👥 Player Capacity</h3>
+        <div class="ult-stats">
+          <div class="ult-stat"><span class="label">Online</span><span class="value" id="ult-mon-online">--</span></div>
+          <div class="ult-stat"><span class="label">Maximum</span><span class="value" id="ult-mon-max">--</span></div>
+          <div class="ult-stat"><span class="label">Usage</span><span class="value" id="ult-mon-usage">--</span></div>
+          <div class="ult-stat"><span class="label">Samples</span><span class="value" id="ult-mon-samples">0</span></div>
+        </div>
+        <div class="ult-meter"><i id="ult-mon-player-meter"></i></div>
+      </div>
+    </div>
+
+    <div class="ult-grid">
+      <div class="ult-card">
+        <h3>📊 Metrics Timeline</h3>
+        <div class="ult-table-wrap">
+          <table class="ult-table">
+            <thead><tr><th>TIME</th><th>TPS</th><th>PING</th><th>PLAYERS</th><th>STATUS</th></tr></thead>
+            <tbody id="ult-metrics-table"><tr><td colspan="5" class="ult-empty">Chưa có sample.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="ult-card">
+        <h3>📉 Trend Detector</h3>
+        <div id="ult-trend-box" class="ult-notice">Đang chờ đủ dữ liệu.</div>
+        <div class="ult-stats" style="margin-top:10px">
+          <div class="ult-stat"><span class="label">TPS slope</span><span class="value" id="ult-tps-slope">--</span></div>
+          <div class="ult-stat"><span class="label">Ping slope</span><span class="value" id="ult-ping-slope">--</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ult-panel" id="ult-panel-tools">
+    <div class="ult-grid">
+      <div class="ult-card">
+        <h3>💬 MOTD Generator</h3>
+        <input class="ult-input" id="ult-motd-title" placeholder="Tên server">
+        <input class="ult-input" style="margin-top:8px" id="ult-motd-sub" placeholder="Slogan">
+        <div class="ult-row" style="margin-top:8px">
+          <select class="ult-select" id="ult-motd-symbol">
+            <option>⚡</option><option>🔥</option><option>☁️</option><option>💀</option><option>🚀</option><option>💎</option>
+          </select>
+          <button class="ult-btn cyan" id="ult-motd-build">Generate</button>
+        </div>
+        <div class="ult-preview" style="margin-top:9px">
+          <div class="ult-preview-title" id="ult-motd-preview-title">Server MOTD</div>
+          <div class="ult-motd-line" id="ult-motd-preview-sub">Chào mừng bạn!</div>
+        </div>
+        <button class="ult-btn" style="margin-top:9px" id="ult-motd-copy">Copy MOTD</button>
+      </div>
+
+      <div class="ult-card">
+        <h3>🧰 Utility Generator</h3>
+        <select class="ult-select" id="ult-util-type">
+          <option value="ip">IP join text</option>
+          <option value="invite">Invite text</option>
+          <option value="rules">Rules text</option>
+          <option value="backup">Backup reminder</option>
+          <option value="restart">Restart reminder</option>
+        </select>
+        <input class="ult-input" style="margin-top:8px" id="ult-util-name" placeholder="Tên người chơi / nội dung">
+        <button class="ult-btn" style="margin-top:8px" id="ult-util-build">Generate text</button>
+        <div class="ult-json" style="margin-top:9px" id="ult-util-output">Chưa có output.</div>
+        <button class="ult-btn cyan" style="margin-top:9px" id="ult-util-copy">Copy</button>
+      </div>
+
+      <div class="ult-card">
+        <h3>🕐 World Time Helper</h3>
+        <div class="ult-clock" id="ult-real-clock">00:00:00</div>
+        <div class="sub" id="ult-real-date">--</div>
+        <div class="ult-row" style="margin-top:10px">
+          <button class="ult-btn" data-world-time="day">Day</button>
+          <button class="ult-btn" data-world-time="noon">Noon</button>
+          <button class="ult-btn yellow" data-world-time="night">Night</button>
+          <button class="ult-btn cyan" data-world-time="midnight">Midnight</button>
+        </div>
+        <div class="ult-json" style="margin-top:9px" id="ult-time-output">/time set day</div>
+      </div>
+    </div>
+
+    <div class="ult-grid">
+      <div class="ult-card">
+        <h3>🌦️ Weather Helper</h3>
+        <div class="ult-row">
+          <button class="ult-btn green" data-weather="clear">☀️ Clear</button>
+          <button class="ult-btn cyan" data-weather="rain">🌧️ Rain</button>
+          <button class="ult-btn blue" data-weather="thunder">⛈️ Thunder</button>
+        </div>
+        <div class="ult-json" style="margin-top:9px" id="ult-weather-output">/weather clear</div>
+      </div>
+
+      <div class="ult-card">
+        <h3>🧱 Gamerule Builder</h3>
+        <select class="ult-select" id="ult-rule-type">
+          <option value="keepInventory">keepInventory</option>
+          <option value="doDaylightCycle">doDaylightCycle</option>
+          <option value="doWeatherCycle">doWeatherCycle</option>
+          <option value="mobGriefing">mobGriefing</option>
+          <option value="doImmediateRespawn">doImmediateRespawn</option>
+          <option value="announceAdvancements">announceAdvancements</option>
+        </select>
+        <div class="ult-row" style="margin-top:8px">
+          <button class="ult-btn green" data-rule="true">TRUE</button>
+          <button class="ult-btn danger" data-rule="false">FALSE</button>
+        </div>
+        <div class="ult-json" style="margin-top:9px" id="ult-rule-output">/gamerule keepInventory true</div>
+      </div>
+
+      <div class="ult-card">
+        <h3>📦 Teleport Helper</h3>
+        <div class="ult-row">
+          <input class="ult-input" id="ult-tp-player" placeholder="Player">
+          <input class="ult-input" id="ult-tp-x" placeholder="X">
+          <input class="ult-input" id="ult-tp-y" placeholder="Y">
+          <input class="ult-input" id="ult-tp-z" placeholder="Z">
+        </div>
+        <button class="ult-btn" style="margin-top:8px" id="ult-tp-build">Build /tp</button>
+        <div class="ult-json" style="margin-top:9px" id="ult-tp-output">/tp <player> ~ ~ ~</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ult-panel" id="ult-panel-commands">
+    <div class="ult-grid">
+      <div class="ult-card">
+        <h3>⌨️ Command Library</h3>
+        <input class="ult-input" id="ult-command-search" placeholder="Tìm lệnh...">
+        <div class="ult-list" id="ult-command-library" style="margin-top:9px"></div>
+      </div>
+
+      <div class="ult-card">
+        <h3>⭐ Favorites</h3>
+        <div class="ult-row">
+          <input class="ult-input" id="ult-favorite-command" placeholder="/command ...">
+          <button class="ult-btn yellow" id="ult-favorite-add">Thêm</button>
+        </div>
+        <div class="ult-list" style="margin-top:9px" id="ult-favorite-list"></div>
+      </div>
+
+      <div class="ult-card">
+        <h3>🧪 Command Sandbox</h3>
+        <textarea class="ult-textarea" id="ult-command-sandbox" placeholder="Nhập lệnh để xem trước..."></textarea>
+        <div class="ult-row" style="margin-top:8px">
+          <button class="ult-btn cyan" id="ult-sandbox-copy">Copy</button>
+          <button class="ult-btn green" id="ult-sandbox-log">Log</button>
+          <button class="ult-btn danger" id="ult-sandbox-clear">Clear</button>
+        </div>
+        <div class="ult-notice warn" style="margin-top:9px">Sandbox không gửi lệnh tới server. Nó chỉ preview/copy.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ult-panel" id="ult-panel-players">
+    <div class="ult-grid">
+      <div class="ult-card">
+        <h3>👤 Player Notes</h3>
+        <div class="ult-row">
+          <input class="ult-input" id="ult-player-name" placeholder="Tên player">
+          <input class="ult-input" id="ult-player-note" placeholder="Ghi chú">
+          <button class="ult-btn" id="ult-player-save">Lưu</button>
+        </div>
+        <div class="ult-list" style="margin-top:10px" id="ult-player-notes"></div>
+      </div>
+
+      <div class="ult-card">
+        <h3>📝 Whitelist Draft</h3>
+        <div class="ult-row">
+          <input class="ult-input" id="ult-whitelist-name" placeholder="Tên player">
+          <button class="ult-btn green" id="ult-whitelist-add">Add</button>
+        </div>
+        <div class="ult-list" style="margin-top:10px" id="ult-whitelist-list"></div>
+        <button class="ult-btn cyan" style="margin-top:9px" id="ult-whitelist-export">Export commands</button>
+      </div>
+
+      <div class="ult-card">
+        <h3>🎯 Player Actions</h3>
+        <input class="ult-input" id="ult-action-player" placeholder="Player name">
+        <div class="ult-row" style="margin-top:9px">
+          <button class="ult-btn" data-player-action="tp">TP</button>
+          <button class="ult-btn cyan" data-player-action="msg">MSG</button>
+          <button class="ult-btn yellow" data-player-action="kick">Kick</button>
+          <button class="ult-btn green" data-player-action="ban">Ban</button>
+        </div>
+        <div class="ult-json" style="margin-top:9px" id="ult-player-action-output">Chưa chọn action.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ult-panel" id="ult-panel-theme">
+    <div class="ult-grid">
+      <div class="ult-card">
+        <h3>🎨 Neon Presets</h3>
+        <div class="ult-row">
+          <button class="ult-btn" data-theme="red">RED</button>
+          <button class="ult-btn cyan" data-theme="cyan">CYAN</button>
+          <button class="ult-btn" data-theme="purple">PURPLE</button>
+          <button class="ult-btn green" data-theme="green">GREEN</button>
+        </div>
+        <div class="sub" style="margin-top:9px">Preset chỉ thay đổi màu giao diện phía trình duyệt.</div>
+      </div>
+
+      <div class="ult-card">
+        <h3>🌓 Visual Controls</h3>
+        <label class="ult-check"><input type="checkbox" id="ult-setting-compact"> Compact UI</label>
+        <label class="ult-check"><input type="checkbox" id="ult-setting-flat"> Reduce glow</label>
+        <label class="ult-check"><input type="checkbox" id="ult-setting-scan"> Hide scanlines</label>
+        <label class="ult-check"><input type="checkbox" id="ult-setting-contrast"> High contrast</label>
+      </div>
+
+      <div class="ult-card">
+        <h3>🔤 UI Scale</h3>
+        <input class="ult-range" id="ult-ui-scale" type="range" min="90" max="115" value="100">
+        <div class="sub" style="margin-top:8px">Scale: <strong id="ult-ui-scale-label">100%</strong></div>
+        <button class="ult-btn" style="margin-top:9px" id="ult-ui-scale-reset">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="ult-panel" id="ult-panel-logs">
+    <div class="ult-grid">
+      <div class="ult-card">
+        <h3>📜 Event Stream</h3>
+        <div class="ult-terminal" id="ult-event-terminal"></div>
+        <div class="ult-row" style="margin-top:9px">
+          <button class="ult-btn" id="ult-log-refresh">Refresh</button>
+          <button class="ult-btn danger" id="ult-log-clear">Clear</button>
+        </div>
+      </div>
+
+      <div class="ult-card">
+        <h3>🚨 Error Monitor</h3>
+        <div class="ult-list" id="ult-error-list"></div>
+      </div>
+    </div>
+
+    <div class="ult-card">
+      <h3>🧾 Activity Table</h3>
+      <div class="ult-table-wrap">
+        <table class="ult-table">
+          <thead><tr><th>TIME</th><th>TYPE</th><th>MESSAGE</th></tr></thead>
+          <tbody id="ult-activity-table"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="ult-panel" id="ult-panel-data">
+    <div class="ult-grid">
+      <div class="ult-card">
+        <h3>💾 Backup Local State</h3>
+        <div class="ult-row">
+          <button class="ult-btn" id="ult-backup-export">Export state</button>
+          <button class="ult-btn cyan" id="ult-backup-import">Import file</button>
+          <input class="ult-hidden" id="ult-backup-file" type="file" accept="application/json,.json">
+        </div>
+        <div class="ult-json" style="margin-top:9px" id="ult-backup-preview">Chưa có backup.</div>
+      </div>
+
+      <div class="ult-card">
+        <h3>📦 Storage Inspector</h3>
+        <div class="ult-stats">
+          <div class="ult-stat"><span class="label">LocalStorage keys</span><span class="value" id="ult-storage-keys">0</span></div>
+          <div class="ult-stat"><span class="label">Estimated bytes</span><span class="value" id="ult-storage-bytes">0</span></div>
+        </div>
+        <button class="ult-btn yellow" style="margin-top:9px" id="ult-storage-scan">Scan</button>
+      </div>
+
+      <div class="ult-card">
+        <h3>🧹 Reset Dashboard</h3>
+        <div class="ult-notice warn">Reset chỉ xóa dữ liệu local của dashboard mở rộng, không xóa server Minecraft.</div>
+        <button class="ult-btn danger" style="margin-top:10px" id="ult-reset-all">Reset local data</button>
+      </div>
+    </div>
+
+    <div class="ult-card">
+      <h3>🔍 Debug Snapshot</h3>
+      <div class="ult-json" id="ult-debug-json">{}</div>
+    </div>
+  </div>
+</section>
+
+<input type="file" id="ult-import-hidden" class="ult-hidden" accept="application/json,.json">
+
+
+<script id="ultimate-js">
+(() => {
+  'use strict';
+
+  const ULT = {
+    started: Date.now(),
+    events: [],
+    errors: [],
+    samples: [],
+    tps: [],
+    ping: [],
+    players: [],
+    notes: [],
+    whitelist: [],
+    favorites: [],
+    maintenance: null,
+    thresholds: {
+      tps: 18.5,
+      ping: 100
+    },
+    settings: {
+      theme: 'red',
+      compact: false,
+      flat: false,
+      scan: false,
+      contrast: false,
+      scale: 100
+    },
+    storageKey: 'bi5556282.ultimate.state.v1'
+  };
+
+  const byId = id => document.getElementById(id);
+
+  function text(id, value) {
+    const el = byId(id);
+    if (el) el.textContent = String(value);
+  }
+
+  function safeString(value) {
+    return String(value ?? '');
+  }
+
+  function escapeHTML(value) {
+    return safeString(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+
+  function now() {
+    return new Date();
+  }
+
+  function time() {
+    return now().toLocaleTimeString('vi-VN', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  }
+
+  function dateTime() {
+    return now().toLocaleString('vi-VN');
+  }
+
+  function log(message, type = 'info') {
+    const item = {
+      time: dateTime(),
+      type,
+      message: safeString(message)
+    };
+    ULT.events.unshift(item);
+    if (ULT.events.length > 250) {
+      ULT.events.length = 250;
+    }
+    renderLogs();
+    save();
+  }
+
+  function logError(message) {
+    const item = {
+      time: dateTime(),
+      message: safeString(message)
+    };
+    ULT.errors.unshift(item);
+    if (ULT.errors.length > 60) {
+      ULT.errors.length = 60;
+    }
+    renderErrorList();
+  }
+
+  function save() {
+    try {
+      const state = {
+        events: ULT.events,
+        errors: ULT.errors,
+        notes: ULT.notes,
+        whitelist: ULT.whitelist,
+        favorites: ULT.favorites,
+        maintenance: ULT.maintenance,
+        thresholds: ULT.thresholds,
+        settings: ULT.settings,
+        savedAt: now().toISOString()
+      };
+      localStorage.setItem(ULT.storageKey, JSON.stringify(state));
+    } catch (error) {
+      logError(`save() failed: ${error.message}`);
+    }
+  }
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(ULT.storageKey);
+      if (!raw) {
+        return;
+      }
+      const state = JSON.parse(raw);
+      if (Array.isArray(state.events)) {
+        ULT.events = state.events;
+      }
+      if (Array.isArray(state.errors)) {
+        ULT.errors = state.errors;
+      }
+      if (Array.isArray(state.notes)) {
+        ULT.notes = state.notes;
+      }
+      if (Array.isArray(state.whitelist)) {
+        ULT.whitelist = state.whitelist;
+      }
+      if (Array.isArray(state.favorites)) {
+        ULT.favorites = state.favorites;
+      }
+      if (state.maintenance) {
+        ULT.maintenance = state.maintenance;
+      }
+      if (state.thresholds) {
+        ULT.thresholds = {
+          ...ULT.thresholds,
+          ...state.thresholds
+        };
+      }
+      if (state.settings) {
+        ULT.settings = {
+          ...ULT.settings,
+          ...state.settings
+        };
+      }
+    } catch (error) {
+      logError(`load() failed: ${error.message}`);
+    }
+  }
+
+  function serverIP() {
+    if (typeof window.SERVER_IP === 'string') {
+      return window.SERVER_IP;
+    }
+    return 'carolyn-xr.tun.ply.gg';
+  }
+
+  function currentStatus() {
+    const el = byId('status-text');
+    const value = el ? el.textContent : '';
+    if (value.includes('ONLINE')) {
+      return 'ONLINE';
+    }
+    if (value.includes('OFFLINE')) {
+      return 'OFFLINE';
+    }
+    return 'UNKNOWN';
+  }
+
+  function currentTPS() {
+    const el = byId('tps-val');
+    const value = el ? el.textContent : '';
+    const match = value.match(/[0-9]+(?:\.[0-9]+)?/);
+    return match ? Number(match[0]) : NaN;
+  }
+
+  function currentPing() {
+    const el = byId('ping-val');
+    const value = el ? el.textContent : '';
+    const match = value.match(/[0-9]+/);
+    return match ? Number(match[0]) : NaN;
+  }
+
+  function currentPlayers() {
+    const el = byId('players-val');
+    const value = el ? el.textContent : '';
+    const match = value.match(/([0-9]+)\s*\/\s*([0-9]+)/);
+    if (!match) {
+      return {
+        online: NaN,
+        max: NaN
+      };
+    }
+    return {
+      online: Number(match[1]),
+      max: Number(match[2])
+    };
+  }
+
+  function sample() {
+    const tps = currentTPS();
+    const ping = currentPing();
+    const players = currentPlayers();
+    const status = currentStatus();
+    const item = {
+      time: time(),
+      stamp: now().toISOString(),
+      tps: Number.isFinite(tps) ? tps : '',
+      ping: Number.isFinite(ping) ? ping : '',
+      players: Number.isFinite(players.online) ? players.online : '',
+      max: Number.isFinite(players.max) ? players.max : '',
+      status
+    };
+    ULT.samples.push(item);
+    if (ULT.samples.length > 180) {
+      ULT.samples.shift();
+    }
+    if (Number.isFinite(tps)) {
+      ULT.tps.push(tps);
+      if (ULT.tps.length > 180) {
+        ULT.tps.shift();
+      }
+    }
+    if (Number.isFinite(ping)) {
+      ULT.ping.push(ping);
+      if (ULT.ping.length > 180) {
+        ULT.ping.shift();
+      }
+    }
+    renderOverview();
+    renderMonitor();
+    renderMetricsTable();
+    updateTrend();
+    evaluateAlerts();
+  }
+
+  function average(list) {
+    if (!list.length) {
+      return NaN;
+    }
+    return list.reduce((sum, value) => sum + value, 0) / list.length;
+  }
+
+  function minimum(list) {
+    return list.length ? Math.min(...list) : NaN;
+  }
+
+  function maximum(list) {
+    return list.length ? Math.max(...list) : NaN;
+  }
+
+  function renderOverview() {
+    text('ult-server-name', 'bi5556282.com');
+    text('ult-playit-host', serverIP());
+    const tps = currentTPS();
+    const ping = currentPing();
+    const players = currentPlayers();
+    text('ult-tps', Number.isFinite(tps) ? `${tps.toFixed(1)} / 20` : '--');
+    text('ult-ping', Number.isFinite(ping) ? `${ping} ms` : '--');
+    if (Number.isFinite(players.online) && Number.isFinite(players.max)) {
+      text('ult-players', `${players.online} / ${players.max}`);
+    } else {
+      text('ult-players', '--');
+    }
+    const health = byId('ult-health');
+    if (health) {
+      health.textContent = currentStatus();
+      health.style.color = currentStatus() === 'ONLINE'
+        ? 'var(--green)'
+        : currentStatus() === 'OFFLINE'
+          ? 'var(--red)'
+          : 'var(--yellow)';
+    }
+  }
+
+  function renderMonitor() {
+    const tps = currentTPS();
+    const ping = currentPing();
+    const players = currentPlayers();
+
+    text('ult-mon-tps', Number.isFinite(tps) ? tps.toFixed(1) : '--');
+    text('ult-mon-tps-avg', Number.isFinite(average(ULT.tps)) ? average(ULT.tps).toFixed(2) : '--');
+    text('ult-mon-tps-min', Number.isFinite(minimum(ULT.tps)) ? minimum(ULT.tps).toFixed(1) : '--');
+    text('ult-mon-tps-max', Number.isFinite(maximum(ULT.tps)) ? maximum(ULT.tps).toFixed(1) : '--');
+
+    text('ult-mon-ping', Number.isFinite(ping) ? `${ping} ms` : '--');
+    text('ult-mon-ping-avg', Number.isFinite(average(ULT.ping)) ? `${average(ULT.ping).toFixed(1)} ms` : '--');
+    text('ult-mon-ping-min', Number.isFinite(minimum(ULT.ping)) ? `${minimum(ULT.ping).toFixed(0)} ms` : '--');
+    text('ult-mon-ping-max', Number.isFinite(maximum(ULT.ping)) ? `${maximum(ULT.ping).toFixed(0)} ms` : '--');
+
+    text('ult-mon-online', Number.isFinite(players.online) ? players.online : '--');
+    text('ult-mon-max', Number.isFinite(players.max) ? players.max : '--');
+
+    if (Number.isFinite(players.online) && Number.isFinite(players.max) && players.max > 0) {
+      const usage = players.online / players.max * 100;
+      text('ult-mon-usage', `${usage.toFixed(1)}%`);
+      setWidth('ult-mon-player-meter', usage);
+    } else {
+      text('ult-mon-usage', '--');
+      setWidth('ult-mon-player-meter', 0);
+    }
+
+    setWidth('ult-mon-tps-meter', Number.isFinite(tps) ? tps / 20 * 100 : 0);
+    setWidth('ult-mon-ping-meter', Number.isFinite(ping) ? Math.min(100, ping / 2) : 0);
+    text('ult-mon-samples', ULT.samples.length);
+  }
+
+  function setWidth(id, width) {
+    const el = byId(id);
+    if (el) {
+      el.style.width = `${Math.max(0, Math.min(100, width))}%`;
+    }
+  }
+
+  function renderMetricsTable() {
+    const body = byId('ult-metrics-table');
+    if (!body) {
+      return;
+    }
+    const rows = ULT.samples.slice(-25).reverse();
+    if (!rows.length) {
+      body.innerHTML = '<tr><td colspan="5" class="ult-empty">Chưa có sample.</td></tr>';
+      return;
+    }
+    body.innerHTML = rows.map(row => `
+      <tr>
+        <td>${escapeHTML(row.time)}</td>
+        <td>${row.tps === '' ? '--' : escapeHTML(row.tps)}</td>
+        <td>${row.ping === '' ? '--' : escapeHTML(row.ping + ' ms')}</td>
+        <td>${row.players === '' ? '--' : escapeHTML(row.players + ' / ' + row.max)}</td>
+        <td><span class="ult-chip ${row.status === 'ONLINE' ? 'on' : row.status === 'OFFLINE' ? 'off' : 'warn'}">${escapeHTML(row.status)}</span></td>
+      </tr>
+    `).join('');
+  }
+
+  function trend(list) {
+    if (list.length < 6) {
+      return NaN;
+    }
+    const n = Math.min(12, list.length);
+    const recent = list.slice(-n);
+    const first = recent[0];
+    const last = recent[recent.length - 1];
+    return (last - first) / Math.max(1, recent.length - 1);
+  }
+
+  function updateTrend() {
+    const tpsSlope = trend(ULT.tps);
+    const pingSlope = trend(ULT.ping);
+    text('ult-tps-slope', Number.isFinite(tpsSlope) ? tpsSlope.toFixed(3) : '--');
+    text('ult-ping-slope', Number.isFinite(pingSlope) ? pingSlope.toFixed(3) : '--');
+    const box = byId('ult-trend-box');
+    if (!box) {
+      return;
+    }
+    if (!Number.isFinite(tpsSlope) || !Number.isFinite(pingSlope)) {
+      box.className = 'ult-notice';
+      box.textContent = 'Đang chờ đủ dữ liệu để phân tích xu hướng.';
+      return;
+    }
+    if (tpsSlope < -0.08) {
+      box.className = 'ult-notice warn';
+      box.textContent = 'TPS đang có xu hướng giảm trong các mẫu gần nhất.';
+      return;
+    }
+    if (pingSlope > 4) {
+      box.className = 'ult-notice warn';
+      box.textContent = 'Ping đang tăng trong các mẫu gần nhất.';
+      return;
+    }
+    box.className = 'ult-notice ok';
+    box.textContent = 'Xu hướng hiện tại chưa phát hiện cảnh báo lớn.';
+  }
+
+  function evaluateAlerts() {
+    const tps = currentTPS();
+    const ping = currentPing();
+    const status = currentStatus();
+    const box = byId('ult-alert-message');
+    if (!box) {
+      return;
+    }
+    if (status === 'OFFLINE') {
+      box.className = 'ult-notice warn';
+      box.textContent = '⚠️ Server đang OFFLINE theo API hiện tại.';
+      return;
+    }
+    if (Number.isFinite(tps) && tps < ULT.thresholds.tps) {
+      box.className = 'ult-notice warn';
+      box.textContent = `⚠️ TPS ${tps.toFixed(1)} thấp hơn ngưỡng ${ULT.thresholds.tps.toFixed(1)}.`;
+      return;
+    }
+    if (Number.isFinite(ping) && ping > ULT.thresholds.ping) {
+      box.className = 'ult-notice warn';
+      box.textContent = `⚠️ Ping ${ping} ms vượt ngưỡng ${ULT.thresholds.ping} ms.`;
+      return;
+    }
+    box.className = 'ult-notice ok';
+    box.textContent = '✅ Đang theo dõi. Chưa có cảnh báo vượt ngưỡng.';
+  }
+
+  function renderLogs() {
+    const terminal = byId('ult-event-terminal');
+    const table = byId('ult-activity-table');
+    if (terminal) {
+      terminal.innerHTML = ULT.events.slice(0, 70).map(item => `
+        <div class="ult-terminal-line ${escapeHTML(item.type)}">[${escapeHTML(item.time)}] [${escapeHTML(item.type).toUpperCase()}] ${escapeHTML(item.message)}</div>
+      `).join('');
+    }
+    if (table) {
+      table.innerHTML = ULT.events.slice(0, 80).map(item => `
+        <tr>
+          <td>${escapeHTML(item.time)}</td>
+          <td>${escapeHTML(item.type.toUpperCase())}</td>
+          <td>${escapeHTML(item.message)}</td>
+        </tr>
+      `).join('');
+    }
+  }
+
+  function renderErrorList() {
+    const box = byId('ult-error-list');
+    if (!box) {
+      return;
+    }
+    if (!ULT.errors.length) {
+      box.innerHTML = '<div class="ult-empty">Không có runtime error được bắt.</div>';
+      return;
+    }
+    box.innerHTML = ULT.errors.slice(0, 30).map(item => `
+      <div class="ult-item">
+        <div>
+          <strong>${escapeHTML(item.message)}</strong>
+          <small>${escapeHTML(item.time)}</small>
+        </div>
+        <span class="ult-chip off">ERROR</span>
+      </div>
+    `).join('');
+  }
+
+  function tab(name) {
+    document.querySelectorAll('[data-ult-tab]').forEach(button => {
+      const active = button.dataset.ultTab === name;
+      button.classList.toggle('cyan', active);
+    });
+    document.querySelectorAll('.ult-panel').forEach(panel => {
+      panel.classList.remove('active');
+    });
+    const panel = byId(`ult-panel-${name}`);
+    if (panel) {
+      panel.classList.add('active');
+    }
+    log(`Mở module: ${name}`);
+  }
+
+  function bindTabs() {
+    document.querySelectorAll('[data-ult-tab]').forEach(button => {
+      button.addEventListener('click', () => tab(button.dataset.ultTab));
+    });
+  }
+
+  function maintenanceLoad() {
+    if (!ULT.maintenance) {
+      return;
+    }
+    const input = byId('ult-maintenance-time');
+    if (input) {
+      input.value = ULT.maintenance;
+    }
+  }
+
+  function maintenanceUpdate() {
+    const output = byId('ult-maintenance-countdown');
+    if (!output) {
+      return;
+    }
+    if (!ULT.maintenance) {
+      output.textContent = 'Không có lịch bảo trì.';
+      return;
+    }
+    const target = new Date(ULT.maintenance).getTime();
+    const delta = target - Date.now();
+    if (!Number.isFinite(target)) {
+      output.textContent = 'Thời gian không hợp lệ.';
+      return;
+    }
+    if (delta <= 0) {
+      output.textContent = '⏰ Đã tới thời điểm bảo trì.';
+      return;
+    }
+    const total = Math.floor(delta / 1000);
+    const days = Math.floor(total / 86400);
+    const hours = Math.floor((total % 86400) / 3600);
+    const minutes = Math.floor((total % 3600) / 60);
+    const seconds = total % 60;
+    output.textContent = `${days}d ${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+  }
+
+  function bindMaintenance() {
+    const start = byId('ult-maintenance-start');
+    const clear = byId('ult-maintenance-clear');
+    if (start) {
+      start.addEventListener('click', () => {
+        const input = byId('ult-maintenance-time');
+        if (!input || !input.value) {
+          log('Chưa chọn thời gian bảo trì.', 'warn');
+          return;
+        }
+        const date = new Date(input.value);
+        if (date.getTime() <= Date.now()) {
+          log('Thời gian bảo trì phải nằm trong tương lai.', 'warn');
+          return;
+        }
+        ULT.maintenance = input.value;
+        maintenanceUpdate();
+        save();
+        log(`Đặt lịch bảo trì: ${input.value}`, 'ok');
+      });
+    }
+    if (clear) {
+      clear.addEventListener('click', () => {
+        ULT.maintenance = null;
+        const input = byId('ult-maintenance-time');
+        if (input) {
+          input.value = '';
+        }
+        maintenanceUpdate();
+        save();
+        log('Đã hủy lịch bảo trì.', 'warn');
+      });
+    }
+  }
+
+  function bindThresholds() {
+    const tps = byId('ult-tps-threshold');
+    const ping = byId('ult-ping-threshold');
+    if (tps) {
+      tps.value = ULT.thresholds.tps;
+      tps.addEventListener('input', () => {
+        ULT.thresholds.tps = Number(tps.value);
+        text('ult-tps-threshold-label', ULT.thresholds.tps.toFixed(1));
+        save();
+        evaluateAlerts();
+      });
+    }
+    if (ping) {
+      ping.value = ULT.thresholds.ping;
+      ping.addEventListener('input', () => {
+        ULT.thresholds.ping = Number(ping.value);
+        text('ult-ping-threshold-label', `${ULT.thresholds.ping} ms`);
+        save();
+        evaluateAlerts();
+      });
+    }
+    text('ult-tps-threshold-label', ULT.thresholds.tps.toFixed(1));
+    text('ult-ping-threshold-label', `${ULT.thresholds.ping} ms`);
+  }
+
+  function bindChecklist() {
+    const boxes = document.querySelectorAll('[data-check]');
+    boxes.forEach(box => {
+      const key = `bi5556282.check.${box.dataset.check}`;
+      try {
+        box.checked = localStorage.getItem(key) === '1';
+      } catch {}
+      box.addEventListener('change', () => {
+        try {
+          localStorage.setItem(key, box.checked ? '1' : '0');
+        } catch {}
+        renderChecklist();
+      });
+    });
+    renderChecklist();
+  }
+
+  function renderChecklist() {
+    const boxes = Array.from(document.querySelectorAll('[data-check]'));
+    const completed = boxes.filter(box => box.checked).length;
+    const total = boxes.length;
+    const ratio = total ? completed / total * 100 : 0;
+    setWidth('ult-check-meter', ratio);
+    text('ult-check-label', `${completed} / ${total} hoàn tất`);
+  }
+
+  function bindAnnouncements() {
+    const input = byId('ult-announcement');
+    const preview = byId('ult-announcement-preview');
+    document.querySelectorAll('[data-announce]').forEach(button => {
+      button.addEventListener('click', () => {
+        const message = input && input.value.trim()
+          ? input.value.trim()
+          : 'Thông báo từ server.';
+        let prefix = '📢 THÔNG BÁO';
+        if (button.dataset.announce === 'maintenance') {
+          prefix = '🛠️ BẢO TRÌ';
+        }
+        if (button.dataset.announce === 'welcome') {
+          prefix = '👋 WELCOME';
+        }
+        const output = `${prefix}: ${message}`;
+        if (preview) {
+          preview.textContent = output;
+        }
+        log(`Announcement preview: ${output}`);
+      });
+    });
+  }
+
+  function bindCalculator() {
+    const go = byId('ult-calc-go');
+    if (!go) {
+      return;
+    }
+    go.addEventListener('click', () => {
+      const a = Number(byId('ult-calc-a')?.value);
+      const b = Number(byId('ult-calc-b')?.value);
+      const op = byId('ult-calc-op')?.value || '+';
+      let result;
+      if (!Number.isFinite(a) || !Number.isFinite(b)) {
+        result = 'Dữ liệu không hợp lệ';
+      } else if (op === '+') {
+        result = a + b;
+      } else if (op === '-') {
+        result = a - b;
+      } else if (op === '*') {
+        result = a * b;
+      } else if (op === '/') {
+        result = b === 0 ? 'Không thể chia 0' : a / b;
+      } else if (op === '%') {
+        result = b === 0 ? 'Không thể chia 0' : a % b;
+      } else if (op === '^') {
+        result = a ** b;
+      } else {
+        result = 'Unsupported';
+      }
+      text('ult-calc-result', `Kết quả: ${result}`);
+      log(`Calculator: ${a} ${op} ${b} = ${result}`);
+    });
+  }
+
+  function bindMOTD() {
+    const build = byId('ult-motd-build');
+    const copy = byId('ult-motd-copy');
+    if (build) {
+      build.addEventListener('click', () => {
+        const title = byId('ult-motd-title')?.value.trim() || 'bi5556282.com';
+        const sub = byId('ult-motd-sub')?.value.trim() || 'Chúc bạn chơi game vui vẻ!';
+        const symbol = byId('ult-motd-symbol')?.value || '⚡';
+        text('ult-motd-preview-title', `${symbol} ${title}`);
+        text('ult-motd-preview-sub', sub);
+        log(`MOTD generated: ${title}`);
+      });
+    }
+    if (copy) {
+      copy.addEventListener('click', () => {
+        const title = byId('ult-motd-preview-title')?.textContent || '';
+        const sub = byId('ult-motd-preview-sub')?.textContent || '';
+        copyText(`${title}
+${sub}`);
+      });
+    }
+  }
+
+  function utilityText(type, value) {
+    const ip = serverIP();
+    const safeValue = value || 'player';
+    if (type === 'ip') {
+      return `🎮 Java Server
+IP: ${ip}`;
+    }
+    if (type === 'invite') {
+      return `🚀 ${safeValue} mời bạn vào server!
+Java: ${ip}`;
+    }
+    if (type === 'rules') {
+      return `📜 Nội quy: không hack, không grief, không spam.
+Server: ${ip}`;
+    }
+    if (type === 'backup') {
+      return `💾 Nhắc backup: hãy /save-all trước khi bảo trì.`;
+    }
+    if (type === 'restart') {
+      return `🔄 Nhắc restart: kiểm tra player và save-all trước khi restart.`;
+    }
+    return '';
+  }
+
+  function bindUtility() {
+    const build = byId('ult-util-build');
+    const copy = byId('ult-util-copy');
+    if (build) {
+      build.addEventListener('click', () => {
+        const type = byId('ult-util-type')?.value || 'ip';
+        const value = byId('ult-util-name')?.value.trim() || '';
+        const result = utilityText(type, value);
+        text('ult-util-output', result);
+        log(`Utility generated: ${type}`);
+      });
+    }
+    if (copy) {
+      copy.addEventListener('click', () => {
+        const value = byId('ult-util-output')?.textContent || '';
+        copyText(value);
+      });
+    }
+  }
+
+  function bindWorldTime() {
+    const output = byId('ult-time-output');
+    document.querySelectorAll('[data-world-time]').forEach(button => {
+      button.addEventListener('click', () => {
+        const value = button.dataset.worldTime;
+        const command = value === 'day'
+          ? '/time set day'
+          : value === 'noon'
+            ? '/time set noon'
+            : value === 'night'
+              ? '/time set night'
+              : '/time set midnight';
+        if (output) {
+          output.textContent = command;
+        }
+        log(`World time preview: ${command}`);
+      });
+    });
+  }
+
+  function bindWeather() {
+    const output = byId('ult-weather-output');
+    document.querySelectorAll('[data-weather]').forEach(button => {
+      button.addEventListener('click', () => {
+        const command = `/weather ${button.dataset.weather}`;
+        if (output) {
+          output.textContent = command;
+        }
+        log(`Weather preview: ${command}`);
+      });
+    });
+  }
+
+  function bindRuleBuilder() {
+    const output = byId('ult-rule-output');
+    document.querySelectorAll('[data-rule]').forEach(button => {
+      button.addEventListener('click', () => {
+        const rule = byId('ult-rule-type')?.value || 'keepInventory';
+        const value = button.dataset.rule;
+        const command = `/gamerule ${rule} ${value}`;
+        if (output) {
+          output.textContent = command;
+        }
+        log(`Gamerule preview: ${command}`);
+      });
+    });
+  }
+
+  function bindTeleport() {
+    const button = byId('ult-tp-build');
+    if (!button) {
+      return;
+    }
+    button.addEventListener('click', () => {
+      const player = byId('ult-tp-player')?.value.trim() || '<player>';
+      const x = byId('ult-tp-x')?.value.trim() || '~';
+      const y = byId('ult-tp-y')?.value.trim() || '~';
+      const z = byId('ult-tp-z')?.value.trim() || '~';
+      const command = `/tp ${player} ${x} ${y} ${z}`;
+      text('ult-tp-output', command);
+      log(`Teleport preview: ${command}`);
+    });
+  }
+
+  const COMMANDS = [
+    ['/list', 'Danh sách người chơi'],
+    ['/tps', 'Xem TPS'],
+    ['/save-all', 'Lưu thế giới'],
+    ['/save-on', 'Bật autosave'],
+    ['/save-off', 'Tắt autosave'],
+    ['/weather clear', 'Trời quang'],
+    ['/weather rain', 'Mưa'],
+    ['/weather thunder', 'Giông'],
+    ['/time set day', 'Ban ngày'],
+    ['/time set night', 'Ban đêm'],
+    ['/time set noon', 'Buổi trưa'],
+    ['/time set midnight', 'Nửa đêm'],
+    ['/difficulty normal', 'Độ khó Normal'],
+    ['/difficulty hard', 'Độ khó Hard'],
+    ['/gamemode survival', 'Survival'],
+    ['/gamemode creative', 'Creative'],
+    ['/gamemode adventure', 'Adventure'],
+    ['/gamerule keepInventory true', 'Giữ đồ'],
+    ['/gamerule keepInventory false', 'Tắt giữ đồ'],
+    ['/gamerule mobGriefing false', 'Tắt mob grief'],
+    ['/gamerule doDaylightCycle false', 'Dừng chu kỳ ngày'],
+    ['/gamerule doWeatherCycle false', 'Dừng chu kỳ thời tiết'],
+    ['/whitelist list', 'Xem whitelist'],
+    ['/whitelist on', 'Bật whitelist'],
+    ['/whitelist off', 'Tắt whitelist'],
+    ['/spawn', 'Về spawn'],
+    ['/help', 'Trợ giúp'],
+    ['/seed', 'Xem seed'],
+    ['/difficulty peaceful', 'Peaceful'],
+    ['/difficulty easy', 'Easy'],
+    ['/op <player>', 'Cấp OP'],
+    ['/deop <player>', 'Gỡ OP'],
+    ['/kick <player>', 'Kick'],
+    ['/ban <player>', 'Ban'],
+    ['/pardon <player>', 'Unban'],
+    ['/msg <player> <text>', 'Nhắn riêng'],
+    ['/say <text>', 'Thông báo server'],
+    ['/tp <player> ~ ~ ~', 'TP người chơi'],
+    ['/give <player> diamond 1', 'Give item'],
+    ['/effect give <player> speed 60 1', 'Effect speed'],
+    ['/kill <player>', 'Kill player'],
+    ['/clear <player>', 'Clear inventory'],
+    ['/locate structure minecraft:stronghold', 'Locate stronghold'],
+    ['/locate structure minecraft:village_plains', 'Locate village'],
+    ['/playsound minecraft:block.note_block.pling master @a', 'Phát âm thanh'],
+    ['/title @a title {"text":"Welcome"}', 'Title all players'],
+    ['/tellraw @a {"text":"Hello"}', 'Tellraw all'],
+    ['/gamerule announceAdvancements true', 'Thông báo advancement'],
+    ['/gamerule doImmediateRespawn true', 'Respawn ngay'],
+    ['/gamerule showDeathMessages true', 'Hiện death message'],
+    ['/gamerule commandBlockOutput false', 'Tắt command output'],
+    ['/gamerule sendCommandFeedback true', 'Hiện command feedback'],
+    ['/gamerule doInsomnia false', 'Tắt phantoms'],
+    ['/gamerule doMobSpawning true', 'Mob spawn'],
+    ['/gamerule doFireTick false', 'Tắt cháy lan']
+  ];
+
+  function renderCommandLibrary(filter = '') {
+    const box = byId('ult-command-library');
+    if (!box) {
+      return;
+    }
+    const query = filter.toLowerCase();
+    const matches = COMMANDS.filter(item =>
+      item[0].toLowerCase().includes(query) ||
+      item[1].toLowerCase().includes(query)
+    );
+    if (!matches.length) {
+      box.innerHTML = '<div class="ult-empty">Không tìm thấy lệnh.</div>';
+      return;
+    }
+    box.innerHTML = matches.map(item => `
+      <div class="ult-item">
+        <div>
+          <strong>${escapeHTML(item[0])}</strong>
+          <small>${escapeHTML(item[1])}</small>
+        </div>
+        <button class="ult-btn cyan" data-command-copy="${escapeHTML(item[0])}">Copy</button>
+      </div>
+    `).join('');
+    box.querySelectorAll('[data-command-copy]').forEach(button => {
+      button.addEventListener('click', () => {
+        copyText(button.dataset.commandCopy);
+      });
+    });
+  }
+
+  function renderFavorites() {
+    const box = byId('ult-favorite-list');
+    if (!box) {
+      return;
+    }
+    if (!ULT.favorites.length) {
+      box.innerHTML = '<div class="ult-empty">Chưa có favorite.</div>';
+      return;
+    }
+    box.innerHTML = ULT.favorites.map((command, index) => `
+      <div class="ult-item">
+        <div><strong>${escapeHTML(command)}</strong></div>
+        <div class="ult-row">
+          <button class="ult-btn cyan" data-fav-copy="${index}">Copy</button>
+          <button class="ult-btn danger" data-fav-remove="${index}">Xóa</button>
+        </div>
+      </div>
+    `).join('');
+    box.querySelectorAll('[data-fav-copy]').forEach(button => {
+      button.addEventListener('click', () => {
+        const command = ULT.favorites[Number(button.dataset.favCopy)];
+        copyText(command || '');
+      });
+    });
+    box.querySelectorAll('[data-fav-remove]').forEach(button => {
+      button.addEventListener('click', () => {
+        ULT.favorites.splice(Number(button.dataset.favRemove), 1);
+        renderFavorites();
+        save();
+        log('Đã xóa favorite command.', 'warn');
+      });
+    });
+  }
+
+  function bindCommands() {
+    const search = byId('ult-command-search');
+    const add = byId('ult-favorite-add');
+    if (search) {
+      search.addEventListener('input', () => renderCommandLibrary(search.value));
+    }
+    if (add) {
+      add.addEventListener('click', () => {
+        const input = byId('ult-favorite-command');
+        const command = input?.value.trim();
+        if (!command) {
+          log('Favorite command rỗng.', 'warn');
+          return;
+        }
+        ULT.favorites.unshift(command);
+        ULT.favorites = ULT.favorites.slice(0, 50);
+        if (input) {
+          input.value = '';
+        }
+        renderFavorites();
+        save();
+        log(`Đã thêm favorite: ${command}`, 'ok');
+      });
+    }
+    renderCommandLibrary();
+    renderFavorites();
+  }
+
+  function bindSandbox() {
+    const copy = byId('ult-sandbox-copy');
+    const logButton = byId('ult-sandbox-log');
+    const clear = byId('ult-sandbox-clear');
+    if (copy) {
+      copy.addEventListener('click', () => {
+        copyText(byId('ult-command-sandbox')?.value || '');
+      });
+    }
+    if (logButton) {
+      logButton.addEventListener('click', () => {
+        const command = byId('ult-command-sandbox')?.value.trim();
+        if (!command) {
+          return;
+        }
+        log(`Sandbox command: ${command}`);
+      });
+    }
+    if (clear) {
+      clear.addEventListener('click', () => {
+        const box = byId('ult-command-sandbox');
+        if (box) {
+          box.value = '';
+        }
+      });
+    }
+  }
+
+  function renderNotes() {
+    const box = byId('ult-player-notes');
+    if (!box) {
+      return;
+    }
+    if (!ULT.notes.length) {
+      box.innerHTML = '<div class="ult-empty">Chưa có note.</div>';
+      return;
+    }
+    box.innerHTML = ULT.notes.map((item, index) => `
+      <div class="ult-item">
+        <div>
+          <strong>${escapeHTML(item.name)}</strong>
+          <small>${escapeHTML(item.note)}</small>
+          <small>${escapeHTML(item.time)}</small>
+        </div>
+        <button class="ult-btn danger" data-note-remove="${index}">Xóa</button>
+      </div>
+    `).join('');
+    box.querySelectorAll('[data-note-remove]').forEach(button => {
+      button.addEventListener('click', () => {
+        ULT.notes.splice(Number(button.dataset.noteRemove), 1);
+        renderNotes();
+        save();
+        log('Đã xóa player note.', 'warn');
+      });
+    });
+  }
+
+  function bindNotes() {
+    const saveButton = byId('ult-player-save');
+    if (saveButton) {
+      saveButton.addEventListener('click', () => {
+        const name = byId('ult-player-name')?.value.trim();
+        const note = byId('ult-player-note')?.value.trim();
+        if (!name || !note) {
+          log('Cần nhập player và note.', 'warn');
+          return;
+        }
+        ULT.notes.unshift({
+          name,
+          note,
+          time: dateTime()
+        });
+        ULT.notes = ULT.notes.slice(0, 100);
+        if (byId('ult-player-name')) byId('ult-player-name').value = '';
+        if (byId('ult-player-note')) byId('ult-player-note').value = '';
+        renderNotes();
+        save();
+        log(`Đã lưu note cho ${name}.`, 'ok');
+      });
+    }
+    renderNotes();
+  }
+
+  function renderWhitelist() {
+    const box = byId('ult-whitelist-list');
+    if (!box) {
+      return;
+    }
+    if (!ULT.whitelist.length) {
+      box.innerHTML = '<div class="ult-empty">Whitelist draft trống.</div>';
+      return;
+    }
+    box.innerHTML = ULT.whitelist.map((name, index) => `
+      <div class="ult-item">
+        <div><strong>${escapeHTML(name)}</strong><small>/whitelist add ${escapeHTML(name)}</small></div>
+        <button class="ult-btn danger" data-whitelist-remove="${index}">Xóa</button>
+      </div>
+    `).join('');
+    box.querySelectorAll('[data-whitelist-remove]').forEach(button => {
+      button.addEventListener('click', () => {
+        ULT.whitelist.splice(Number(button.dataset.whitelistRemove), 1);
+        renderWhitelist();
+        save();
+        log('Đã xóa whitelist draft.', 'warn');
+      });
+    });
+  }
+
+  function bindWhitelist() {
+    const add = byId('ult-whitelist-add');
+    const exportButton = byId('ult-whitelist-export');
+    if (add) {
+      add.addEventListener('click', () => {
+        const input = byId('ult-whitelist-name');
+        const name = input?.value.trim();
+        if (!name) {
+          log('Whitelist name rỗng.', 'warn');
+          return;
+        }
+        if (!ULT.whitelist.includes(name)) {
+          ULT.whitelist.push(name);
+        }
+        if (input) {
+          input.value = '';
+        }
+        renderWhitelist();
+        save();
+        log(`Đã thêm whitelist draft: ${name}`, 'ok');
+      });
+    }
+    if (exportButton) {
+      exportButton.addEventListener('click', () => {
+        const commands = ULT.whitelist.map(name => `/whitelist add ${name}`);
+        copyText(commands.join('\n'));
+
+      });
+    }
+    renderWhitelist();
+  }
+
+  function bindPlayerActions() {
+    const output = byId('ult-player-action-output');
+    document.querySelectorAll('[data-player-action]').forEach(button => {
+      button.addEventListener('click', () => {
+        const player = byId('ult-action-player')?.value.trim() || '<player>';
+        let command = '';
+        if (button.dataset.playerAction === 'tp') {
+          command = `/tp ${player} ~ ~ ~`;
+        }
+        if (button.dataset.playerAction === 'msg') {
+          command = `/msg ${player} Hello!`;
+        }
+        if (button.dataset.playerAction === 'kick') {
+          command = `/kick ${player} Please rejoin.`;
+        }
+        if (button.dataset.playerAction === 'ban') {
+          command = `/ban ${player}`;
+        }
+        if (output) {
+          output.textContent = command;
+        }
+        log(`Player action preview: ${command}`);
+      });
+    });
+  }
+
+  function applyTheme(theme) {
+    document.body.classList.remove(
+      'ult-neon-cyan',
+      'ult-neon-purple',
+      'ult-neon-green'
+    );
+    if (theme === 'cyan') {
+      document.body.classList.add('ult-neon-cyan');
+    }
+    if (theme === 'purple') {
+      document.body.classList.add('ult-neon-purple');
+    }
+    if (theme === 'green') {
+      document.body.classList.add('ult-neon-green');
+    }
+    ULT.settings.theme = theme;
+    save();
+  }
+
+  function applyVisuals() {
+    document.body.classList.toggle('ult-compact', ULT.settings.compact);
+    document.body.classList.toggle('ult-flat', ULT.settings.flat);
+    document.body.classList.toggle('ext-hide-scanlines', ULT.settings.scan);
+    document.body.classList.toggle('ext-contrast', ULT.settings.contrast);
+    document.documentElement.style.setProperty('--ult-ui-scale', ULT.settings.scale / 100);
+    const root = document.getElementById('ultimate-control-center');
+    if (root) {
+      root.style.fontSize = `${ULT.settings.scale}%`;
+    }
+    const compact = byId('ult-setting-compact');
+    const flat = byId('ult-setting-flat');
+    const scan = byId('ult-setting-scan');
+    const contrast = byId('ult-setting-contrast');
+    if (compact) compact.checked = ULT.settings.compact;
+    if (flat) flat.checked = ULT.settings.flat;
+    if (scan) scan.checked = ULT.settings.scan;
+    if (contrast) contrast.checked = ULT.settings.contrast;
+    text('ult-ui-scale-label', `${ULT.settings.scale}%`);
+    applyTheme(ULT.settings.theme);
+  }
+
+  function bindTheme() {
+    document.querySelectorAll('[data-theme]').forEach(button => {
+      button.addEventListener('click', () => {
+        applyTheme(button.dataset.theme);
+        log(`Theme changed: ${button.dataset.theme}`);
+      });
+    });
+
+    const compact = byId('ult-setting-compact');
+    const flat = byId('ult-setting-flat');
+    const scan = byId('ult-setting-scan');
+    const contrast = byId('ult-setting-contrast');
+    const scale = byId('ult-ui-scale');
+    const reset = byId('ult-ui-scale-reset');
+
+    if (compact) {
+      compact.addEventListener('change', () => {
+        ULT.settings.compact = compact.checked;
+        applyVisuals();
+        save();
+      });
+    }
+    if (flat) {
+      flat.addEventListener('change', () => {
+        ULT.settings.flat = flat.checked;
+        applyVisuals();
+        save();
+      });
+    }
+    if (scan) {
+      scan.addEventListener('change', () => {
+        ULT.settings.scan = scan.checked;
+        applyVisuals();
+        save();
+      });
+    }
+    if (contrast) {
+      contrast.addEventListener('change', () => {
+        ULT.settings.contrast = contrast.checked;
+        applyVisuals();
+        save();
+      });
+    }
+    if (scale) {
+      scale.value = ULT.settings.scale;
+      scale.addEventListener('input', () => {
+        ULT.settings.scale = Number(scale.value);
+        applyVisuals();
+        save();
+      });
+    }
+    if (reset) {
+      reset.addEventListener('click', () => {
+        ULT.settings.scale = 100;
+        if (scale) scale.value = 100;
+        applyVisuals();
+        save();
+        log('UI scale reset.', 'ok');
+      });
+    }
+    applyVisuals();
+  }
+
+  function updateRealClock() {
+    const n = now();
+    text('ult-real-clock', n.toLocaleTimeString('vi-VN'));
+    text('ult-real-date', n.toLocaleDateString('vi-VN', {
+      weekday: 'long',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    }));
+  }
+
+  function copyText(value) {
+    const content = safeString(value);
+    if (!content) {
+      log('Copy thất bại: dữ liệu rỗng.', 'warn');
+      return;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(content)
+        .then(() => log(`Đã copy: ${content.slice(0, 100)}`, 'ok'))
+        .catch(() => fallbackCopy(content));
+      return;
+    }
+    fallbackCopy(content);
+  }
+
+  function fallbackCopy(value) {
+    const area = document.createElement('textarea');
+    area.value = value;
+    area.style.position = 'fixed';
+    area.style.opacity = '0';
+    document.body.appendChild(area);
+    area.select();
+    try {
+      document.execCommand('copy');
+      log('Đã copy bằng fallback.', 'ok');
+    } catch (error) {
+      log(`Copy thất bại: ${error.message}`, 'err');
+    }
+    area.remove();
+  }
+
+  function jsonData() {
+    return {
+      version: 'ultimate-v1',
+      exportedAt: now().toISOString(),
+      server: serverIP(),
+      status: currentStatus(),
+      tps: currentTPS(),
+      ping: currentPing(),
+      players: currentPlayers(),
+      settings: ULT.settings,
+      thresholds: ULT.thresholds,
+      maintenance: ULT.maintenance,
+      notes: ULT.notes,
+      whitelist: ULT.whitelist,
+      favorites: ULT.favorites,
+      samples: ULT.samples.slice(-180),
+      events: ULT.events.slice(-250),
+      errors: ULT.errors.slice(-60)
+    };
+  }
+
+  function download(filename, content, type) {
+    const blob = new Blob([content], { type });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = filename;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 500);
+  }
+
+  function exportState() {
+    const payload = JSON.stringify(jsonData(), null, 2);
+    download(`bi5556282-ultimate-${Date.now()}.json`, payload, 'application/json;charset=utf-8');
+    const preview = byId('ult-backup-preview');
+    if (preview) {
+      preview.textContent = payload;
+    }
+    log('Đã export ultimate state.', 'ok');
+  }
+
+  function importState(file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        if (Array.isArray(data.notes)) ULT.notes = data.notes;
+        if (Array.isArray(data.whitelist)) ULT.whitelist = data.whitelist;
+        if (Array.isArray(data.favorites)) ULT.favorites = data.favorites;
+        if (Array.isArray(data.events)) ULT.events = data.events;
+        if (Array.isArray(data.errors)) ULT.errors = data.errors;
+        if (Array.isArray(data.samples)) ULT.samples = data.samples;
+        if (data.thresholds) ULT.thresholds = {...ULT.thresholds, ...data.thresholds};
+        if (data.settings) ULT.settings = {...ULT.settings, ...data.settings};
+        if (data.maintenance) ULT.maintenance = data.maintenance;
+        maintenanceLoad();
+        renderNotes();
+        renderWhitelist();
+        renderFavorites();
+        renderLogs();
+        renderErrorList();
+        renderMetricsTable();
+        bindThresholds();
+        applyVisuals();
+        save();
+        log('Import state thành công.', 'ok');
+      } catch (error) {
+        logError(`Import failed: ${error.message}`);
+        log('Import thất bại: file JSON không hợp lệ.', 'err');
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function storageScan() {
+    let count = 0;
+    let bytes = 0;
+    try {
+      for (let index = 0; index < localStorage.length; index += 1) {
+        const key = localStorage.key(index) || '';
+        const value = localStorage.getItem(key) || '';
+        count += 1;
+        bytes += key.length + value.length;
+      }
+    } catch (error) {
+      logError(`Storage scan failed: ${error.message}`);
+    }
+    text('ult-storage-keys', count);
+    text('ult-storage-bytes', bytes.toLocaleString('vi-VN'));
+    log(`Storage scan: ${count} keys, ~${bytes} chars.`, 'info');
+  }
+
+  function resetAll() {
+    const ok = window.confirm('Xóa dữ liệu local của Ultimate Control Center?');
+    if (!ok) {
+      return;
+    }
+    try {
+      localStorage.removeItem(ULT.storageKey);
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('bi5556282.check.')) {
+          localStorage.removeItem(key);
+        }
+      });
+    } catch {}
+    ULT.events = [];
+    ULT.errors = [];
+    ULT.notes = [];
+    ULT.whitelist = [];
+    ULT.favorites = [];
+    ULT.samples = [];
+    ULT.tps = [];
+    ULT.ping = [];
+    ULT.maintenance = null;
+    renderLogs();
+    renderErrorList();
+    renderNotes();
+    renderWhitelist();
+    renderFavorites();
+    renderMetricsTable();
+    maintenanceLoad();
+    maintenanceUpdate();
+    log('Đã reset dữ liệu local.', 'warn');
+  }
+
+  function bindData() {
+    const exportButton = byId('ult-backup-export');
+    const importButton = byId('ult-backup-import');
+    const importFile = byId('ult-backup-file');
+    const hidden = byId('ult-import-hidden');
+    const scan = byId('ult-storage-scan');
+    const reset = byId('ult-reset-all');
+
+    if (exportButton) {
+      exportButton.addEventListener('click', exportState);
+    }
+    if (importButton && importFile) {
+      importButton.addEventListener('click', () => importFile.click());
+      importFile.addEventListener('change', () => {
+        if (importFile.files?.[0]) {
+          importState(importFile.files[0]);
+        }
+      });
+    }
+    if (hidden) {
+      hidden.addEventListener('change', () => {
+        if (hidden.files?.[0]) {
+          importState(hidden.files[0]);
+        }
+      });
+    }
+    if (scan) {
+      scan.addEventListener('click', storageScan);
+    }
+    if (reset) {
+      reset.addEventListener('click', resetAll);
+    }
+  }
+
+  function refreshDebug() {
+    const debug = byId('ult-debug-json');
+    if (!debug) {
+      return;
+    }
+    const data = {
+      now: now().toISOString(),
+      server: serverIP(),
+      status: currentStatus(),
+      tps: currentTPS(),
+      ping: currentPing(),
+      samples: ULT.samples.length,
+      events: ULT.events.length,
+      errors: ULT.errors.length,
+      favorites: ULT.favorites.length,
+      notes: ULT.notes.length,
+      whitelist: ULT.whitelist.length,
+      network: navigator.onLine ? 'online' : 'offline',
+      visibility: document.visibilityState,
+      protocol: location.protocol
+    };
+    debug.textContent = JSON.stringify(data, null, 2);
+  }
+
+  function keyboardShortcuts() {
+    document.addEventListener('keydown', event => {
+      if (event.ctrlKey && event.key.toLowerCase() === 'm') {
+        event.preventDefault();
+        tab('monitor');
+        log('Shortcut Ctrl+M -> Monitor.');
+      }
+      if (event.ctrlKey && event.key.toLowerCase() === 'l') {
+        event.preventDefault();
+        tab('logs');
+        log('Shortcut Ctrl+L -> Logs.');
+      }
+      if (event.ctrlKey && event.key.toLowerCase() === 't') {
+        event.preventDefault();
+        tab('theme');
+        log('Shortcut Ctrl+T -> Theme.');
+      }
+      if (event.altKey && event.key === '1') {
+        tab('overview');
+      }
+      if (event.altKey && event.key === '2') {
+        tab('monitor');
+      }
+      if (event.altKey && event.key === '3') {
+        tab('tools');
+      }
+      if (event.altKey && event.key === '4') {
+        tab('commands');
+      }
+      if (event.altKey && event.key === '5') {
+        tab('players');
+      }
+    });
+  }
+
+  function monitorNetwork() {
+    const state = navigator.onLine ? 'ONLINE' : 'OFFLINE';
+    log(`Browser network: ${state}`, navigator.onLine ? 'ok' : 'warn');
+  }
+
+  function bindRuntimeErrors() {
+    window.addEventListener('error', event => {
+      const message = event.message || 'Unknown runtime error';
+      logError(message);
+      log(`Runtime error: ${message}`, 'err');
+    });
+    window.addEventListener('unhandledrejection', event => {
+      const message = safeString(event.reason || 'Unhandled promise rejection');
+      logError(message);
+      log(`Unhandled promise: ${message}`, 'err');
+    });
+  }
+
+  function maybeHookOriginalStatus() {
+    if (typeof window.fetchServerStatus !== 'function') {
+      return false;
+    }
+    if (window.__ultimateStatusHooked) {
+      return true;
+    }
+    const original = window.fetchServerStatus;
+    window.fetchServerStatus = async function(...args) {
+      try {
+        const result = await original.apply(this, args);
+        sample();
+        log(`Status refresh completed: ${currentStatus()}`, currentStatus() === 'ONLINE' ? 'ok' : 'warn');
+        return result;
+      } catch (error) {
+        logError(error.message || String(error));
+        log(`Status refresh failed: ${error.message || error}`, 'err');
+        throw error;
+      }
+    };
+    window.__ultimateStatusHooked = true;
+    return true;
+  }
+
+  function initialData() {
+    renderOverview();
+    renderMonitor();
+    renderMetricsTable();
+    updateTrend();
+    maintenanceLoad();
+    maintenanceUpdate();
+    renderLogs();
+    renderErrorList();
+    refreshDebug();
+  }
+
+  function periodic() {
+    maintenanceUpdate();
+    updateRealClock();
+    renderOverview();
+    renderMonitor();
+    refreshDebug();
+    maybeHookOriginalStatus();
+  }
+
+  function init() {
+    load();
+    bindTabs();
+    bindMaintenance();
+    bindThresholds();
+    bindChecklist();
+    bindAnnouncements();
+    bindCalculator();
+    bindMOTD();
+    bindUtility();
+    bindWorldTime();
+    bindWeather();
+    bindRuleBuilder();
+    bindTeleport();
+    bindCommands();
+    bindSandbox();
+    bindNotes();
+    bindWhitelist();
+    bindPlayerActions();
+    bindTheme();
+    bindData();
+    bindRuntimeErrors();
+    keyboardShortcuts();
+    initialData();
+    monitorNetwork();
+    log('Ultimate Control Center initialized.', 'ok');
+
+    setInterval(periodic, 1000);
+    setInterval(sample, 5000);
+
+    window.addEventListener('online', () => {
+      log('Browser network restored.', 'ok');
+    });
+    window.addEventListener('offline', () => {
+      log('Browser network lost.', 'warn');
+    });
+    document.addEventListener('visibilitychange', () => {
+      log(`Visibility: ${document.visibilityState}`);
+    });
+
+    const hookWait = setInterval(() => {
+      if (maybeHookOriginalStatus()) {
+        clearInterval(hookWait);
+        log('Đã nối monitor với status function gốc.', 'ok');
+      }
+    }, 250);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+})();
+</script>
+
+
+<script id="ultimate-utils-js">
+(() => {
+  'use strict';
+
+  const q = id => document.getElementById(id);
+
+  function isoToLocal(value) {
+    const date = new Date(value);
+    if (!Number.isFinite(date.getTime())) {
+      return '--';
+    }
+    return date.toLocaleString('vi-VN');
+  }
+
+  function serverAddressParts() {
+    const ip = typeof window.SERVER_IP === 'string'
+      ? window.SERVER_IP
+      : 'carolyn-xr.tun.ply.gg';
+    const parts = ip.split(':');
+    return {
+      host: parts[0] || ip,
+      port: parts[1] || '25565'
+    };
+  }
+
+  function updateAddressHelper() {
+    const parts = serverAddressParts();
+    const output = q('ult-playit-host');
+    if (output) {
+      output.title = `Host: ${parts.host} | Default Minecraft port: ${parts.port}`;
+    }
+  }
+
+  function buildSocialText() {
+    const parts = serverAddressParts();
+    return [
+      '╔════════════════════════════╗',
+      '║      BI5556282 SERVER      ║',
+      '╠════════════════════════════╣',
+      `║ IP: ${parts.host}`,
+      '║ Version: 26.1.2',
+      '║ Tunnel: Playit.gg',
+      '╚════════════════════════════╝'
+    ].join('\n');
+
+  }
+
+  window.ULTIMATE_SOCIAL_COPY = () => {
+    const value = buildSocialText();
+    if (navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(value);
+    }
+  };
+
+  function hookLegacyIP() {
+    const nodes = document.querySelectorAll('.ip-text');
+    nodes.forEach(node => {
+      node.addEventListener('dblclick', () => {
+        const value = node.textContent.trim();
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(value)
+            .then(() => window.showToast?.(`✅ Đã copy: ${value}`));
+        }
+      });
+    });
+  }
+
+  function observeStatus() {
+    const status = q('status-text');
+    if (!status) {
+      return;
+    }
+    const observer = new MutationObserver(() => {
+      const value = status.textContent || '';
+      const event = new CustomEvent('ultimate-status-change', {
+        detail: {
+          text: value,
+          online: value.includes('ONLINE'),
+          time: Date.now()
+        }
+      });
+      document.dispatchEvent(event);
+    });
+    observer.observe(status, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
+  }
+
+  function bindStatusEvents() {
+    document.addEventListener('ultimate-status-change', event => {
+      const detail = event.detail || {};
+      const mode = detail.online ? 'ok' : 'warn';
+      const message = detail.online
+        ? 'Server chuyển sang ONLINE.'
+        : 'Server không còn báo ONLINE.';
+      window.__ULTIMATE_LAST_STATUS_EVENT = {
+        ...detail,
+        message
+      };
+      if (window.__ULTIMATE_LOG) {
+        window.__ULTIMATE_LOG(message, mode);
+      }
+    });
+  }
+
+  function safeJSON(value) {
+    try {
+      return JSON.stringify(value, null, 2);
+    } catch {
+      return '{}';
+    }
+  }
+
+  window.ULTIMATE_DEBUG = () => {
+    return safeJSON({
+      href: location.href,
+      protocol: location.protocol,
+      language: navigator.language,
+      online: navigator.onLine,
+      visible: document.visibilityState,
+      address: serverAddressParts(),
+      savedAt: new Date().toISOString()
+    });
+  };
+
+  function init() {
+    updateAddressHelper();
+    hookLegacyIP();
+    observeStatus();
+    bindStatusEvents();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, {once:true});
+  } else {
+    init();
+  }
+})();
+</script>
+
+<script id="ultimate-command-catalog">
+(() => {
+  'use strict';
+  const EXTRA_COMMAND_CATALOG = [
+    ['/difficulty peaceful', 'Độ khó Peaceful'],
+    ['/difficulty easy', 'Độ khó Easy'],
+    ['/difficulty normal', 'Độ khó Normal'],
+    ['/difficulty hard', 'Độ khó Hard'],
+    ['/gamerule doFireTick true', 'Bật cháy lan'],
+    ['/gamerule doFireTick false', 'Tắt cháy lan'],
+    ['/gamerule doMobLoot true', 'Mob drop'],
+    ['/gamerule doMobLoot false', 'Tắt mob drop'],
+    ['/gamerule doEntityDrops true', 'Entity drop'],
+    ['/gamerule doEntityDrops false', 'Tắt entity drop'],
+    ['/gamerule doInsomnia true', 'Bật phantom'],
+    ['/gamerule doInsomnia false', 'Tắt phantom'],
+    ['/gamerule doPatrolSpawning true', 'Bật patrol'],
+    ['/gamerule doPatrolSpawning false', 'Tắt patrol'],
+    ['/gamerule doTraderSpawning true', 'Bật wandering trader'],
+    ['/gamerule doTraderSpawning false', 'Tắt wandering trader'],
+    ['/gamerule drowningDamage true', 'Bật sát thương ngạt'],
+    ['/gamerule drowningDamage false', 'Tắt sát thương ngạt'],
+    ['/gamerule fallDamage true', 'Bật sát thương rơi'],
+    ['/gamerule fallDamage false', 'Tắt sát thương rơi'],
+    ['/gamerule fireDamage true', 'Bật sát thương lửa'],
+    ['/gamerule fireDamage false', 'Tắt sát thương lửa'],
+    ['/gamerule freezeDamage true', 'Bật sát thương đóng băng'],
+    ['/gamerule freezeDamage false', 'Tắt sát thương đóng băng'],
+    ['/gamerule keepInventory true', 'Giữ inventory'],
+    ['/gamerule keepInventory false', 'Không giữ inventory'],
+    ['/gamerule naturalRegeneration true', 'Natural regen'],
+    ['/gamerule naturalRegeneration false', 'Tắt natural regen'],
+    ['/gamerule playersSleepingPercentage 0', 'Một người ngủ'],
+    ['/gamerule playersSleepingPercentage 50', 'Nửa server ngủ'],
+    ['/gamerule playersSleepingPercentage 100', 'Tất cả phải ngủ'],
+    ['/gamerule randomTickSpeed 3', 'Random tick mặc định'],
+    ['/gamerule randomTickSpeed 6', 'Random tick x2'],
+    ['/gamerule randomTickSpeed 0', 'Dừng random tick'],
+    ['/gamerule spectatorsGenerateChunks false', 'Spectator không load chunk'],
+    ['/gamerule spectatorsGenerateChunks true', 'Spectator load chunk'],
+    ['/gamerule tntExplodes false', 'Tắt TNT'],
+    ['/gamerule tntExplodes true', 'Bật TNT'],
+    ['/gamerule universalAnger false', 'Tắt universal anger'],
+    ['/gamerule universalAnger true', 'Bật universal anger'],
+    ['/gamerule doVinesSpread false', 'Tắt dây leo lan'],
+    ['/gamerule doVinesSpread true', 'Bật dây leo lan'],
+    ['/gamerule maxEntityCramming 24', 'Entity cramming 24'],
+    ['/gamerule spawnRadius 10', 'Spawn radius 10'],
+    ['/gamerule maxCommandChainLength 65536', 'Command chain lớn'],
+    ['/gamerule logAdminCommands true', 'Log admin command'],
+    ['/gamerule reducedDebugInfo false', 'Debug info đầy đủ'],
+    ['/gamerule sendCommandFeedback true', 'Command feedback'],
+    ['/gamerule showDeathMessages true', 'Death messages'],
+  ];
+  window.EXTRA_COMMAND_CATALOG = EXTRA_COMMAND_CATALOG;
+})();
+</script>
 </body>
 </html>
