@@ -365,9 +365,6 @@ function drawTPSChart() {
 addEventListener('resize', resizeChart); resizeChart();
 
 /* Trạng thái server */
-// Dán link cổng 8080 (Public) của Codespaces vào đây, ví dụ:
-// 'https://ten-codespace-8080.app.github.dev/status'
-const CODESPACE_STATUS_URL = '';
 let lastTps = 19.9;
 
 async function getJSON(url) {
@@ -380,12 +377,14 @@ async function getJSON(url) {
   } finally { clearTimeout(timer); }
 }
 
-function setOnline(isOn, label) {
+function setOnline(state, label) {
+  const colors = { on: 'var(--green)', off: 'var(--red)', unknown: 'var(--yellow)' };
+  const c = colors[state];
   const dot = $('status-dot'), txt = $('status-text');
   txt.textContent = label;
-  txt.style.color = isOn ? 'var(--green)' : 'var(--glow)';
-  dot.style.background = isOn ? 'var(--green)' : 'var(--red)';
-  dot.style.boxShadow = isOn ? '0 0 12px var(--green)' : '0 0 12px var(--red)';
+  txt.style.color = c;
+  dot.style.background = c;
+  dot.style.boxShadow = `0 0 12px ${c}`;
 }
 
 function setMetrics(tps, ping) {
@@ -398,20 +397,32 @@ function setMetrics(tps, ping) {
   $('ping-bar').style.width = `${Math.min(ping, 100)}%`;
 }
 
+const STATUS_APIS = [
+  { name: 'mcstatus.io', url: `https://api.mcstatus.io/v2/status/java/${SERVER_IP}` },
+  { name: 'mcsrvstat.us', url: `https://api.mcsrvstat.us/3/${SERVER_IP}` }
+];
+
 async function fetchServerStatus() {
-  let data = null, source = '';
+  let data = null, source = '', gotAnswer = false;
 
-  // 1) Hỏi trực tiếp Codespaces qua cổng đã forward
-  if (CODESPACE_STATUS_URL) {
-    try { data = await getJSON(CODESPACE_STATUS_URL); source = 'Codespaces'; } catch (e) { data = null; }
-  }
-  // 2) Dự phòng: truy vấn qua địa chỉ Playit.gg
-  if (!data) {
-    try { data = await getJSON(`https://api.mcsrvstat.us/2/${SERVER_IP}`); source = 'Playit.gg'; } catch (e) { data = null; }
+  // Kiểm tra địa chỉ Playit.gg lần lượt qua từng API, dừng khi có kết quả ONLINE
+  for (const api of STATUS_APIS) {
+    try {
+      const d = await getJSON(api.url);
+      gotAnswer = true;
+      if (d.online) { data = d; source = api.name; break; }
+      if (!data) data = d;
+    } catch (e) { console.warn(api.name + ' lỗi:', e); }
   }
 
-  if (!data || !data.online) {
-    setOnline(false, 'OFFLINE (Codespaces đang tắt hoặc chưa chạy server)');
+  if (!gotAnswer) {
+    setOnline('unknown', 'KHÔNG KIỂM TRA ĐƯỢC (API không phản hồi)');
+    $('players-val').textContent = '-- / --';
+    $('players-bar').style.width = '0%';
+    return;
+  }
+  if (!data.online) {
+    setOnline('off', 'OFFLINE (không kết nối được tới Playit.gg)');
     $('players-val').textContent = '0 / 20';
     $('players-bar').style.width = '0%';
     return;
@@ -419,13 +430,11 @@ async function fetchServerStatus() {
 
   const on = data.players ? data.players.online : 0;
   const max = data.players ? data.players.max : 20;
-  setOnline(true, `ONLINE (${source})`);
+  setOnline('on', `ONLINE (Playit.gg)`);
   $('players-val').textContent = `${on} / ${max}`;
   $('players-bar').style.width = `${max ? (on / max) * 100 : 0}%`;
 
-  const tps = typeof data.tps === 'number' ? data.tps : +(19.8 + Math.random() * .2).toFixed(1);
-  const ping = typeof data.ping === 'number' ? Math.round(data.ping) : Math.floor(20 + Math.random() * 10);
-  setMetrics(tps, ping);
+  setMetrics(+(19.8 + Math.random() * .2).toFixed(1), Math.floor(20 + Math.random() * 10));
 }
 
 setInterval(fetchServerStatus, 5000);
