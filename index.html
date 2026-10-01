@@ -67,7 +67,6 @@
             pointer-events: none;
         }
 
-        /* Scanline effect */
         .scanlines {
             position: fixed;
             top: 0;
@@ -122,6 +121,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            flex-wrap: wrap;
         }
 
         .brand-badge {
@@ -130,9 +130,18 @@
             color: #fff;
             padding: 3px 8px;
             border-radius: 4px;
-            vertical-align: middle;
             text-shadow: none;
             box-shadow: 0 0 10px rgba(255, 0, 51, 0.8);
+        }
+
+        .host-badge {
+            font-size: 0.8rem;
+            background: #24292e;
+            color: #58a6ff;
+            border: 1px solid #30363d;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-shadow: none;
         }
 
         .sys-clock-box {
@@ -547,7 +556,10 @@
         <!-- Header -->
         <header class="header">
             <div class="brand">
-                <h1>bi5556282.com <span class="brand-badge">26.1.2</span></h1>
+                <h1>bi5556282.com 
+                    <span class="brand-badge">26.1.2</span>
+                    <span class="host-badge">☁️ GitHub Codespaces</span>
+                </h1>
             </div>
             <div class="sys-clock-box">
                 <div class="clock" id="liveClock">00:00:00</div>
@@ -559,7 +571,7 @@
         <div class="status-banner">
             <div class="status-indicator">
                 <div class="dot"></div>
-                <span>Trạng Thái Server: <strong style="color: #00ff66;">ONLINE</strong></span>
+                <span>Trạng Thái Server: <strong style="color: #00ff66;">ONLINE (Codespaces Active)</strong></span>
             </div>
             <div class="btn-action-group">
                 <button class="btn" onclick="copyIP()">
@@ -585,9 +597,9 @@
         <div class="metrics-grid">
             <div class="metric-card">
                 <div class="metric-label">TỐC ĐỘ SERVER (TPS)</div>
-                <div class="metric-value" id="tps-val">20.0 / 20.0</div>
+                <div class="metric-value" id="tps-val">19.9 / 20.0</div>
                 <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="tps-bar" style="width: 100%;"></div>
+                    <div class="progress-bar-fill" id="tps-bar" style="width: 99.5%;"></div>
                 </div>
             </div>
 
@@ -608,10 +620,11 @@
             </div>
 
             <div class="metric-card">
-                <div class="metric-label">HỆ THỐNG / ENGINE</div>
-                <div class="metric-value" style="font-size: 1.2rem; color: #ff3355;">Purpur 26.1.2</div>
+                <div class="metric-label">HOST & ENGINE</div>
+                <div class="metric-value" style="font-size: 1.1rem; color: #ff3355;">Purpur 26.1.2</div>
+                <div style="font-size: 0.75rem; color: #58a6ff; margin-bottom: 6px;">Hosted on GitHub Codespaces</div>
                 <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: 100%;"></div>
+                    <div class="progress-bar-fill" style="width: 100%; background: #58a6ff; box-shadow: 0 0 8px #58a6ff;"></div>
                 </div>
             </div>
         </div>
@@ -634,10 +647,11 @@
         <!-- Tab 1: Info -->
         <div id="tab-info" class="tab-panel active">
             <ul class="info-list">
-                <li>Phiên bản chính thức: <span class="code-inline">26.1.2</span> (Purpur / Paper TCP Core).</li>
-                <li>Hỗ trợ các Launcher: <span class="code-inline">TL Legacy</span>, <span class="code-inline">TLauncher</span>, <span class="code-inline">Official Minecraft Launcher</span>.</li>
-                <li>Tích hợp các Plugin tối ưu: <span class="code-inline">LuckPerms</span>, <span class="code-inline">VeinMiner</span>, <span class="code-inline">ClearLagg</span>.</li>
-                <li>Bảo vệ vùng đất cá nhân, chống griefing và giữ trải nghiệm sinh tồn mượt mà.</li>
+                <li>Hạ tầng máy chủ: Chạy trên môi trường ảo hóa <span class="code-inline">GitHub Codespaces</span> Cloud.</li>
+                <li>Đường truyền kết nối: Tunneling qua giao thức TCP cao tốc của <span class="code-inline">Playit.gg</span>.</li>
+                <li>Phiên bản chính thức: <span class="code-inline">26.1.2</span> (Purpur Core tối ưu hóa cao).</li>
+                <li>Tích hợp các Plugin quản trị & tối ưu: <span class="code-inline">LuckPerms</span>, <span class="code-inline">VeinMiner</span>, <span class="code-inline">ClearLagg</span>.</li>
+                <li>Hỗ trợ người chơi kết nối từ tất cả client (TL Legacy, TLauncher, Official Launcher).</li>
             </ul>
         </div>
 
@@ -666,7 +680,7 @@
         <div id="tab-setup" class="tab-panel">
             <ol style="padding-left: 20px; line-height: 1.8;">
                 <li>Bấm nút <strong>"Sao Chép IP"</strong> ở trên để lưu địa chỉ server vào bộ nhớ tạm.</li>
-                <li>Khởi động Launcher Minecraft của bạn (chọn đúng phiên bản <strong>26.1.2</strong>).</li>
+                <li>Khởi động Launcher Minecraft của bạn (chọn phiên bản <strong>26.1.2</strong>).</li>
                 <li>Vào mục <strong>Multiplayer (Đa người chơi)</strong> -> Chọn <strong>Add Server (Thêm máy chủ)</strong>.</li>
                 <li>Dán IP <span class="code-inline">carolyn-xr.tun.ply.gg</span> vào ô Server Address rồi bấm <strong>Done</strong> để tham gia!</li>
             </ol>
@@ -674,7 +688,7 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <p>&copy; 2026 <strong>bi5556282.com</strong> | Powered by Purpur & Playit.gg Tunneling</p>
+            <p>&copy; 2026 <strong>bi5556282.com</strong> | Hosted on GitHub Codespaces Cloud & Playit.gg Tunneling</p>
             <p style="margin-top: 5px; font-size: 0.75rem; color: #666;">Hệ thống tự động cập nhật thời gian thực & hiệu ứng Cyberpunk Visual Engine.</p>
         </footer>
 
@@ -692,7 +706,7 @@
         let audioCtx = null;
 
         /* ---------------------------------------------------------
-           1. WEB AUDIO API SYNTHESIZER (No external audio needed)
+           1. WEB AUDIO API SYNTHESIZER
            --------------------------------------------------------- */
         function initAudio() {
             if (!audioCtx) {
@@ -811,7 +825,6 @@
         function drawBgParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Draw connecting lines
             for (let i = 0; i < particleCount; i++) {
                 for (let j = i + 1; j < particleCount; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -829,7 +842,6 @@
                 }
             }
 
-            // Draw particles
             for (let p of particles) {
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -854,7 +866,7 @@
            --------------------------------------------------------- */
         const chartCanvas = document.getElementById('tps-chart');
         const chartCtx = chartCanvas.getContext('2d');
-        const tpsHistory = new Array(30).fill(20.0);
+        const tpsHistory = new Array(30).fill(19.9);
 
         function resizeChart() {
             chartCanvas.width = chartCanvas.parentElement.clientWidth;
@@ -864,7 +876,6 @@
         resizeChart();
 
         function updateChart() {
-            // Simulate realistic TPS minor fluctuation
             const simulatedTPS = +(19.8 + Math.random() * 0.2).toFixed(1);
             tpsHistory.push(simulatedTPS);
             tpsHistory.shift();
@@ -872,14 +883,12 @@
             document.getElementById('tps-val').textContent = `${simulatedTPS} / 20.0`;
             document.getElementById('tps-bar').style.width = `${(simulatedTPS / 20) * 100}%`;
 
-            // Draw Chart
             chartCtx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
             chartCtx.beginPath();
 
             const step = chartCanvas.width / (tpsHistory.length - 1);
             for (let i = 0; i < tpsHistory.length; i++) {
                 const x = i * step;
-                // Map TPS range [15, 20] to Canvas Height
                 const normalized = (tpsHistory[i] - 18) / 2.5; 
                 const y = chartCanvas.height - (normalized * chartCanvas.height * 0.7 + 10);
 
