@@ -54,6 +54,7 @@
             gap: 12px;
             margin-bottom: 35px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -73,6 +74,17 @@
             background-color: #e6002e;
             box-shadow: 0 0 20px rgba(255, 0, 51, 0.9);
             transform: translateY(-2px);
+        }
+
+        .btn-launch {
+            background-color: #2b000a;
+            border: 1px solid #ff0033;
+            color: #ff4d4d;
+        }
+
+        .btn-launch:hover {
+            background-color: #ff0033;
+            color: #ffffff;
         }
 
         select.btn {
@@ -119,23 +131,57 @@
             color: #ff4d4d;
             margin-bottom: 10px;
         }
+
+        /* Khung thông báo popup */
+        #toast {
+            visibility: hidden;
+            min-width: 300px;
+            background-color: #1f0307;
+            color: #ff6666;
+            text-align: center;
+            border: 1px solid #ff0033;
+            border-radius: 6px;
+            padding: 12px 18px;
+            position: fixed;
+            z-index: 100;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            box-shadow: 0 0 15px rgba(255, 0, 51, 0.6);
+            font-size: 0.9rem;
+        }
+
+        #toast.show {
+            visibility: visible;
+            animation: fadein 0.3s, fadeout 0.5s 3.5s;
+        }
+
+        @keyframes fadein {
+            from { bottom: 0; opacity: 0; }
+            to { bottom: 30px; opacity: 1; }
+        }
+
+        @keyframes fadeout {
+            from { bottom: 30px; opacity: 1; }
+            to { bottom: 0; opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>bi5556282.com</h1>
-        <div class="subtitle">PORTAL 1.21.4</div>
-        <div class="status">Đang quét Server... | Purpur 1.21.4</div>
+        <div class="subtitle">PORTAL 26.1.2</div>
+        <div class="status">Đang quét Server... | Purpur 26.1.2</div>
 
         <div class="btn-group">
             <button class="btn" onclick="copyIP()">Sao chép IP Server</button>
-            <select class="btn">
-                <option>TLauncher</option>
-                <option>SKLauncher</option>
-                <option>Official Launcher</option>
+            <select class="btn" id="launcherSelect">
+                <option value="tl_legacy">TL Legacy</option>
+                <option value="tlauncher">TLauncher</option>
+                <option value="official">Official Launcher</option>
             </select>
-            <button class="btn" style="background-color: #2b000a; border: 1px solid #ff0033;">Mở Game</button>
+            <button class="btn btn-launch" onclick="launchGame()">Mở Game</button>
         </div>
 
         <h2 class="restriction">Protocol Restriction Active</h2>
@@ -154,10 +200,40 @@
         </div>
     </div>
 
+    <!-- Thông báo Popup khi bấm nút -->
+    <div id="toast"></div>
+
     <script>
+        const SERVER_IP = 'carolyn-xr.tun.ply.gg';
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerHTML = message;
+            toast.className = 'show';
+            setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 4000);
+        }
+
         function copyIP() {
-            navigator.clipboard.writeText('carolyn-xr.tun.ply.gg');
-            alert('Đã sao chép IP: carolyn-xr.tun.ply.gg');
+            navigator.clipboard.writeText(SERVER_IP);
+            showToast('✅ Đã sao chép IP: <strong>' + SERVER_IP + '</strong>');
+        }
+
+        function launchGame() {
+            const launcher = document.getElementById('launcherSelect').value;
+            
+            // Tự động copy IP vào bộ nhớ tạm
+            navigator.clipboard.writeText(SERVER_IP);
+
+            // Thử mở Minecraft thông qua URL Protocol Handler
+            window.location.href = "minecraft://";
+
+            if (launcher === 'official') {
+                showToast('🚀 Đã copy IP! Đang thử mở Minecraft Official Launcher...');
+            } else if (launcher === 'tl_legacy') {
+                showToast('🚀 Đã copy IP! Mở <strong>TL Legacy</strong> rồi dán IP vào Kết nối trực tiếp.');
+            } else {
+                showToast('🚀 Đã copy IP! Mở <strong>TLauncher</strong> rồi dán IP vào Chơi mạng.');
+            }
         }
     </script>
 </body>
