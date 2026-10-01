@@ -3,83 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bi5556282.com - Server Minecraft</title>
+    <title>bi5556282.com | Cyberpunk Minecraft Portal</title>
     <style>
+        /* =========================================================
+           1. CORE STYLES & RESET
+           ========================================================= */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: 'Consolas', 'Courier New', monospace;
+            user-select: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0203;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff0033;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff3355;
         }
 
         body {
             background-color: #0b0203;
-            background-image: 
-                linear-gradient(rgba(255, 20, 60, 0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 20, 60, 0.08) 1px, transparent 1px),
-                linear-gradient(rgba(11, 2, 3, 0.85), rgba(11, 2, 3, 0.95)),
-                url('https://images.unsplash.com/photo-1605636362483-366a6db90382?q=80&w=1920&auto=format&fit=crop');
-            
-            background-size: 25px 25px, 25px 25px, cover, cover;
-            background-position: center center;
-            background-attachment: fixed;
-            transition: background-image 1.5s ease-in-out;
-            
             color: #f5f5f5;
-            padding: 40px 20px;
             min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding: 30px 15px;
         }
 
-        .container {
-            max-width: 900px;
+        /* =========================================================
+           2. BACKGROUND & CANVAS MATRIX/PARTICLES
+           ========================================================= */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: 
+                linear-gradient(rgba(255, 20, 60, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 20, 60, 0.05) 1px, transparent 1px),
+                radial-gradient(circle at center, rgba(11, 2, 3, 0.6) 0%, rgba(11, 2, 3, 0.98) 100%);
+            background-size: 30px 30px, 30px 30px, cover;
+            pointer-events: none;
+        }
+
+        /* Scanline effect */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 99;
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.25) 50%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* =========================================================
+           3. LAYOUT & CONTAINER
+           ========================================================= */
+        .portal-wrapper {
+            max-width: 1000px;
             margin: 0 auto;
             border-left: 3px solid #ff0033;
-            padding-left: 20px;
+            border-right: 1px solid rgba(255, 0, 51, 0.2);
+            background: rgba(15, 3, 6, 0.75);
+            backdrop-filter: blur(8px);
+            padding: 30px;
+            box-shadow: 0 0 35px rgba(255, 0, 51, 0.15);
+            border-radius: 0 12px 12px 0;
+            position: relative;
         }
 
-        .header-wrap {
+        /* =========================================================
+           4. HEADER & TOP BAR
+           ========================================================= */
+        .header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 2px solid rgba(255, 0, 51, 0.3);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .brand h1 {
+            font-size: 2.8rem;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255, 0, 51, 0.9), 0 0 30px rgba(255, 0, 51, 0.4);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-badge {
+            font-size: 0.8rem;
+            background: #ff0033;
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            vertical-align: middle;
+            text-shadow: none;
+            box-shadow: 0 0 10px rgba(255, 0, 51, 0.8);
+        }
+
+        .sys-clock-box {
+            display: flex;
+            flex-direction: column;
             align-items: flex-end;
-            margin-bottom: 5px;
+        }
+
+        .clock {
+            font-size: 2rem;
+            color: #ff3355;
+            font-weight: bold;
+            text-shadow: 0 0 12px rgba(255, 0, 51, 0.8);
+            background: rgba(255, 0, 51, 0.08);
+            padding: 6px 16px;
+            border-radius: 6px;
+            border: 1px dashed #ff0033;
+            letter-spacing: 2px;
+        }
+
+        .date-display {
+            font-size: 0.85rem;
+            color: #ff8093;
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+
+        /* =========================================================
+           5. SERVER STATUS & QUICK ACTIONS
+           ========================================================= */
+        .status-banner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 0, 51, 0.05);
+            border: 1px solid rgba(255, 0, 51, 0.25);
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 25px;
             flex-wrap: wrap;
             gap: 15px;
         }
 
-        h1 {
-            font-size: 3rem;
-            color: #ffffff;
-            text-shadow: 0 0 12px rgba(255, 0, 51, 0.8);
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
         }
 
-        .clock {
-            font-size: 1.8rem;
-            color: #ff3355;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 0, 51, 0.6);
-            background: rgba(255, 0, 51, 0.1);
-            padding: 5px 15px;
-            border-radius: 6px;
-            border: 1px dashed #ff0033;
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: #00ff66;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff66;
+            animation: pulse 1.8s infinite;
         }
 
-        .subtitle {
-            color: #ff4d4d;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(0, 255, 102, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 102, 0); }
         }
 
-        .status {
-            color: #ff6666;
-            margin-bottom: 25px;
-        }
-
-        .btn-group {
+        .btn-action-group {
             display: flex;
             gap: 12px;
-            margin-bottom: 35px;
-            align-items: center;
             flex-wrap: wrap;
         }
 
@@ -87,81 +208,308 @@
             background-color: #ff0033;
             color: #ffffff;
             border: none;
-            padding: 10px 20px;
+            padding: 12px 24px;
             font-weight: bold;
             font-size: 0.95rem;
             border-radius: 4px;
             cursor: pointer;
-            box-shadow: 0 0 12px rgba(255, 0, 51, 0.5);
-            transition: all 0.2s ease;
+            box-shadow: 0 0 15px rgba(255, 0, 51, 0.4);
+            transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn:hover {
-            background-color: #e6002e;
-            box-shadow: 0 0 20px rgba(255, 0, 51, 0.9);
+            background-color: #ff1a47;
+            box-shadow: 0 0 25px rgba(255, 0, 51, 0.9);
             transform: translateY(-2px);
         }
 
-        h2.restriction {
-            font-size: 2rem;
-            color: #ffffff;
-            border-bottom: 1px solid #33000a;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-            text-shadow: 0 0 8px rgba(255, 0, 51, 0.5);
+        .btn:active {
+            transform: translateY(1px);
         }
 
-        .ver-tag {
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #ff0033;
             color: #ff4d4d;
-            font-weight: bold;
-            margin-bottom: 15px;
+            box-shadow: none;
         }
 
-        .ip-box {
-            background: rgba(255, 0, 51, 0.05);
-            border: 1px dashed #ff0033;
+        .btn-outline:hover {
+            background: rgba(255, 0, 51, 0.15);
+            color: #fff;
+        }
+
+        /* =========================================================
+           6. IP DISPLAY BOX
+           ========================================================= */
+        .ip-card {
+            background: linear-gradient(135deg, rgba(30, 5, 10, 0.8), rgba(15, 2, 5, 0.9));
+            border: 1px solid #ff0033;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: inset 0 0 15px rgba(255, 0, 51, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ip-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 51, 0.15), transparent);
+            transition: 0.5s;
+        }
+
+        .ip-card:hover::before {
+            left: 100%;
+        }
+
+        .ip-title {
+            color: #ff4d4d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .ip-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .ip-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            letter-spacing: 1px;
+            background: #1f0307;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 0, 51, 0.4);
+            text-shadow: 0 0 8px rgba(255, 0, 51, 0.6);
+        }
+
+        /* =========================================================
+           7. TELEMETRY & DASHBOARD METRICS
+           ========================================================= */
+        .section-title {
+            font-size: 1.4rem;
+            color: #fff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 0, 51, 0.2);
+            padding-bottom: 8px;
+        }
+
+        .section-title::before {
+            content: '>';
+            color: #ff0033;
+            font-weight: bold;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(20, 4, 8, 0.6);
+            border: 1px solid rgba(255, 0, 51, 0.2);
             padding: 15px;
             border-radius: 6px;
-            margin-bottom: 30px;
-            line-height: 1.6;
+            transition: border-color 0.3s;
         }
 
-        .ip-highlight {
-            color: #ff6666;
+        .metric-card:hover {
+            border-color: #ff0033;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: #ff8093;
+            margin-bottom: 8px;
+        }
+
+        .metric-value {
+            font-size: 1.6rem;
             font-weight: bold;
-            background: #2b0008;
-            padding: 2px 8px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 0, 51, 0.15);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: #ff0033;
+            width: 0%;
+            box-shadow: 0 0 8px #ff0033;
+            transition: width 0.8s ease;
+        }
+
+        /* =========================================================
+           8. NAVIGATION TABS & CONTENT PANELS
+           ========================================================= */
+        .tabs-header {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid rgba(255, 0, 51, 0.2);
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: #ff8093;
+            padding: 10px 18px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px 4px 0 0;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+            background: rgba(255, 0, 51, 0.1);
+        }
+
+        .tab-btn.active {
+            color: #fff;
+            background: #ff0033;
+            box-shadow: 0 -2px 10px rgba(255, 0, 51, 0.5);
+        }
+
+        .tab-panel {
+            display: none;
+            background: rgba(20, 4, 8, 0.4);
+            border: 1px solid rgba(255, 0, 51, 0.2);
+            padding: 20px;
+            border-radius: 6px;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .info-list li::before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+            color: #ff0033;
+        }
+
+        .code-inline {
+            background: #2b000a;
+            color: #ff6680;
+            padding: 2px 6px;
             border-radius: 4px;
             border: 1px solid #80001a;
+            font-size: 0.9em;
         }
 
-        .telemetry h3 {
+        /* =========================================================
+           9. LIVE CANVAS GRAPH
+           ========================================================= */
+        .graph-container {
+            width: 100%;
+            height: 120px;
+            background: rgba(10, 2, 4, 0.8);
+            border: 1px solid rgba(255, 0, 51, 0.3);
+            border-radius: 6px;
+            margin-top: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #tps-chart {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* =========================================================
+           10. FOOTER & TOAST
+           ========================================================= */
+        .footer {
+            text-align: center;
+            border-top: 1px solid rgba(255, 0, 51, 0.2);
+            padding-top: 20px;
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        .footer a {
             color: #ff4d4d;
-            margin-bottom: 10px;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
         }
 
         #toast {
             visibility: hidden;
-            min-width: 320px;
-            background-color: #1f0307;
-            color: #ff6666;
+            min-width: 300px;
+            background-color: #1a0307;
+            color: #ff6680;
             text-align: center;
             border: 1px solid #ff0033;
             border-radius: 6px;
-            padding: 12px 18px;
+            padding: 14px 20px;
             position: fixed;
-            z-index: 100;
+            z-index: 1000;
             left: 50%;
             bottom: 30px;
             transform: translateX(-50%);
-            box-shadow: 0 0 15px rgba(255, 0, 51, 0.6);
+            box-shadow: 0 0 20px rgba(255, 0, 51, 0.7);
             font-size: 0.95rem;
             line-height: 1.4;
         }
 
         #toast.show {
             visibility: visible;
-            animation: fadein 0.3s, fadeout 0.5s 4.5s;
+            animation: fadein 0.3s, fadeout 0.5s 4s;
         }
 
         @keyframes fadein {
@@ -173,87 +521,381 @@
             from { bottom: 30px; opacity: 1; }
             to { bottom: 0; opacity: 0; }
         }
+
+        /* =========================================================
+           11. RESPONSIVE BREAKPOINTS
+           ========================================================= */
+        @media (max-width: 600px) {
+            .brand h1 { font-size: 2rem; }
+            .clock { font-size: 1.4rem; }
+            .portal-wrapper { padding: 15px; }
+            .btn { width: 100%; justify-content: center; }
+            .ip-content { flex-direction: column; align-items: stretch; }
+            .ip-text { text-align: center; font-size: 1.1rem; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="header-wrap">
-            <h1>bi5556282.com</h1>
-            <div class="clock" id="liveClock">00:00:00</div>
-        </div>
+    <!-- Background Canvas and Effects -->
+    <canvas id="bg-canvas"></canvas>
+    <div class="bg-overlay"></div>
+    <div class="scanlines"></div>
+
+    <div class="portal-wrapper">
         
-        <div class="subtitle">PORTAL 26.1.2</div>
-        <div class="status">Đang quét Server... | Purpur 26.1.2</div>
+        <!-- Header -->
+        <header class="header">
+            <div class="brand">
+                <h1>bi5556282.com <span class="brand-badge">26.1.2</span></h1>
+            </div>
+            <div class="sys-clock-box">
+                <div class="clock" id="liveClock">00:00:00</div>
+                <div class="date-display" id="liveDate">UTC+07:00 | THỨ NĂM</div>
+            </div>
+        </header>
 
-        <div class="btn-group">
-            <button class="btn" onclick="copyIP()">Sao chép IP Server</button>
-        </div>
-
-        <h2 class="restriction">Protocol Restriction Active</h2>
-        <div class="ver-tag">VER 26.1.2</div>
-
-        <div class="ip-box">
-            Địa chỉ web <strong>bi5556282.com</strong> tối ưu hóa cho giao thức TCP Minecraft. Để kết nối trực tiếp, hãy nhập IP <span class="ip-highlight">carolyn-xr.tun.ply.gg</span> vào Minecraft Client (v26.1.2).
-        </div>
-
-        <div class="telemetry">
-            <h3>Live Telemetry</h3>
-            <div style="margin-top: 10px;">
-                <span>TPS: 20.0</span><br>
-                <span style="color: #ff6666;">Hiệu năng Server: 20.0 / 20.0 TPS</span>
+        <!-- Status Banner -->
+        <div class="status-banner">
+            <div class="status-indicator">
+                <div class="dot"></div>
+                <span>Trạng Thái Server: <strong style="color: #00ff66;">ONLINE</strong></span>
+            </div>
+            <div class="btn-action-group">
+                <button class="btn" onclick="copyIP()">
+                    📋 Sao Chép IP
+                </button>
+                <button class="btn btn-outline" onclick="toggleAudio()">
+                    🔊 <span id="sound-status">Bật Âm Thanh</span>
+                </button>
             </div>
         </div>
+
+        <!-- IP Card -->
+        <div class="ip-card">
+            <div class="ip-title">KẾT NỐI TRỰC TIẾP (MINECRAFT JAVA 26.1.2)</div>
+            <div class="ip-content">
+                <div class="ip-text" id="server-ip-text">carolyn-xr.tun.ply.gg</div>
+                <button class="btn" onclick="copyIP()">Sao Chép IP</button>
+            </div>
+        </div>
+
+        <!-- Live Telemetry Section -->
+        <h2 class="section-title">Live Telemetry Dashboard</h2>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">TỐC ĐỘ SERVER (TPS)</div>
+                <div class="metric-value" id="tps-val">20.0 / 20.0</div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="tps-bar" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">ĐỘ TRỄ KẾT NỐI (PING)</div>
+                <div class="metric-value" id="ping-val">24 ms</div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="ping-bar" style="width: 20%; background: #00ff66; box-shadow: 0 0 8px #00ff66;"></div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">NGƯỜI CHƠI ONLINE</div>
+                <div class="metric-value" id="players-val">1 / 20</div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="players-bar" style="width: 5%;"></div>
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">HỆ THỐNG / ENGINE</div>
+                <div class="metric-value" style="font-size: 1.2rem; color: #ff3355;">Purpur 26.1.2</div>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Real-time Graph -->
+        <div class="graph-container">
+            <canvas id="tps-chart"></canvas>
+        </div>
+
+        <br>
+
+        <!-- Navigation Tabs -->
+        <div class="tabs-header">
+            <button class="tab-btn active" onclick="switchTab(event, 'tab-info')">📌 Tổng Quan</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-rules')">📜 Nội Quy Server</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-commands')">💻 Lệnh Cơ Bản</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-setup')">⚙️ Hướng Dẫn Vào</button>
+        </div>
+
+        <!-- Tab 1: Info -->
+        <div id="tab-info" class="tab-panel active">
+            <ul class="info-list">
+                <li>Phiên bản chính thức: <span class="code-inline">26.1.2</span> (Purpur / Paper TCP Core).</li>
+                <li>Hỗ trợ các Launcher: <span class="code-inline">TL Legacy</span>, <span class="code-inline">TLauncher</span>, <span class="code-inline">Official Minecraft Launcher</span>.</li>
+                <li>Tích hợp các Plugin tối ưu: <span class="code-inline">LuckPerms</span>, <span class="code-inline">VeinMiner</span>, <span class="code-inline">ClearLagg</span>.</li>
+                <li>Bảo vệ vùng đất cá nhân, chống griefing và giữ trải nghiệm sinh tồn mượt mà.</li>
+            </ul>
+        </div>
+
+        <!-- Tab 2: Rules -->
+        <div id="tab-rules" class="tab-panel">
+            <ul class="info-list">
+                <li>Không sử dụng phần mềm thứ ba (X-Ray, Fly Hack, Killaura...).</li>
+                <li>Không phá hoại công trình (Griefing) của người chơi khác trong khu vực đã bảo vệ.</li>
+                <li>Giữ gìn ngôn từ trong khung chat, không spam hoặc xúc phạm thành viên khác.</li>
+                <li>Báo cáo lỗi game/plugin cho Admin thay vì trục lợi cá nhân.</li>
+            </ul>
+        </div>
+
+        <!-- Tab 3: Commands -->
+        <div id="tab-commands" class="tab-panel">
+            <ul class="info-list">
+                <li><span class="code-inline">/sethome [tên]</span> - Đánh dấu điểm nhà cá nhân.</li>
+                <li><span class="code-inline">/home [tên]</span> - Dịch chuyển về nhà đã lưu.</li>
+                <li><span class="code-inline">/tpa [tên_người_chơi]</span> - Gửi yêu cầu dịch chuyển tới người chơi khác.</li>
+                <li><span class="code-inline">/tpaccept</span> - Chấp nhận yêu cầu dịch chuyển.</li>
+                <li><span class="code-inline">/spawn</span> - Quay trở lại sảnh chính của Server.</li>
+            </ul>
+        </div>
+
+        <!-- Tab 4: Setup Guide -->
+        <div id="tab-setup" class="tab-panel">
+            <ol style="padding-left: 20px; line-height: 1.8;">
+                <li>Bấm nút <strong>"Sao Chép IP"</strong> ở trên để lưu địa chỉ server vào bộ nhớ tạm.</li>
+                <li>Khởi động Launcher Minecraft của bạn (chọn đúng phiên bản <strong>26.1.2</strong>).</li>
+                <li>Vào mục <strong>Multiplayer (Đa người chơi)</strong> -> Chọn <strong>Add Server (Thêm máy chủ)</strong>.</li>
+                <li>Dán IP <span class="code-inline">carolyn-xr.tun.ply.gg</span> vào ô Server Address rồi bấm <strong>Done</strong> để tham gia!</li>
+            </ol>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 <strong>bi5556282.com</strong> | Powered by Purpur & Playit.gg Tunneling</p>
+            <p style="margin-top: 5px; font-size: 0.75rem; color: #666;">Hệ thống tự động cập nhật thời gian thực & hiệu ứng Cyberpunk Visual Engine.</p>
+        </footer>
+
     </div>
 
+    <!-- Toast Popup Notification -->
     <div id="toast"></div>
 
+    <!-- =========================================================
+       JAVASCRIPT LOGIC
+       ========================================================= -->
     <script>
         const SERVER_IP = 'carolyn-xr.tun.ply.gg';
+        let soundEnabled = false;
+        let audioCtx = null;
 
-        // 1. TỰ ĐỘNG ĐỔI HÌNH NỀN
-        const backgrounds = [
-            'https://images.unsplash.com/photo-1605636362483-366a6db90382?q=80&w=1920&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1920&auto=format&fit=crop',
-            'https://images.unsplash.com/photo-1614729939124-03290b8edea9?q=80&w=1920&auto=format&fit=crop'
-        ];
-        
-        let bgIndex = 0;
-        function changeBackground() {
-            bgIndex = (bgIndex + 1) % backgrounds.length;
-            document.body.style.backgroundImage = `
-                linear-gradient(rgba(255, 20, 60, 0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 20, 60, 0.08) 1px, transparent 1px),
-                linear-gradient(rgba(11, 2, 3, 0.85), rgba(11, 2, 3, 0.95)),
-                url('${backgrounds[bgIndex]}')
-            `;
+        /* ---------------------------------------------------------
+           1. WEB AUDIO API SYNTHESIZER (No external audio needed)
+           --------------------------------------------------------- */
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
         }
-        setInterval(changeBackground, 5000);
 
-        // 2. ĐỒNG HỒ THỜI GIAN THỰC
-        function updateClock() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('liveClock').textContent = hours + ':' + minutes + ':' + seconds;
+        function playBeep(freq = 600, duration = 0.06, type = 'sine') {
+            if (!soundEnabled) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {}
         }
-        setInterval(updateClock, 1000);
-        updateClock();
 
-        // 3. THÔNG BÁO VÀ SAO CHÉP IP
+        function toggleAudio() {
+            soundEnabled = !soundEnabled;
+            const btnText = document.getElementById('sound-status');
+            if (soundEnabled) {
+                initAudio();
+                btnText.textContent = 'Tắt Âm Thanh';
+                showToast('🔊 Đã bật âm thanh hiệu ứng giao diện!');
+                playBeep(800, 0.1);
+            } else {
+                btnText.textContent = 'Bật Âm Thanh';
+                showToast('🔇 Đã tắt âm thanh!');
+            }
+        }
+
+        /* ---------------------------------------------------------
+           2. TOAST NOTIFICATION & COPY IP
+           --------------------------------------------------------- */
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.innerHTML = message;
             toast.className = 'show';
+            playBeep(900, 0.08, 'triangle');
             setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 4000);
         }
 
         function copyIP() {
             navigator.clipboard.writeText(SERVER_IP);
-            showToast('✅ Đã sao chép IP: <strong>' + SERVER_IP + '</strong>');
+            showToast('✅ Đã sao chép IP thành công:<br><strong>' + SERVER_IP + '</strong>');
         }
+
+        /* ---------------------------------------------------------
+           3. LIVE REAL-TIME CLOCK & DATE
+           --------------------------------------------------------- */
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('liveClock').textContent = `${hours}:${minutes}:${seconds}`;
+
+            const days = ['CHỦ NHẬT', 'THỨ HAI', 'THỨ BA', 'THỨ TƯ', 'THỨ NĂM', 'THỨ SÁU', 'THỨ BẢY'];
+            const dayName = days[now.getDay()];
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            document.getElementById('liveDate').textContent = `UTC+07:00 | ${dayName}, ${day}/${month}/${year}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        /* ---------------------------------------------------------
+           4. TAB SWITCHING SYSTEM
+           --------------------------------------------------------- */
+        function switchTab(evt, tabId) {
+            playBeep(500, 0.04);
+            const panels = document.querySelectorAll('.tab-panel');
+            const btns = document.querySelectorAll('.tab-btn');
+
+            panels.forEach(p => p.classList.remove('active'));
+            btns.forEach(b => b.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+
+        /* ---------------------------------------------------------
+           5. CANVAS BACKGROUND PARTICLES & GRID ENGINE
+           --------------------------------------------------------- */
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const particles = [];
+        const particleCount = 45;
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.6,
+                vy: (Math.random() - 0.5) * 0.6,
+                radius: Math.random() * 2 + 1
+            });
+        }
+
+        function drawBgParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw connecting lines
+            for (let i = 0; i < particleCount; i++) {
+                for (let j = i + 1; j < particleCount; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 130) {
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(255, 0, 51, ${0.15 - dist / 130 * 0.15})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Draw particles
+            for (let p of particles) {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 51, 85, 0.6)';
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = '#ff0033';
+                ctx.fill();
+
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            }
+
+            requestAnimationFrame(drawBgParticles);
+        }
+        drawBgParticles();
+
+        /* ---------------------------------------------------------
+           6. LIVE TPS CHART & DYNAMIC SIMULATION
+           --------------------------------------------------------- */
+        const chartCanvas = document.getElementById('tps-chart');
+        const chartCtx = chartCanvas.getContext('2d');
+        const tpsHistory = new Array(30).fill(20.0);
+
+        function resizeChart() {
+            chartCanvas.width = chartCanvas.parentElement.clientWidth;
+            chartCanvas.height = chartCanvas.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', resizeChart);
+        resizeChart();
+
+        function updateChart() {
+            // Simulate realistic TPS minor fluctuation
+            const simulatedTPS = +(19.8 + Math.random() * 0.2).toFixed(1);
+            tpsHistory.push(simulatedTPS);
+            tpsHistory.shift();
+
+            document.getElementById('tps-val').textContent = `${simulatedTPS} / 20.0`;
+            document.getElementById('tps-bar').style.width = `${(simulatedTPS / 20) * 100}%`;
+
+            // Draw Chart
+            chartCtx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
+            chartCtx.beginPath();
+
+            const step = chartCanvas.width / (tpsHistory.length - 1);
+            for (let i = 0; i < tpsHistory.length; i++) {
+                const x = i * step;
+                // Map TPS range [15, 20] to Canvas Height
+                const normalized = (tpsHistory[i] - 18) / 2.5; 
+                const y = chartCanvas.height - (normalized * chartCanvas.height * 0.7 + 10);
+
+                if (i === 0) chartCtx.moveTo(x, y);
+                else chartCtx.lineTo(x, y);
+            }
+
+            chartCtx.strokeStyle = '#ff0033';
+            chartCtx.lineWidth = 2;
+            chartCtx.shadowBlur = 10;
+            chartCtx.shadowColor = '#ff0033';
+            chartCtx.stroke();
+        }
+
+        setInterval(updateChart, 2000);
+        updateChart();
     </script>
 </body>
 </html>
