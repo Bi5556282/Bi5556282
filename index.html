@@ -14,10 +14,17 @@
 
         body {
             background-color: #0b0203;
+            /* Hiệu ứng 3 lớp: Lưới đỏ -> Lớp phủ tối -> Hình nền */
             background-image: 
                 linear-gradient(rgba(255, 20, 60, 0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 20, 60, 0.08) 1px, transparent 1px);
-            background-size: 25px 25px;
+                linear-gradient(90deg, rgba(255, 20, 60, 0.08) 1px, transparent 1px),
+                linear-gradient(rgba(11, 2, 3, 0.85), rgba(11, 2, 3, 0.95)),
+                url('https://images.unsplash.com/photo-1605636362483-366a6db90382?q=80&w=1920&auto=format&fit=crop'); /* THAY LINK ẢNH CỦA BẠN VÀO DÒNG NÀY */
+            
+            background-size: 25px 25px, 25px 25px, cover, cover;
+            background-position: center center;
+            background-attachment: fixed;
+            
             color: #f5f5f5;
             padding: 40px 20px;
             min-height: 100vh;
@@ -30,11 +37,30 @@
             padding-left: 20px;
         }
 
+        .header-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 5px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
         h1 {
             font-size: 3rem;
             color: #ffffff;
             text-shadow: 0 0 12px rgba(255, 0, 51, 0.8);
-            margin-bottom: 5px;
+        }
+
+        .clock {
+            font-size: 1.8rem;
+            color: #ff3355;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 0, 51, 0.6);
+            background: rgba(255, 0, 51, 0.1);
+            padding: 5px 15px;
+            border-radius: 6px;
+            border: 1px dashed #ff0033;
         }
 
         .subtitle {
@@ -132,7 +158,6 @@
             margin-bottom: 10px;
         }
 
-        /* Khung thông báo popup */
         #toast {
             visibility: hidden;
             min-width: 300px;
@@ -170,7 +195,12 @@
 <body>
 
     <div class="container">
-        <h1>bi5556282.com</h1>
+        <div class="header-wrap">
+            <h1>bi5556282.com</h1>
+            <!-- Đồng hồ thời gian thực -->
+            <div class="clock" id="liveClock">00:00:00</div>
+        </div>
+        
         <div class="subtitle">PORTAL 26.1.2</div>
         <div class="status">Đang quét Server... | Purpur 26.1.2</div>
 
@@ -185,10 +215,10 @@
         </div>
 
         <h2 class="restriction">Protocol Restriction Active</h2>
-        <div class="ver-tag">VER 1.21.4</div>
+        <div class="ver-tag">VER 26.1.2</div>
 
         <div class="ip-box">
-            Địa chỉ web <strong>bi5556282.com</strong> tối ưu hóa cho giao thức TCP Minecraft. Để kết nối trực tiếp, hãy nhập IP <span class="ip-highlight">carolyn-xr.tun.ply.gg</span> vào Minecraft Client (v1.21.4).
+            Địa chỉ web <strong>bi5556282.com</strong> tối ưu hóa cho giao thức TCP Minecraft. Để kết nối trực tiếp, hãy nhập IP <span class="ip-highlight">carolyn-xr.tun.ply.gg</span> vào Minecraft Client (v26.1.2).
         </div>
 
         <div class="telemetry">
@@ -200,12 +230,24 @@
         </div>
     </div>
 
-    <!-- Thông báo Popup khi bấm nút -->
+    <!-- Khung Popup -->
     <div id="toast"></div>
 
     <script>
         const SERVER_IP = 'carolyn-xr.tun.ply.gg';
 
+        // Hàm chạy đồng hồ thời gian thực
+        function updateClock() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('liveClock').textContent = hours + ':' + minutes + ':' + seconds;
+        }
+        setInterval(updateClock, 1000); // Cập nhật mỗi 1 giây
+        updateClock(); // Chạy ngay khi load trang
+
+        // Hàm hiện thông báo
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.innerHTML = message;
@@ -213,26 +255,23 @@
             setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 4000);
         }
 
+        // Hàm copy IP
         function copyIP() {
             navigator.clipboard.writeText(SERVER_IP);
             showToast('✅ Đã sao chép IP: <strong>' + SERVER_IP + '</strong>');
         }
 
+        // Hàm Mở Game
         function launchGame() {
             const launcher = document.getElementById('launcherSelect').value;
-            
-            // Tự động copy IP vào bộ nhớ tạm
             navigator.clipboard.writeText(SERVER_IP);
 
-            // Thử mở Minecraft thông qua URL Protocol Handler
-            window.location.href = "minecraft://";
-
             if (launcher === 'official') {
-                showToast('🚀 Đã copy IP! Đang thử mở Minecraft Official Launcher...');
+                showToast('🚀 Đã copy IP! Mở <strong>Minecraft Launcher</strong> chính thức và dán vào game nhé.');
             } else if (launcher === 'tl_legacy') {
-                showToast('🚀 Đã copy IP! Mở <strong>TL Legacy</strong> rồi dán IP vào Kết nối trực tiếp.');
+                showToast('🚀 Đã copy IP! Bạn hãy tự mở <strong>TL Legacy</strong>, vào mục Đa người chơi và dán IP.');
             } else {
-                showToast('🚀 Đã copy IP! Mở <strong>TLauncher</strong> rồi dán IP vào Chơi mạng.');
+                showToast('🚀 Đã copy IP! Bạn hãy tự mở <strong>TLauncher</strong>, vào mục Đa người chơi và dán IP.');
             }
         }
     </script>
