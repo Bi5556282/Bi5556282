@@ -14,16 +14,17 @@
 
         body {
             background-color: #0b0203;
-            /* Hiệu ứng 3 lớp: Lưới đỏ -> Lớp phủ tối -> Hình nền */
+            /* Hình nền mặc định lúc mới tải trang */
             background-image: 
                 linear-gradient(rgba(255, 20, 60, 0.08) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 20, 60, 0.08) 1px, transparent 1px),
                 linear-gradient(rgba(11, 2, 3, 0.85), rgba(11, 2, 3, 0.95)),
-                url('https://images.unsplash.com/photo-1605636362483-366a6db90382?q=80&w=1920&auto=format&fit=crop'); /* THAY LINK ẢNH CỦA BẠN VÀO DÒNG NÀY */
+                url('https://images.unsplash.com/photo-1605636362483-366a6db90382?q=80&w=1920&auto=format&fit=crop');
             
             background-size: 25px 25px, 25px 25px, cover, cover;
             background-position: center center;
             background-attachment: fixed;
+            transition: background-image 1.5s ease-in-out; /* Hiệu ứng chuyển cảnh mượt */
             
             color: #f5f5f5;
             padding: 40px 20px;
@@ -160,7 +161,7 @@
 
         #toast {
             visibility: hidden;
-            min-width: 300px;
+            min-width: 320px;
             background-color: #1f0307;
             color: #ff6666;
             text-align: center;
@@ -173,12 +174,13 @@
             bottom: 30px;
             transform: translateX(-50%);
             box-shadow: 0 0 15px rgba(255, 0, 51, 0.6);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            line-height: 1.4;
         }
 
         #toast.show {
             visibility: visible;
-            animation: fadein 0.3s, fadeout 0.5s 3.5s;
+            animation: fadein 0.3s, fadeout 0.5s 4.5s;
         }
 
         @keyframes fadein {
@@ -197,7 +199,6 @@
     <div class="container">
         <div class="header-wrap">
             <h1>bi5556282.com</h1>
-            <!-- Đồng hồ thời gian thực -->
             <div class="clock" id="liveClock">00:00:00</div>
         </div>
         
@@ -230,13 +231,32 @@
         </div>
     </div>
 
-    <!-- Khung Popup -->
     <div id="toast"></div>
 
     <script>
         const SERVER_IP = 'carolyn-xr.tun.ply.gg';
 
-        // Hàm chạy đồng hồ thời gian thực
+        // 1. HỆ THỐNG ĐỔI HÌNH NỀN TỰ ĐỘNG
+        const backgrounds = [
+            'https://images.unsplash.com/photo-1605636362483-366a6db90382?q=80&w=1920&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1920&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1614729939124-03290b8edea9?q=80&w=1920&auto=format&fit=crop'
+        ];
+        
+        let bgIndex = 0;
+        function changeBackground() {
+            bgIndex = (bgIndex + 1) % backgrounds.length;
+            document.body.style.backgroundImage = `
+                linear-gradient(rgba(255, 20, 60, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 20, 60, 0.08) 1px, transparent 1px),
+                linear-gradient(rgba(11, 2, 3, 0.85), rgba(11, 2, 3, 0.95)),
+                url('${backgrounds[bgIndex]}')
+            `;
+        }
+        setInterval(changeBackground, 5000); // Đổi hình mỗi 5 giây
+
+        // 2. HỆ THỐNG ĐỒNG HỒ
         function updateClock() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
@@ -244,34 +264,33 @@
             const seconds = String(now.getSeconds()).padStart(2, '0');
             document.getElementById('liveClock').textContent = hours + ':' + minutes + ':' + seconds;
         }
-        setInterval(updateClock, 1000); // Cập nhật mỗi 1 giây
-        updateClock(); // Chạy ngay khi load trang
+        setInterval(updateClock, 1000);
+        updateClock();
 
-        // Hàm hiện thông báo
+        // 3. HỆ THỐNG NÚT BẤM VÀ THÔNG BÁO
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.innerHTML = message;
             toast.className = 'show';
-            setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 4000);
+            setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 5000); // Tắt sau 5s
         }
 
-        // Hàm copy IP
         function copyIP() {
             navigator.clipboard.writeText(SERVER_IP);
             showToast('✅ Đã sao chép IP: <strong>' + SERVER_IP + '</strong>');
         }
 
-        // Hàm Mở Game
         function launchGame() {
             const launcher = document.getElementById('launcherSelect').value;
-            navigator.clipboard.writeText(SERVER_IP);
+            navigator.clipboard.writeText(SERVER_IP); // Luôn copy IP sẵn cho người dùng
 
             if (launcher === 'official') {
-                showToast('🚀 Đã copy IP! Mở <strong>Minecraft Launcher</strong> chính thức và dán vào game nhé.');
-            } else if (launcher === 'tl_legacy') {
-                showToast('🚀 Đã copy IP! Bạn hãy tự mở <strong>TL Legacy</strong>, vào mục Đa người chơi và dán IP.');
+                // Thử gọi giao thức của Official Launcher (chỉ hoạt động nếu có cài bản quyền)
+                window.location.href = "minecraft://";
+                showToast('🚀 Đang gọi <strong>Minecraft Official</strong>...<br>Đã copy sẵn IP: ' + SERVER_IP);
             } else {
-                showToast('🚀 Đã copy IP! Bạn hãy tự mở <strong>TLauncher</strong>, vào mục Đa người chơi và dán IP.');
+                // TL Legacy và TLauncher (Web bị chặn mở file .exe)
+                showToast('⚠️ Trình duyệt không có quyền mở ứng dụng ngoài.<br>Đã copy sẵn IP: <strong>' + SERVER_IP + '</strong><br>Vui lòng tự bật Launcher để chơi!');
             }
         }
     </script>
