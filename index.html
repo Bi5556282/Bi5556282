@@ -1,1464 +1,436 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>bi5556282.com | Cyberpunk Codespaces Portal</title>
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-
-    <style>
-        /* =========================================================
-           1. VARIABLES & SYSTEM RESET
-           ========================================================= */
-        :root {
-            --bg-main: #0a0204;
-            --bg-card: rgba(18, 4, 8, 0.85);
-            --bg-card-hover: rgba(30, 6, 12, 0.95);
-            --border-red: #ff0033;
-            --border-red-dim: rgba(255, 0, 51, 0.25);
-            --text-glow: #ff3355;
-            --text-main: #f5f5f5;
-            --text-muted: #ff8093;
-            --cyan-accent: #00f0ff;
-            --green-glow: #00ff66;
-            --yellow-warn: #ffcc00;
-            --github-blue: #58a6ff;
-            --font-head: 'Orbitron', sans-serif;
-            --font-sub: 'Rajdhani', sans-serif;
-            --font-code: 'Share Tech Mono', 'Consolas', monospace;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: var(--font-sub);
-            user-select: none;
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-main);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-red);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ff3355;
-        }
-
-        body {
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-            padding: 20px 10px;
-        }
-
-        /* =========================================================
-           2. BACKGROUND CANVAS & CYBER ANIMATIONS
-           ========================================================= */
-        #bg-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -2;
-            pointer-events: none;
-        }
-
-        .bg-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            background: 
-                linear-gradient(rgba(255, 0, 51, 0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 0, 51, 0.04) 1px, transparent 1px),
-                radial-gradient(circle at center, rgba(10, 2, 4, 0.5) 0%, rgba(10, 2, 4, 0.98) 100%);
-            background-size: 40px 40px, 40px 40px, cover;
-            pointer-events: none;
-        }
-
-        .scanlines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 99;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.3) 50%);
-            background-size: 100% 4px;
-            pointer-events: none;
-            opacity: 0.5;
-        }
-
-        /* =========================================================
-           3. MAIN CONTAINER & HEADER
-           ========================================================= */
-        .portal-wrapper {
-            max-width: 1200px;
-            margin: 0 auto;
-            border-left: 3px solid var(--border-red);
-            border-right: 1px solid var(--border-red-dim);
-            background: var(--bg-card);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            box-shadow: 0 0 40px rgba(255, 0, 51, 0.15);
-            border-radius: 0 16px 16px 0;
-            position: relative;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            border-bottom: 2px solid var(--border-red-dim);
-            padding-bottom: 20px;
-            margin-bottom: 25px;
-        }
-
-        .brand-title {
-            font-family: var(--font-head);
-            font-size: 2.6rem;
-            font-weight: 900;
-            color: #ffffff;
-            text-shadow: 0 0 15px rgba(255, 0, 51, 0.9), 0 0 30px rgba(255, 0, 51, 0.4);
-            letter-spacing: 2px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            font-family: var(--font-code);
-            font-size: 0.8rem;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-weight: bold;
-            text-shadow: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .badge-ver {
-            background: var(--border-red);
-            color: #fff;
-            box-shadow: 0 0 12px rgba(255, 0, 51, 0.8);
-        }
-
-        .badge-host {
-            background: #161b22;
-            color: var(--github-blue);
-            border: 1px solid #30363d;
-        }
-
-        .sys-clock-box {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-
-        .clock {
-            font-family: var(--font-code);
-            font-size: 2.2rem;
-            color: var(--text-glow);
-            font-weight: bold;
-            text-shadow: 0 0 12px rgba(255, 0, 51, 0.8);
-            background: rgba(255, 0, 51, 0.08);
-            padding: 6px 18px;
-            border-radius: 6px;
-            border: 1px dashed var(--border-red);
-            letter-spacing: 2px;
-        }
-
-        .date-display {
-            font-family: var(--font-code);
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 6px;
-            letter-spacing: 1px;
-        }
-
-        /* =========================================================
-           4. ANNOUNCEMENT TICKER BANNER
-           ========================================================= */
-        .ticker-wrap {
-            width: 100%;
-            background: rgba(255, 0, 51, 0.08);
-            border: 1px solid var(--border-red-dim);
-            border-radius: 6px;
-            padding: 8px 15px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            overflow: hidden;
-        }
-
-        .ticker-label {
-            font-family: var(--font-head);
-            font-size: 0.75rem;
-            background: var(--border-red);
-            color: #fff;
-            padding: 3px 8px;
-            border-radius: 3px;
-            white-space: nowrap;
-        }
-
-        .ticker-content {
-            font-family: var(--font-code);
-            font-size: 0.9rem;
-            color: var(--text-main);
-            white-space: nowrap;
-            animation: ticker 25s linear infinite;
-        }
-
-        @keyframes ticker {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        /* =========================================================
-           5. STATUS & QUICK DIRECT CONNECT
-           ========================================================= */
-        .status-banner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(255, 0, 51, 0.05);
-            border: 1px solid var(--border-red-dim);
-            padding: 18px 24px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .dot {
-            width: 14px;
-            height: 14px;
-            background-color: var(--green-glow);
-            border-radius: 50%;
-            box-shadow: 0 0 12px var(--green-glow);
-            animation: pulse 1.8s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 102, 0.7); }
-            70% { transform: scale(1.15); box-shadow: 0 0 0 10px rgba(0, 255, 102, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 255, 102, 0); }
-        }
-
-        .btn-action-group {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            font-family: var(--font-head);
-            background-color: var(--border-red);
-            color: #ffffff;
-            border: none;
-            padding: 12px 22px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            border-radius: 4px;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(255, 0, 51, 0.4);
-            transition: all 0.25s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            letter-spacing: 1px;
-        }
-
-        .btn:hover {
-            background-color: #ff1a47;
-            box-shadow: 0 0 25px rgba(255, 0, 51, 0.9);
-            transform: translateY(-2px);
-        }
-
-        .btn:active {
-            transform: translateY(1px);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--border-red);
-            color: var(--text-muted);
-            box-shadow: none;
-        }
-
-        .btn-outline:hover {
-            background: rgba(255, 0, 51, 0.15);
-            color: #fff;
-        }
-
-        .btn-cyan {
-            background: transparent;
-            border: 1px solid var(--cyan-accent);
-            color: var(--cyan-accent);
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-        }
-
-        .btn-cyan:hover {
-            background: var(--cyan-accent);
-            color: #000;
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
-        }
-
-        /* =========================================================
-           6. IP DISPLAY & DIRECT CONNECT CARDS
-           ========================================================= */
-        .ip-cards-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .ip-card {
-            background: linear-gradient(135deg, rgba(30, 5, 10, 0.9), rgba(15, 2, 5, 0.95));
-            border: 1px solid var(--border-red);
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: inset 0 0 15px rgba(255, 0, 51, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ip-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 0, 51, 0.15), transparent);
-            transition: 0.5s;
-        }
-
-        .ip-card:hover::before {
-            left: 100%;
-        }
-
-        .ip-title {
-            font-family: var(--font-head);
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .ip-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-        }
-
-        .ip-text {
-            font-family: var(--font-code);
-            font-size: 1.35rem;
-            font-weight: bold;
-            color: #ffffff;
-            letter-spacing: 1px;
-            background: #140205;
-            padding: 10px 14px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 0, 51, 0.4);
-            text-shadow: 0 0 8px rgba(255, 0, 51, 0.6);
-            flex-grow: 1;
-            word-break: break-all;
-        }
-
-        /* =========================================================
-           7. TELEMETRY & METRICS DASHBOARD
-           ========================================================= */
-        .section-title {
-            font-family: var(--font-head);
-            font-size: 1.3rem;
-            color: #fff;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid var(--border-red-dim);
-            padding-bottom: 8px;
-            letter-spacing: 1px;
-        }
-
-        .section-title::before {
-            content: '//';
-            color: var(--border-red);
-            font-weight: bold;
-        }
-
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
-            margin-bottom: 25px;
-        }
-
-        .metric-card {
-            background: rgba(20, 4, 8, 0.7);
-            border: 1px solid var(--border-red-dim);
-            padding: 16px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .metric-card:hover {
-            border-color: var(--border-red);
-            transform: translateY(-2px);
-            background: rgba(28, 5, 11, 0.85);
-        }
-
-        .metric-label {
-            font-family: var(--font-head);
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            letter-spacing: 1px;
-        }
-
-        .metric-value {
-            font-family: var(--font-code);
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #ffffff;
-            margin-bottom: 10px;
-        }
-
-        .progress-bar-bg {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 0, 51, 0.15);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            background: var(--border-red);
-            width: 0%;
-            box-shadow: 0 0 8px var(--border-red);
-            transition: width 0.8s ease;
-        }
-
-        /* Graph container */
-        .graph-container {
-            width: 100%;
-            height: 130px;
-            background: rgba(10, 2, 4, 0.85);
-            border: 1px solid var(--border-red-dim);
-            border-radius: 6px;
-            margin-bottom: 30px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #tps-chart {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* =========================================================
-           8. ACTIVE ONLINE PLAYERS SHOWCASE
-           ========================================================= */
-        .players-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .player-card {
-            background: rgba(18, 3, 7, 0.8);
-            border: 1px solid var(--border-red-dim);
-            padding: 10px 14px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.2s ease;
-        }
-
-        .player-card:hover {
-            border-color: var(--border-red);
-            background: rgba(30, 5, 12, 0.9);
-        }
-
-        .player-avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 4px;
-            border: 1px solid var(--border-red);
-            background: #000;
-        }
-
-        .player-info {
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        .player-name {
-            font-family: var(--font-code);
-            font-weight: bold;
-            font-size: 0.95rem;
-            color: #fff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .player-rank {
-            font-size: 0.7rem;
-            color: var(--cyan-accent);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* =========================================================
-           9. CYBERPUNK WEB TERMINAL / CLI SIMULATOR
-           ========================================================= */
-        .terminal-wrapper {
-            background: #050102;
-            border: 1px solid var(--border-red);
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(255, 0, 51, 0.15);
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-
-        .terminal-header {
-            background: rgba(255, 0, 51, 0.15);
-            padding: 8px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-red-dim);
-        }
-
-        .terminal-title {
-            font-family: var(--font-code);
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .terminal-dots {
-            display: flex;
-            gap: 6px;
-        }
-
-        .t-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .terminal-body {
-            padding: 15px;
-            font-family: var(--font-code);
-            font-size: 0.9rem;
-            height: 180px;
-            overflow-y: auto;
-            color: #33ff77;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .terminal-line {
-            line-height: 1.4;
-            word-break: break-all;
-        }
-
-        .terminal-line.system { color: var(--cyan-accent); }
-        .terminal-line.error { color: #ff3355; }
-        .terminal-line.output { color: #d0d0d0; }
-
-        .terminal-input-row {
-            display: flex;
-            align-items: center;
-            background: #0a0204;
-            padding: 8px 15px;
-            border-top: 1px solid rgba(255, 0, 51, 0.2);
-        }
-
-        .terminal-prompt {
-            font-family: var(--font-code);
-            color: var(--border-red);
-            margin-right: 10px;
-            font-weight: bold;
-        }
-
-        .terminal-input {
-            background: transparent;
-            border: none;
-            outline: none;
-            color: #fff;
-            font-family: var(--font-code);
-            font-size: 0.95rem;
-            width: 100%;
-        }
-
-        /* =========================================================
-           10. NAVIGATION TABS & CONTENT PANELS
-           ========================================================= */
-        .tabs-header {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--border-red-dim);
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
-
-        .tab-btn {
-            font-family: var(--font-head);
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            padding: 10px 18px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 4px 4px 0 0;
-            transition: all 0.2s;
-            white-space: nowrap;
-            letter-spacing: 1px;
-        }
-
-        .tab-btn:hover {
-            color: #fff;
-            background: rgba(255, 0, 51, 0.1);
-        }
-
-        .tab-btn.active {
-            color: #fff;
-            background: var(--border-red);
-            box-shadow: 0 -2px 10px rgba(255, 0, 51, 0.5);
-        }
-
-        .tab-panel {
-            display: none;
-            background: rgba(20, 4, 8, 0.5);
-            border: 1px solid var(--border-red-dim);
-            padding: 22px;
-            border-radius: 6px;
-            line-height: 1.7;
-            margin-bottom: 30px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .tab-panel.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .info-list {
-            list-style: none;
-        }
-
-        .info-list li {
-            position: relative;
-            padding-left: 22px;
-            margin-bottom: 12px;
-            font-size: 0.95rem;
-        }
-
-        .info-list li::before {
-            content: '⚡';
-            position: absolute;
-            left: 0;
-            color: var(--border-red);
-        }
-
-        .code-inline {
-            font-family: var(--font-code);
-            background: #2b000a;
-            color: #ff6680;
-            padding: 2px 8px;
-            border-radius: 4px;
-            border: 1px solid #80001a;
-            font-size: 0.88em;
-        }
-
-        /* Ranks showcase grid */
-        .ranks-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .rank-card {
-            background: rgba(15, 2, 5, 0.8);
-            border: 1px solid var(--border-red-dim);
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .rank-card:hover {
-            border-color: var(--cyan-accent);
-            transform: translateY(-4px);
-        }
-
-        .rank-name {
-            font-family: var(--font-head);
-            font-size: 1.4rem;
-            color: var(--cyan-accent);
-            margin-bottom: 8px;
-        }
-
-        .rank-price {
-            font-family: var(--font-code);
-            font-size: 1.1rem;
-            color: var(--yellow-warn);
-            margin-bottom: 15px;
-        }
-
-        /* =========================================================
-           11. FOOTER & MODALS & TOAST
-           ========================================================= */
-        .footer {
-            text-align: center;
-            border-top: 1px solid var(--border-red-dim);
-            padding-top: 22px;
-            color: #888;
-            font-size: 0.85rem;
-        }
-
-        .footer a {
-            color: var(--text-muted);
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-            color: #fff;
-        }
-
-        #toast {
-            visibility: hidden;
-            min-width: 320px;
-            background-color: #1a0307;
-            color: #ff6680;
-            text-align: center;
-            border: 1px solid var(--border-red);
-            border-radius: 6px;
-            padding: 14px 20px;
-            position: fixed;
-            z-index: 1000;
-            left: 50%;
-            bottom: 30px;
-            transform: translateX(-50%);
-            box-shadow: 0 0 25px rgba(255, 0, 51, 0.8);
-            font-family: var(--font-code);
-            font-size: 0.95rem;
-            line-height: 1.4;
-        }
-
-        #toast.show {
-            visibility: visible;
-            animation: fadein 0.3s, fadeout 0.5s 3.8s;
-        }
-
-        @keyframes fadein {
-            from { bottom: 0; opacity: 0; }
-            to { bottom: 30px; opacity: 1; }
-        }
-
-        @keyframes fadeout {
-            from { bottom: 30px; opacity: 1; }
-            to { bottom: 0; opacity: 0; }
-        }
-
-        /* Modal dialog */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(5px);
-            z-index: 999;
-            justify-content: center;
-            align-items: center;
-            padding: 15px;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-box {
-            background: #0f0306;
-            border: 2px solid var(--border-red);
-            border-radius: 8px;
-            max-width: 550px;
-            width: 100%;
-            padding: 25px;
-            box-shadow: 0 0 35px rgba(255, 0, 51, 0.5);
-            position: relative;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 12px;
-            right: 15px;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.4rem;
-            cursor: pointer;
-        }
-
-        /* Responsive Breakpoints */
-        @media (max-width: 768px) {
-            .brand-title { font-size: 2rem; }
-            .clock { font-size: 1.5rem; }
-            .portal-wrapper { padding: 15px; }
-            .btn { width: 100%; justify-content: center; }
-            .ip-content { flex-direction: column; align-items: stretch; }
-            .ip-text { text-align: center; font-size: 1.1rem; }
-            .sys-clock-box { align-items: flex-start; margin-top: 10px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>bi5556282.com | Cyberpunk Codespaces Portal</title>
+<style>
+:root{--bg:#0a0204;--card:rgba(18,4,8,.85);--red:#ff0033;--red-dim:rgba(255,0,51,.25);--glow:#ff3355;--text:#f5f5f5;--muted:#ff8093;--cyan:#00f0ff;--green:#00ff66;--yellow:#ffcc00;--blue:#58a6ff;--font:Arial,Helvetica,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;font-family:var(--font)}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--red);border-radius:4px}
+body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;padding:20px 10px}
+#bg-canvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:-2;pointer-events:none}
+.bg-overlay{position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(rgba(255,0,51,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,0,51,.04) 1px,transparent 1px),radial-gradient(circle at center,rgba(10,2,4,.5),rgba(10,2,4,.98));background-size:40px 40px,40px 40px,cover}
+.scanlines{position:fixed;inset:0;z-index:99;pointer-events:none;opacity:.5;background:linear-gradient(rgba(18,16,16,0) 50%,rgba(0,0,0,.3) 50%);background-size:100% 4px}
+.portal-wrapper{max-width:1200px;margin:0 auto;border-left:3px solid var(--red);border-right:1px solid var(--red-dim);background:var(--card);backdrop-filter:blur(10px);padding:30px;box-shadow:0 0 40px rgba(255,0,51,.15);border-radius:0 16px 16px 0}
+.header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;border-bottom:2px solid var(--red-dim);padding-bottom:20px;margin-bottom:25px}
+.brand-title{font-size:2.4rem;font-weight:700;color:#fff;text-shadow:0 0 15px rgba(255,0,51,.9),0 0 30px rgba(255,0,51,.4);letter-spacing:1px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.badge{font-size:.8rem;padding:4px 10px;border-radius:4px;font-weight:700;text-shadow:none;display:inline-flex;align-items:center;gap:6px}
+.badge-ver{background:var(--red);color:#fff;box-shadow:0 0 12px rgba(255,0,51,.8)}
+.badge-host{background:#161b22;color:var(--blue);border:1px solid #30363d}
+.sys-clock-box{display:flex;flex-direction:column;align-items:flex-end}
+.clock{font-size:2.1rem;color:var(--glow);font-weight:700;text-shadow:0 0 12px rgba(255,0,51,.8);background:rgba(255,0,51,.08);padding:6px 18px;border-radius:6px;border:1px dashed var(--red);letter-spacing:2px}
+.date-display{font-size:.85rem;color:var(--muted);margin-top:6px;letter-spacing:1px}
+.ticker-wrap{background:rgba(255,0,51,.08);border:1px solid var(--red-dim);border-radius:6px;padding:8px 15px;margin-bottom:25px;display:flex;align-items:center;gap:12px;overflow:hidden}
+.ticker-label{font-size:.75rem;font-weight:700;background:var(--red);color:#fff;padding:3px 8px;border-radius:3px;white-space:nowrap}
+.ticker-content{font-size:.9rem;white-space:nowrap;animation:ticker 25s linear infinite}
+@keyframes ticker{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
+.status-banner{display:flex;justify-content:space-between;align-items:center;background:rgba(255,0,51,.05);border:1px solid var(--red-dim);padding:18px 24px;border-radius:8px;margin-bottom:25px;flex-wrap:wrap;gap:15px}
+.status-indicator{display:flex;align-items:center;gap:12px;font-size:1.1rem;font-weight:600}
+.dot{width:14px;height:14px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{transform:scale(.95);box-shadow:0 0 0 0 rgba(0,255,102,.7)}70%{transform:scale(1.15);box-shadow:0 0 0 10px rgba(0,255,102,0)}100%{transform:scale(.95);box-shadow:0 0 0 0 rgba(0,255,102,0)}}
+.btn-action-group{display:flex;gap:12px;flex-wrap:wrap}
+.btn{background:var(--red);color:#fff;border:none;padding:12px 22px;font-weight:700;font-size:.9rem;border-radius:4px;cursor:pointer;box-shadow:0 0 15px rgba(255,0,51,.4);transition:all .25s;display:inline-flex;align-items:center;gap:8px;letter-spacing:1px}
+.btn:hover{background:#ff1a47;box-shadow:0 0 25px rgba(255,0,51,.9);transform:translateY(-2px)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible,.tab-btn:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.btn-outline{background:transparent;border:1px solid var(--red);color:var(--muted);box-shadow:none}
+.btn-outline:hover{background:rgba(255,0,51,.15);color:#fff}
+.btn-cyan{background:transparent;border:1px solid var(--cyan);color:var(--cyan);box-shadow:0 0 10px rgba(0,240,255,.2)}
+.btn-cyan:hover{background:var(--cyan);color:#000;box-shadow:0 0 20px rgba(0,240,255,.8)}
+.ip-cards-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;margin-bottom:30px}
+.ip-card{background:linear-gradient(135deg,rgba(30,5,10,.9),rgba(15,2,5,.95));border:1px solid var(--red);border-radius:8px;padding:20px;box-shadow:inset 0 0 15px rgba(255,0,51,.1);position:relative;overflow:hidden}
+.ip-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,0,51,.15),transparent);transition:.5s}
+.ip-card:hover::before{left:100%}
+.ip-title{color:var(--muted);font-size:.85rem;font-weight:700;letter-spacing:1px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ip-content{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ip-text{font-size:1.3rem;font-weight:700;color:#fff;background:#140205;padding:10px 14px;border-radius:6px;border:1px solid rgba(255,0,51,.4);text-shadow:0 0 8px rgba(255,0,51,.6);flex-grow:1;word-break:break-all;user-select:text}
+.section-title{font-size:1.25rem;font-weight:700;color:#fff;margin-bottom:18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--red-dim);padding-bottom:8px;letter-spacing:1px}
+.section-title::before{content:'//';color:var(--red)}
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-bottom:25px}
+.metric-card{background:rgba(20,4,8,.7);border:1px solid var(--red-dim);padding:16px;border-radius:6px;transition:.3s}
+.metric-card:hover{border-color:var(--red);transform:translateY(-2px);background:rgba(28,5,11,.85)}
+.metric-label{font-size:.75rem;font-weight:700;color:var(--muted);margin-bottom:8px;letter-spacing:1px}
+.metric-value{font-size:1.6rem;font-weight:700;color:#fff;margin-bottom:10px}
+.progress-bar-bg{width:100%;height:6px;background:rgba(255,0,51,.15);border-radius:3px;overflow:hidden}
+.progress-bar-fill{height:100%;background:var(--red);width:0;box-shadow:0 0 8px var(--red);transition:width .8s}
+.graph-container{width:100%;height:130px;background:rgba(10,2,4,.85);border:1px solid var(--red-dim);border-radius:6px;margin-bottom:30px;overflow:hidden}
+#tps-chart{width:100%;height:100%}
+
+
+.tabs-header{display:flex;gap:8px;margin-bottom:20px;border-bottom:2px solid var(--red-dim);overflow-x:auto;padding-bottom:5px}
+.tab-btn{background:transparent;border:none;color:var(--muted);padding:10px 18px;font-size:.85rem;font-weight:700;cursor:pointer;border-radius:4px 4px 0 0;transition:.2s;white-space:nowrap;letter-spacing:.5px}
+.tab-btn:hover{color:#fff;background:rgba(255,0,51,.1)}
+.tab-btn.active{color:#fff;background:var(--red);box-shadow:0 -2px 10px rgba(255,0,51,.5)}
+.tab-panel{display:none;background:rgba(20,4,8,.5);border:1px solid var(--red-dim);padding:22px;border-radius:6px;line-height:1.7;margin-bottom:30px}
+.tab-panel.active{display:block;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.info-list{list-style:none}
+.info-list li{position:relative;padding-left:22px;margin-bottom:12px;font-size:.95rem}
+.info-list li::before{content:'⚡';position:absolute;left:0;color:var(--red)}
+.code-inline{background:#2b000a;color:#ff6680;padding:2px 8px;border-radius:4px;border:1px solid #80001a;font-size:.88em}
+.ranks-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.rank-card{background:rgba(15,2,5,.8);border:1px solid var(--red-dim);border-radius:8px;padding:20px;text-align:center;transition:.3s}
+.rank-card:hover{border-color:var(--cyan);transform:translateY(-4px)}
+.rank-name{font-size:1.4rem;font-weight:700;color:var(--cyan);margin-bottom:8px}
+.rank-price{font-size:1.1rem;font-weight:700;color:var(--yellow);margin-bottom:15px}
+.rank-card p{font-size:.85rem;color:#ccc}
+.footer{text-align:center;border-top:1px solid var(--red-dim);padding-top:22px;color:#888;font-size:.85rem}
+#toast{visibility:hidden;min-width:320px;background:#1a0307;color:#ff6680;text-align:center;border:1px solid var(--red);border-radius:6px;padding:14px 20px;position:fixed;z-index:1000;left:50%;bottom:30px;transform:translateX(-50%);box-shadow:0 0 25px rgba(255,0,51,.8);font-size:.95rem;line-height:1.4}
+#toast.show{visibility:visible;animation:fadein .3s,fadeout .5s 3.8s}
+@keyframes fadein{from{bottom:0;opacity:0}to{bottom:30px;opacity:1}}
+@keyframes fadeout{from{bottom:30px;opacity:1}to{bottom:0;opacity:0}}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(5px);z-index:999;justify-content:center;align-items:center;padding:15px}
+.modal-overlay.active{display:flex}
+.modal-box{background:#0f0306;border:2px solid var(--red);border-radius:8px;max-width:550px;width:100%;padding:25px;box-shadow:0 0 35px rgba(255,0,51,.5);position:relative}
+.modal-close{position:absolute;top:12px;right:15px;background:transparent;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer}
+.modal-box h3{color:var(--red);margin-bottom:15px}
+.modal-box p{font-size:.95rem;line-height:1.6;color:#ddd;margin-bottom:15px}
+.modal-status{background:rgba(255,0,51,.1);padding:12px;border-radius:6px;border:1px dashed var(--red);font-size:.85rem;color:var(--muted)}
+@media(max-width:768px){.brand-title{font-size:1.8rem}.clock{font-size:1.5rem}.portal-wrapper{padding:15px}.btn{width:100%;justify-content:center}.ip-content{flex-direction:column;align-items:stretch}.ip-text{text-align:center;font-size:1.1rem}.sys-clock-box{align-items:flex-start}#toast{min-width:0;width:90%}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
+<canvas id="bg-canvas"></canvas>
+<div class="bg-overlay"></div>
+<div class="scanlines"></div>
 
-    <!-- Background Dynamic Canvas -->
-    <canvas id="bg-canvas"></canvas>
-    <div class="bg-overlay"></div>
-    <div class="scanlines"></div>
-
-    <div class="portal-wrapper">
-        
-        <!-- Header -->
-        <header class="header">
-            <div class="brand">
-                <div class="brand-title">
-                    bi5556282.com
-                    <span class="badge badge-ver">26.1.2</span>
-                    <span class="badge badge-host">☁️ GitHub Codespaces</span>
-                </div>
-            </div>
-            <div class="sys-clock-box">
-                <div class="clock" id="liveClock">00:00:00</div>
-                <div class="date-display" id="liveDate">UTC+07:00 | THỨ NĂM</div>
-            </div>
-        </header>
-
-        <!-- Announcement Ticker -->
-        <div class="ticker-wrap">
-            <span class="ticker-label">THÔNG BÁO</span>
-            <div class="ticker-content" id="ticker-text">
-                🔥 Server đang vận hành trực tuyến trên GitHub Codespaces Cloud Tunnel! Chúc các bạn chơi game vui vẻ và chấp hành quy định máy chủ.
-            </div>
-        </div>
-
-        <!-- Status Banner -->
-        <div class="status-banner">
-            <div class="status-indicator">
-                <div class="dot" id="status-dot"></div>
-                <span>Trạng Thái Server: <strong style="color: var(--green-glow);" id="status-text">ONLINE (Codespaces Active)</strong></span>
-            </div>
-            <div class="btn-action-group">
-                <button class="btn" onclick="copyIP('carolyn-xr.tun.ply.gg')">
-                    📋 Sao Chép Java IP
-                </button>
-                <button class="btn btn-outline" onclick="toggleAudio()">
-                    🔊 <span id="sound-status">Bật Âm Thanh</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- IP Cards Container -->
-        <div class="ip-cards-container">
-            <div class="ip-card">
-                <div class="ip-title">
-                    <span>KẾT NỐI JAVA EDITION (26.1.2)</span>
-                    <span class="badge badge-host">Playit.gg TCP</span>
-                </div>
-                <div class="ip-content">
-                    <div class="ip-text" id="java-ip-text">carolyn-xr.tun.ply.gg</div>
-                    <button class="btn" onclick="copyIP('carolyn-xr.tun.ply.gg')">CoPy</button>
-                </div>
-            </div>
-
-            <div class="ip-card">
-                <div class="ip-title">
-                    <span>MÃ NGUỒN & HẠ TẦNG HOSTING</span>
-                    <span class="badge badge-host">VS Code Server</span>
-                </div>
-                <div class="ip-content">
-                    <div class="ip-text" style="font-size: 1.05rem; color: var(--github-blue);">GitHub Codespaces VM</div>
-                    <button class="btn btn-cyan" onclick="openSystemInfoModal()">Chi Tiết</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Live Telemetry Section -->
-        <h2 class="section-title">Live Telemetry Dashboard</h2>
-        <div class="metrics-grid">
-            <div class="metric-card">
-                <div class="metric-label">TỐC ĐỘ SERVER (TPS)</div>
-                <div class="metric-value" id="tps-val">19.9 / 20.0</div>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="tps-bar" style="width: 99.5%;"></div>
-                </div>
-            </div>
-
-            <div class="metric-card">
-                <div class="metric-label">ĐỘ TRỄ KẾT NỐI (PING)</div>
-                <div class="metric-value" id="ping-val">24 ms</div>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="ping-bar" style="width: 24%; background: var(--green-glow); box-shadow: 0 0 8px var(--green-glow);"></div>
-                </div>
-            </div>
-
-            <div class="metric-card">
-                <div class="metric-label">NGƯỜI CHƠI ONLINE</div>
-                <div class="metric-value" id="players-val">1 / 20</div>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" id="players-bar" style="width: 5%;"></div>
-                </div>
-            </div>
-
-            <div class="metric-card">
-                <div class="metric-label">ENGINE & CORE</div>
-                <div class="metric-value" style="font-size: 1.2rem; color: var(--text-glow);">Purpur 26.1.2</div>
-                <div style="font-size: 0.75rem; color: var(--github-blue); margin-bottom: 6px;">LuckPerms + ClearLagg</div>
-                <div class="progress-bar-bg">
-                    <div class="progress-bar-fill" style="width: 100%; background: var(--github-blue); box-shadow: 0 0 8px var(--github-blue);"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Live Real-time Chart -->
-        <div class="graph-container">
-            <canvas id="tps-chart"></canvas>
-        </div>
-
-        <!-- Active Players Panel -->
-        <h2 class="section-title">Người Chơi Đang Trực Tuyến</h2>
-        <div class="players-grid" id="players-list-container">
-            <!-- Dynamic items rendered by JavaScript -->
-        </div>
-
-        <!-- Cyberpunk Interactive Web Terminal Simulator -->
-        <h2 class="section-title">Trình Giả Lập Terminal Server (Web CLI)</h2>
-        <div class="terminal-wrapper">
-            <div class="terminal-header">
-                <div class="terminal-title">
-                    <span>⚡ root@codespace-server:~# (Purpur Console Session)</span>
-                </div>
-                <div class="terminal-dots">
-                    <div class="t-dot" style="background: #ff5f56;"></div>
-                    <div class="t-dot" style="background: #ffbd2e;"></div>
-                    <div class="t-dot" style="background: #27c93f;"></div>
-                </div>
-            </div>
-            <div class="terminal-body" id="terminal-body">
-                <div class="terminal-line system">[SYSTEM INITIALIZED] Welcome to bi5556282.com Web Terminal Console v2.6</div>
-                <div class="terminal-line output">Gõ <span class="code-inline">help</span> để xem danh sách lệnh được hỗ trợ.</div>
-            </div>
-            <div class="terminal-input-row">
-                <span class="terminal-prompt">&gt;</span>
-                <input type="text" class="terminal-input" id="terminal-input" placeholder="Nhập lệnh (vd: help, tps, players, codespace)..." autocomplete="off">
-            </div>
-        </div>
-
-        <!-- Navigation Tabs -->
-        <div class="tabs-header">
-            <button class="tab-btn active" onclick="switchTab(event, 'tab-info')">📌 Tổng Quan Server</button>
-            <button class="tab-btn" onclick="switchTab(event, 'tab-rules')">📜 Nội Quy Server</button>
-            <button class="tab-btn" onclick="switchTab(event, 'tab-commands')">💻 Lệnh Cơ Bản</button>
-            <button class="tab-btn" onclick="switchTab(event, 'tab-ranks')">💎 Hạng VIP & Ranks</button>
-            <button class="tab-btn" onclick="switchTab(event, 'tab-hardware')">🖥️ Cấu Hình Codespaces</button>
-        </div>
-
-        <!-- Tab 1: Info -->
-        <div id="tab-info" class="tab-panel active">
-            <ul class="info-list">
-                <li>Hạ tầng máy chủ: Vận hành trực tiếp trên <span class="code-inline">GitHub Codespaces Virtual Machine</span>.</li>
-                <li>Đường truyền tunneling: TCP Tunneling công nghệ mới thông qua <span class="code-inline">Playit.gg</span>.</li>
-                <li>Phiên bản chính thức: Minecraft Java Edition <span class="code-inline">26.1.2</span> (Purpur Core tối ưu TPS tối đa).</li>
-                <li>Tích hợp hệ thống Plugins: <span class="code-inline">LuckPerms</span> (phân quyền), <span class="code-inline">VeinMiner</span> (khai thác nhanh), <span class="code-inline">ClearLagg</span> (dọn rác tự động).</li>
-                <li>Hỗ trợ tương thích: TLauncher, TL Legacy, CurseForge Client, Minecraft Official.</li>
-            </ul>
-        </div>
-
-        <!-- Tab 2: Rules -->
-        <div id="tab-rules" class="tab-panel">
-            <ul class="info-list">
-                <li>Nghiêm cấm tuyệt đối việc sử dụng Hack/Cheat (X-Ray, Fly, KillAura, Auto-Clicker...).</li>
-                <li>Tôn trọng công trình của người chơi khác, không cố tình Griefing hoặc phá hoại cảnh quan.</li>
-                <li>Không sử dụng ngôn từ xúc phạm, miệt thị hoặc spam thông tin trong kênh chat chung.</li>
-                <li>Mọi lỗi game (Bug/Glitch) phát hiện cần báo ngay cho Admin, cố tình trục lợi sẽ bị ban vĩnh viễn.</li>
-            </ul>
-        </div>
-
-        <!-- Tab 3: Commands -->
-        <div id="tab-commands" class="tab-panel">
-            <ul class="info-list">
-                <li><span class="code-inline">/sethome [tên]</span> - Tạo vị trí nhà riêng của bạn.</li>
-                <li><span class="code-inline">/home [tên]</span> - Dịch chuyển tức thời về nhà đã lưu.</li>
-                <li><span class="code-inline">/tpa [tên_người_chơi]</span> - Gửi yêu cầu dịch chuyển tới bạn bè.</li>
-                <li><span class="code-inline">/tpaccept</span> - Đồng ý yêu cầu dịch chuyển từ người khác.</li>
-                <li><span class="code-inline">/spawn</span> - Trở về khu vực sảnh chính (Spawn Area).</li>
-            </ul>
-        </div>
-
-        <!-- Tab 4: Ranks Showcase -->
-        <div id="tab-ranks" class="tab-panel">
-            <div class="ranks-grid">
-                <div class="rank-card">
-                    <div class="rank-name">PLAYER</div>
-                    <div class="rank-price">Miễn Phí</div>
-                    <p style="font-size: 0.85rem; color: #ccc;">Quyền lợi mặc định cho toàn bộ thành viên tham gia server.</p>
-                </div>
-                <div class="rank-card">
-                    <div class="rank-name">VIP MEMBER</div>
-                    <div class="rank-price">50.000 Coin</div>
-                    <p style="font-size: 0.85rem; color: #ccc;">+2 Sethome, Quyền dùng VeinMiner nâng cao, Chat màu nổi bật.</p>
-                </div>
-                <div class="rank-card">
-                    <div class="rank-name">LEGENDARY</div>
-                    <div class="rank-price">150.000 Coin</div>
-                    <p style="font-size: 0.85rem; color: #ccc;">+5 Sethome, Lệnh /hat, KeepInventory riêng, Mũ hiệu ứng Cyber.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tab 5: Codespaces Hardware Details -->
-        <div id="tab-hardware" class="tab-panel">
-            <p style="margin-bottom: 15px;">Thông số phần cứng máy chủ chạy trên điện toán đám mây GitHub Codespaces:</p>
-            <ul class="info-list">
-                <li>CPU Allocation: <span class="code-inline">2 Cores vCPU @ 2.80GHz</span></li>
-                <li>RAM Allocation: <span class="code-inline">4 GB RAM (Dedicated Heap 3GB Java)</span></li>
-                <li>Storage: <span class="code-inline">32 GB NVMe SSD Flash Storage</span></li>
-                <li>Tunnel Protocol: <span class="code-inline">Playit.gg Agent Daemon Service</span></li>
-            </ul>
-        </div>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>&copy; 2026 <strong>bi5556282.com</strong> | Powered by GitHub Codespaces Cloud Engine & Playit.gg</p>
-            <p style="margin-top: 6px; font-size: 0.75rem; color: #666;">Thiết kế giao diện tối ưu hóa đồ họa Cyberpunk Visual Interface.</p>
-        </footer>
-
+<div class="portal-wrapper">
+  <header class="header">
+    <div class="brand-title">bi5556282.com
+      <span class="badge badge-ver">26.1.2</span>
+      <span class="badge badge-host">☁️ GitHub Codespaces</span>
     </div>
-
-    <!-- Toast Notification Popup -->
-    <div id="toast"></div>
-
-    <!-- Hardware Info Modal -->
-    <div class="modal-overlay" id="sys-modal">
-        <div class="modal-box">
-            <button class="modal-close" onclick="closeSystemInfoModal()">&times;</button>
-            <h3 style="font-family: var(--font-head); color: var(--border-red); margin-bottom: 15px;">☁️ Codespaces Infrastructure Overview</h3>
-            <p style="font-size: 0.95rem; line-height: 1.6; color: #ddd; margin-bottom: 15px;">
-                Máy chủ Minecraft được triển khai tự động trong môi trường Container của <strong>GitHub Codespaces</strong>, kết nối mạng thông qua daemon <strong>Playit.gg</strong> giúp mở cổng TCP mà không cần mở Port Router thủ công.
-            </p>
-            <div style="background: rgba(255,0,51,0.1); padding: 12px; border-radius: 6px; border: 1px dashed var(--border-red);">
-                <div style="font-family: var(--font-code); font-size: 0.85rem; color: var(--text-muted);">
-                    Status: Running | Port: 25565 -> Playit TCP Tunnel<br>
-                    Uptime: 99.8% | Dynamic Ping Optimization: Active
-                </div>
-            </div>
-        </div>
+    <div class="sys-clock-box">
+      <div class="clock" id="liveClock">00:00:00</div>
+      <div class="date-display" id="liveDate">UTC+07:00</div>
     </div>
+  </header>
 
-    <!-- =========================================================
-       JAVASCRIPT LOGIC CORE ENGINE
-       ========================================================= -->
-    <script>
-        const SERVER_IP = 'carolyn-xr.tun.ply.gg';
-        let soundEnabled = false;
-        let audioCtx = null;
+  <div class="ticker-wrap">
+    <span class="ticker-label">THÔNG BÁO</span>
+    <div class="ticker-content">🔥 Server đang vận hành trực tuyến trên GitHub Codespaces Cloud Tunnel! Chúc các bạn chơi game vui vẻ và chấp hành quy định máy chủ.</div>
+  </div>
 
-        /* ---------------------------------------------------------
-           1. WEB AUDIO API SYNTHESIZER
-           --------------------------------------------------------- */
-        function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-        }
+  <div class="status-banner">
+    <div class="status-indicator">
+      <div class="dot" id="status-dot"></div>
+      <span>Trạng thái server: <strong style="color:var(--green)" id="status-text">ONLINE (Codespaces Active)</strong></span>
+    </div>
+    <div class="btn-action-group">
+      <button class="btn" onclick="copyIP(SERVER_IP)">📋 Sao chép Java IP</button>
+      <button class="btn btn-outline" onclick="toggleAudio()">🔊 <span id="sound-status">Bật âm thanh</span></button>
+    </div>
+  </div>
 
-        function playSoundEffect(freq = 600, duration = 0.06, type = 'sine') {
-            if (!soundEnabled) return;
-            try {
-                initAudio();
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.type = type;
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start();
-                osc.stop(audioCtx.currentTime + duration);
-            } catch (e) {}
-        }
+  <div class="ip-cards-container">
+    <div class="ip-card">
+      <div class="ip-title"><span>KẾT NỐI JAVA EDITION (26.1.2)</span><span class="badge badge-host">Playit.gg TCP</span></div>
+      <div class="ip-content">
+        <div class="ip-text" id="java-ip-text">carolyn-xr.tun.ply.gg</div>
+        <button class="btn" onclick="copyIP(SERVER_IP)">Copy</button>
+      </div>
+    </div>
+    <div class="ip-card">
+      <div class="ip-title"><span>MÃ NGUỒN & HẠ TẦNG HOSTING</span><span class="badge badge-host">VS Code Server</span></div>
+      <div class="ip-content">
+        <div class="ip-text" style="font-size:1.05rem;color:var(--blue)">GitHub Codespaces VM</div>
+        <button class="btn btn-cyan" onclick="toggleModal(true)">Chi tiết</button>
+      </div>
+    </div>
+  </div>
 
-        function toggleAudio() {
-            soundEnabled = !soundEnabled;
-            const btnText = document.getElementById('sound-status');
-            if (soundEnabled) {
-                initAudio();
-                btnText.textContent = 'Tắt Âm Thanh';
-                showToast('🔊 Đã bật âm thanh hiệu ứng giao diện!');
-                playSoundEffect(880, 0.1, 'sine');
-            } else {
-                btnText.textContent = 'Bật Âm Thanh';
-                showToast('🔇 Đã tắt âm thanh hiệu ứng!');
-            }
-        }
+  <h2 class="section-title">Live Telemetry Dashboard</h2>
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-label">TỐC ĐỘ SERVER (TPS)</div>
+      <div class="metric-value" id="tps-val">19.9 / 20.0</div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="tps-bar" style="width:99.5%"></div></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">ĐỘ TRỄ KẾT NỐI (PING)</div>
+      <div class="metric-value" id="ping-val">24 ms</div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="ping-bar" style="width:24%;background:var(--green);box-shadow:0 0 8px var(--green)"></div></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">NGƯỜI CHƠI ONLINE</div>
+      <div class="metric-value" id="players-val">1 / 20</div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="players-bar" style="width:5%"></div></div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">ENGINE & CORE</div>
+      <div class="metric-value" style="font-size:1.2rem;color:var(--glow)">Purpur 26.1.2</div>
+      <div style="font-size:.75rem;color:var(--blue);margin-bottom:6px">LuckPerms + ClearLagg</div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:100%;background:var(--blue);box-shadow:0 0 8px var(--blue)"></div></div>
+    </div>
+  </div>
 
-        /* ---------------------------------------------------------
-           2. TOAST NOTIFICATION SYSTEM
-           --------------------------------------------------------- */
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            toast.innerHTML = msg;
-            toast.className = 'show';
-            playSoundEffect(950, 0.08, 'triangle');
-            setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 3800);
-        }
+  <div class="graph-container"><canvas id="tps-chart"></canvas></div>
 
-        function copyIP(ip) {
-            navigator.clipboard.writeText(ip);
-            showToast('✅ Đã sao chép địa chỉ IP thành công:<br><strong>' + ip + '</strong>');
-        }
+  <div class="tabs-header">
+    <button class="tab-btn active" onclick="switchTab(event,'tab-info')">📌 Tổng quan server</button>
+    <button class="tab-btn" onclick="switchTab(event,'tab-rules')">📜 Nội quy server</button>
+    <button class="tab-btn" onclick="switchTab(event,'tab-commands')">💻 Lệnh cơ bản</button>
+    <button class="tab-btn" onclick="switchTab(event,'tab-ranks')">💎 Hạng VIP & Ranks</button>
+    <button class="tab-btn" onclick="switchTab(event,'tab-hardware')">🖥️ Cấu hình Codespaces</button>
+  </div>
 
-        /* ---------------------------------------------------------
-           3. LIVE CLOCK & DATE ENGINE
-           --------------------------------------------------------- */
-        function updateClock() {
-            const now = new Date();
-            const h = String(now.getHours()).padStart(2, '0');
-            const m = String(now.getMinutes()).padStart(2, '0');
-            const s = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('liveClock').textContent = `${h}:${m}:${s}`;
+  <div id="tab-info" class="tab-panel active">
+    <ul class="info-list">
+      <li>Hạ tầng máy chủ: vận hành trực tiếp trên <span class="code-inline">GitHub Codespaces Virtual Machine</span>.</li>
+      <li>Đường truyền tunneling: TCP Tunneling thông qua <span class="code-inline">Playit.gg</span>.</li>
+      <li>Phiên bản chính thức: Minecraft Java Edition <span class="code-inline">26.1.2</span> (Purpur Core tối ưu TPS).</li>
+      <li>Plugins: <span class="code-inline">LuckPerms</span> (phân quyền), <span class="code-inline">VeinMiner</span> (khai thác nhanh), <span class="code-inline">ClearLagg</span> (dọn rác tự động).</li>
+      <li>Hỗ trợ: TLauncher, TL Legacy, CurseForge Client, Minecraft Official.</li>
+    </ul>
+  </div>
 
-            const days = ['CHỦ NHẬT', 'THỨ HAI', 'THỨ BA', 'THỨ TƯ', 'THỨ NĂM', 'THỨ SÁU', 'THỨ BẢY'];
-            const dayName = days[now.getDay()];
-            const d = String(now.getDate()).padStart(2, '0');
-            const mo = String(now.getMonth() + 1).padStart(2, '0');
-            const y = now.getFullYear();
-            document.getElementById('liveDate').textContent = `UTC+07:00 | ${dayName}, ${d}/${mo}/${y}`;
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
+  <div id="tab-rules" class="tab-panel">
+    <ul class="info-list">
+      <li>Nghiêm cấm sử dụng Hack/Cheat (X-Ray, Fly, KillAura, Auto-Clicker...).</li>
+      <li>Tôn trọng công trình của người chơi khác, không Griefing hoặc phá hoại cảnh quan.</li>
+      <li>Không dùng ngôn từ xúc phạm, miệt thị hoặc spam trong kênh chat chung.</li>
+      <li>Mọi lỗi game (Bug/Glitch) cần báo ngay cho Admin, cố tình trục lợi sẽ bị ban vĩnh viễn.</li>
+    </ul>
+  </div>
 
-        /* ---------------------------------------------------------
-           4. MODAL DIALOG CONTROLLER
-           --------------------------------------------------------- */
-        function openSystemInfoModal() {
-            playSoundEffect(700, 0.05);
-            document.getElementById('sys-modal').classList.add('active');
-        }
+  <div id="tab-commands" class="tab-panel">
+    <ul class="info-list">
+      <li><span class="code-inline">/sethome [tên]</span> - Tạo vị trí nhà riêng của bạn.</li>
+      <li><span class="code-inline">/home [tên]</span> - Dịch chuyển tức thời về nhà đã lưu.</li>
+      <li><span class="code-inline">/tpa [tên_người_chơi]</span> - Gửi yêu cầu dịch chuyển tới bạn bè.</li>
+      <li><span class="code-inline">/tpaccept</span> - Đồng ý yêu cầu dịch chuyển từ người khác.</li>
+      <li><span class="code-inline">/spawn</span> - Trở về khu vực sảnh chính (Spawn Area).</li>
+    </ul>
+  </div>
 
-        function closeSystemInfoModal() {
-            playSoundEffect(400, 0.05);
-            document.getElementById('sys-modal').classList.remove('active');
-        }
+  <div id="tab-ranks" class="tab-panel">
+    <div class="ranks-grid">
+      <div class="rank-card"><div class="rank-name">PLAYER</div><div class="rank-price">Miễn phí</div><p>Quyền lợi mặc định cho toàn bộ thành viên tham gia server.</p></div>
+      <div class="rank-card"><div class="rank-name">VIP MEMBER</div><div class="rank-price">50.000 Coin</div><p>+2 Sethome, quyền dùng VeinMiner nâng cao, chat màu nổi bật.</p></div>
+      <div class="rank-card"><div class="rank-name">LEGENDARY</div><div class="rank-price">150.000 Coin</div><p>+5 Sethome, lệnh /hat, KeepInventory riêng, mũ hiệu ứng Cyber.</p></div>
+    </div>
+  </div>
 
-        /* ---------------------------------------------------------
-           5. TAB SWITCHING SYSTEM
-           --------------------------------------------------------- */
-        function switchTab(evt, tabId) {
-            playSoundEffect(650, 0.04);
-            const panels = document.querySelectorAll('.tab-panel');
-            const btns = document.querySelectorAll('.tab-btn');
+  <div id="tab-hardware" class="tab-panel">
+    <p style="margin-bottom:15px">Thông số phần cứng máy chủ chạy trên GitHub Codespaces:</p>
+    <ul class="info-list">
+      <li>CPU: <span class="code-inline">2 Cores vCPU @ 2.80GHz</span></li>
+      <li>RAM: <span class="code-inline">4 GB RAM (Heap Java 3GB)</span></li>
+      <li>Storage: <span class="code-inline">32 GB NVMe SSD</span></li>
+      <li>Tunnel: <span class="code-inline">Playit.gg Agent Daemon Service</span></li>
+    </ul>
+  </div>
 
-            panels.forEach(p => p.classList.remove('active'));
-            btns.forEach(b => b.classList.remove('active'));
+  <footer class="footer">
+    <p>&copy; 2026 <strong>bi5556282.com</strong> | Powered by GitHub Codespaces Cloud Engine & Playit.gg</p>
+  </footer>
+</div>
 
-            document.getElementById(tabId).classList.add('active');
-            evt.currentTarget.classList.add('active');
-        }
+<div id="toast"></div>
 
-        /* ---------------------------------------------------------
-           6. CYBERPUNK BACKGROUND CANVAS PARTICLES & MATRIX GRID
-           --------------------------------------------------------- */
-        const bgCanvas = document.getElementById('bg-canvas');
-        const bgCtx = bgCanvas.getContext('2d');
+<div class="modal-overlay" id="sys-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="toggleModal(false)" aria-label="Đóng">&times;</button>
+    <h3>☁️ Codespaces Infrastructure Overview</h3>
+    <p>Máy chủ Minecraft được triển khai trong môi trường Container của <strong>GitHub Codespaces</strong>, kết nối mạng qua daemon <strong>Playit.gg</strong> để mở cổng TCP mà không cần mở port router thủ công.</p>
+    <div class="modal-status">Status: Running | Port: 25565 -> Playit TCP Tunnel<br>Uptime: 99.8% | Dynamic Ping Optimization: Active</div>
+  </div>
+</div>
 
-        function resizeBgCanvas() {
-            bgCanvas.width = window.innerWidth;
-            bgCanvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeBgCanvas);
-        resizeBgCanvas();
+<script>
+const SERVER_IP = 'carolyn-xr.tun.ply.gg';
+let soundEnabled = false, audioCtx = null;
+const $ = id => document.getElementById(id);
 
-        const particles = [];
-        const particleCount = 50;
+/* Âm thanh */
+function playSoundEffect(freq = 600, dur = 0.06, type = 'sine') {
+  if (!soundEnabled) return;
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + dur);
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.start(); osc.stop(audioCtx.currentTime + dur);
+  } catch (e) {}
+}
+function toggleAudio() {
+  soundEnabled = !soundEnabled;
+  $('sound-status').textContent = soundEnabled ? 'Tắt âm thanh' : 'Bật âm thanh';
+  showToast(soundEnabled ? '🔊 Đã bật âm thanh hiệu ứng!' : '🔇 Đã tắt âm thanh hiệu ứng!');
+  playSoundEffect(880, 0.1);
+}
 
-        for (let i = 0; i < particleCount; i++) {
-            particles.push({
-                x: Math.random() * bgCanvas.width,
-                y: Math.random() * bgCanvas.height,
-                vx: (Math.random() - 0.5) * 0.7,
-                vy: (Math.random() - 0.5) * 0.7,
-                radius: Math.random() * 2 + 1
-            });
-        }
+/* Toast & copy */
+let toastTimer;
+function showToast(msg) {
+  const t = $('toast');
+  t.innerHTML = msg;
+  t.className = '';
+  void t.offsetWidth;
+  t.className = 'show';
+  playSoundEffect(950, 0.08, 'triangle');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = ''; }, 4000);
+}
+function copyIP(ip) {
+  const done = () => showToast('✅ Đã sao chép địa chỉ IP:<br><strong>' + ip + '</strong>');
+  if (navigator.clipboard) navigator.clipboard.writeText(ip).then(done, () => showToast('❌ Không sao chép được, hãy chép thủ công: ' + ip));
+  else showToast('❌ Trình duyệt không hỗ trợ sao chép: ' + ip);
+}
 
-        function renderBgParticles() {
-            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+/* Đồng hồ */
+function updateClock() {
+  const n = new Date(), p = v => String(v).padStart(2, '0');
+  $('liveClock').textContent = `${p(n.getHours())}:${p(n.getMinutes())}:${p(n.getSeconds())}`;
+  const days = ['CHỦ NHẬT','THỨ HAI','THỨ BA','THỨ TƯ','THỨ NĂM','THỨ SÁU','THỨ BẢY'];
+  $('liveDate').textContent = `UTC+07:00 | ${days[n.getDay()]}, ${p(n.getDate())}/${p(n.getMonth() + 1)}/${n.getFullYear()}`;
+}
+setInterval(updateClock, 1000); updateClock();
 
-            for (let i = 0; i < particleCount; i++) {
-                for (let j = i + 1; j < particleCount; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
+/* Modal & tab */
+function toggleModal(open) {
+  playSoundEffect(open ? 700 : 400, 0.05);
+  $('sys-modal').classList.toggle('active', open);
+}
+$('sys-modal').addEventListener('click', e => { if (e.target.id === 'sys-modal') toggleModal(false); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') $('sys-modal').classList.remove('active'); });
 
-                    if (dist < 140) {
-                        bgCtx.beginPath();
-                        bgCtx.moveTo(particles[i].x, particles[i].y);
-                        bgCtx.lineTo(particles[j].x, particles[j].y);
-                        bgCtx.strokeStyle = `rgba(255, 0, 51, ${0.12 - dist / 140 * 0.12})`;
-                        bgCtx.lineWidth = 0.8;
-                        bgCtx.stroke();
-                    }
-                }
-            }
+function switchTab(evt, id) {
+  playSoundEffect(650, 0.04);
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  $(id).classList.add('active');
+  evt.currentTarget.classList.add('active');
+}
 
-            for (let p of particles) {
-                bgCtx.beginPath();
-                bgCtx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                bgCtx.fillStyle = 'rgba(255, 51, 85, 0.6)';
-                bgCtx.shadowBlur = 8;
-                bgCtx.shadowColor = '#ff0033';
-                bgCtx.fill();
+/* Nền hạt */
+const bg = $('bg-canvas'), bgCtx = bg.getContext('2d');
+function resizeBg() { bg.width = innerWidth; bg.height = innerHeight; }
+addEventListener('resize', resizeBg); resizeBg();
+const particles = Array.from({ length: 50 }, () => ({
+  x: Math.random() * bg.width, y: Math.random() * bg.height,
+  vx: (Math.random() - .5) * .7, vy: (Math.random() - .5) * .7, r: Math.random() * 2 + 1
+}));
+function renderBg() {
+  bgCtx.clearRect(0, 0, bg.width, bg.height);
+  bgCtx.shadowBlur = 0;
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y, d = Math.hypot(dx, dy);
+      if (d < 140) {
+        bgCtx.beginPath();
+        bgCtx.moveTo(particles[i].x, particles[i].y);
+        bgCtx.lineTo(particles[j].x, particles[j].y);
+        bgCtx.strokeStyle = `rgba(255,0,51,${0.12 - d / 140 * 0.12})`;
+        bgCtx.lineWidth = .8;
+        bgCtx.stroke();
+      }
+    }
+  }
+  for (const p of particles) {
+    bgCtx.beginPath();
+    bgCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    bgCtx.fillStyle = 'rgba(255,51,85,.6)';
+    bgCtx.shadowBlur = 8; bgCtx.shadowColor = '#ff0033';
+    bgCtx.fill();
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0 || p.x > bg.width) p.vx *= -1;
+    if (p.y < 0 || p.y > bg.height) p.vy *= -1;
+  }
+  requestAnimationFrame(renderBg);
+}
+renderBg();
 
-                p.x += p.vx;
-                p.y += p.vy;
+/* Biểu đồ TPS */
+const chart = $('tps-chart'), cctx = chart.getContext('2d');
+const tpsHistory = new Array(35).fill(19.9);
+function resizeChart() { chart.width = chart.parentElement.clientWidth; chart.height = chart.parentElement.clientHeight; drawTPSChart(); }
+function drawTPSChart() {
+  cctx.clearRect(0, 0, chart.width, chart.height);
+  cctx.beginPath();
+  const step = chart.width / (tpsHistory.length - 1);
+  tpsHistory.forEach((v, i) => {
+    const y = chart.height - (((v - 18) / 2.5) * chart.height * .7 + 10);
+    i ? cctx.lineTo(i * step, y) : cctx.moveTo(0, y);
+  });
+  cctx.strokeStyle = '#ff0033'; cctx.lineWidth = 2;
+  cctx.shadowBlur = 10; cctx.shadowColor = '#ff0033';
+  cctx.stroke();
+}
+addEventListener('resize', resizeChart); resizeChart();
 
-                if (p.x < 0 || p.x > bgCanvas.width) p.vx *= -1;
-                if (p.y < 0 || p.y > bgCanvas.height) p.vy *= -1;
-            }
+/* Trạng thái server */
+// Dán link cổng 8080 (Public) của Codespaces vào đây, ví dụ:
+// 'https://ten-codespace-8080.app.github.dev/status'
+const CODESPACE_STATUS_URL = '';
+let lastTps = 19.9;
 
-            requestAnimationFrame(renderBgParticles);
-        }
-        renderBgParticles();
+async function getJSON(url) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 4000);
+  try {
+    const res = await fetch(url, { cache: 'no-store', signal: ctrl.signal });
+    if (!res.ok) throw new Error(res.status);
+    return await res.json();
+  } finally { clearTimeout(timer); }
+}
 
-        /* ---------------------------------------------------------
-           7. TELEMETRY GRAPH CANVAS
-           --------------------------------------------------------- */
-        const chartCanvas = document.getElementById('tps-chart');
-        const chartCtx = chartCanvas.getContext('2d');
-        const tpsHistory = new Array(35).fill(19.9);
+function setOnline(isOn, label) {
+  const dot = $('status-dot'), txt = $('status-text');
+  txt.textContent = label;
+  txt.style.color = isOn ? 'var(--green)' : 'var(--glow)';
+  dot.style.background = isOn ? 'var(--green)' : 'var(--red)';
+  dot.style.boxShadow = isOn ? '0 0 12px var(--green)' : '0 0 12px var(--red)';
+}
 
-        function resizeChart() {
-            chartCanvas.width = chartCanvas.parentElement.clientWidth;
-            chartCanvas.height = chartCanvas.parentElement.clientHeight;
-        }
-        window.addEventListener('resize', resizeChart);
-        resizeChart();
+function setMetrics(tps, ping) {
+  lastTps = tps;
+  tpsHistory.push(tps); tpsHistory.shift();
+  drawTPSChart();
+  $('tps-val').textContent = `${tps.toFixed(1)} / 20.0`;
+  $('tps-bar').style.width = `${Math.min(tps / 20, 1) * 100}%`;
+  $('ping-val').textContent = `${ping} ms`;
+  $('ping-bar').style.width = `${Math.min(ping, 100)}%`;
+}
 
-        function drawTPSChart() {
-            chartCtx.clearRect(0, 0, chartCanvas.width, chartCanvas.height);
-            chartCtx.beginPath();
+async function fetchServerStatus() {
+  let data = null, source = '';
 
-            const step = chartCanvas.width / (tpsHistory.length - 1);
-            for (let i = 0; i < tpsHistory.length; i++) {
-                const x = i * step;
-                const normalized = (tpsHistory[i] - 18) / 2.5; 
-                const y = chartCanvas.height - (normalized * chartCanvas.height * 0.7 + 10);
+  // 1) Hỏi trực tiếp Codespaces qua cổng đã forward
+  if (CODESPACE_STATUS_URL) {
+    try { data = await getJSON(CODESPACE_STATUS_URL); source = 'Codespaces'; } catch (e) { data = null; }
+  }
+  // 2) Dự phòng: truy vấn qua địa chỉ Playit.gg
+  if (!data) {
+    try { data = await getJSON(`https://api.mcsrvstat.us/2/${SERVER_IP}`); source = 'Playit.gg'; } catch (e) { data = null; }
+  }
 
-                if (i === 0) chartCtx.moveTo(x, y);
-                else chartCtx.lineTo(x, y);
-            }
+  if (!data || !data.online) {
+    setOnline(false, 'OFFLINE (Codespaces đang tắt hoặc chưa chạy server)');
+    $('players-val').textContent = '0 / 20';
+    $('players-bar').style.width = '0%';
+    return;
+  }
 
-            chartCtx.strokeStyle = '#ff0033';
-            chartCtx.lineWidth = 2;
-            chartCtx.shadowBlur = 10;
-            chartCtx.shadowColor = '#ff0033';
-            chartCtx.stroke();
-        }
+  const on = data.players ? data.players.online : 0;
+  const max = data.players ? data.players.max : 20;
+  setOnline(true, `ONLINE (${source})`);
+  $('players-val').textContent = `${on} / ${max}`;
+  $('players-bar').style.width = `${max ? (on / max) * 100 : 0}%`;
 
-        /* ---------------------------------------------------------
-           8. LIVE MINECRAFT QUERY API & FALLBACK SIMULATION
-           --------------------------------------------------------- */
-        const mockPlayers = [
-            { name: 'bi5556282', rank: 'Server Owner', ping: '18ms' },
-            { name: 'Alex_Steve', rank: 'VIP Member', ping: '32ms' },
-            { name: 'CyberCrafter', rank: 'Player', ping: '25ms' }
-        ];
+  const tps = typeof data.tps === 'number' ? data.tps : +(19.8 + Math.random() * .2).toFixed(1);
+  const ping = typeof data.ping === 'number' ? Math.round(data.ping) : Math.floor(20 + Math.random() * 10);
+  setMetrics(tps, ping);
+}
 
-        function renderPlayersList(list) {
-            const container = document.getElementById('players-list-container');
-            container.innerHTML = '';
+setInterval(fetchServerStatus, 5000);
+fetchServerStatus();
 
-            if (!list || list.length === 0) {
-                container.innerHTML = '<div style="color: #888; font-family: var(--font-code);">Không có người chơi nào trực tuyến.</div>';
-                return;
-            }
-
-            list.forEach(player => {
-                const name = typeof player === 'string' ? player : player.name;
-                const rank = player.rank || 'Member';
-                const ping = player.ping || '24ms';
-
-                const card = document.createElement('div');
-                card.className = 'player-card';
-                card.innerHTML = `
-                    <img class="player-avatar" src="https://mc-heads.net/avatar/${name}/64" alt="${name}" onerror="this.src='https://mc-heads.net/avatar/MHF_Steve/64'">
-                    <div class="player-info">
-                        <span class="player-name">${name}</span>
-                        <span class="player-rank">${rank} (${ping})</span>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        async function fetchServerStatus() {
-            try {
-                const response = await fetch(`https://api.mcsrvstat.us/2/${SERVER_IP}`);
-                const data = await response.json();
-
-                if (data.online) {
-                    document.getElementById('status-text').textContent = 'ONLINE (Live Query)';
-                    document.getElementById('status-text').style.color = 'var(--green-glow)';
-                    document.getElementById('status-dot').style.backgroundColor = 'var(--green-glow)';
-
-                    const onlinePlayers = data.players ? data.players.online : 0;
-                    const maxPlayers = data.players ? data.players.max : 20;
-                    document.getElementById('players-val').textContent = `${onlinePlayers} / ${maxPlayers}`;
-                    document.getElementById('players-bar').style.width = `${(onlinePlayers / maxPlayers) * 100}%`;
-
-                    if (data.players && data.players.list) {
-                        renderPlayersList(data.players.list);
-                    } else {
-                        renderPlayersList(mockPlayers.slice(0, onlinePlayers || 1));
-                    }
-                } else {
-                    useSimulatedStatus();
-                }
-            } catch (err) {
-                useSimulatedStatus();
-            }
-        }
-
-        function useSimulatedStatus() {
-            const simTPS = +(19.8 + Math.random() * 0.2).toFixed(1);
-            const simPing = Math.floor(20 + Math.random() * 10);
-
-            tpsHistory.push(simTPS);
-            tpsHistory.shift();
-            drawTPSChart();
-
-            document.getElementById('tps-val').textContent = `${simTPS} / 20.0`;
-            document.getElementById('tps-bar').style.width = `${(simTPS / 20) * 100}%`;
-
-            document.getElementById('ping-val').textContent = `${simPing} ms`;
-            document.getElementById('ping-bar').style.width = `${simPing}%`;
-
-            renderPlayersList(mockPlayers);
-        }
-
-        setInterval(fetchServerStatus, 5000);
-        fetchServerStatus();
-
-        /* ---------------------------------------------------------
-           9. WEB TERMINAL CLI SIMULATOR LOGIC
-           --------------------------------------------------------- */
-        const terminalInput = document.getElementById('terminal-input');
-        const terminalBody = document.getElementById('terminal-body');
-
-        function appendTerminalLine(text, type = 'output') {
-            const line = document.createElement('div');
-            line.className = `terminal-line ${type}`;
-            line.innerHTML = text;
-            terminalBody.appendChild(line);
-            terminalBody.scrollTop = terminalBody.scrollHeight;
-        }
-
-        terminalInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const cmd = this.value.trim().toLowerCase();
-                if (!cmd) return;
-
-                playSoundEffect(800, 0.04, 'square');
-                appendTerminalLine(`root@codespace:~# ${this.value}`, 'system');
-                this.value = '';
-
-                switch (cmd) {
-                    case 'help':
-                        appendTerminalLine('Các lệnh khả dụng: help, tps, players, codespace, clear, ping, info');
-                        break;
-                    case 'tps':
-                        appendTerminalLine(`Current TPS: ${document.getElementById('tps-val').textContent} (Purpur Tick Loop 50ms)`);
-                        break;
-                    case 'players':
-                        appendTerminalLine(`Online Players: ${document.getElementById('players-val').textContent}`);
-                        break;
-                    case 'codespace':
-                        appendTerminalLine('Environment: GitHub Codespaces Cloud Container (Ubuntu Linux GUI/Debian)');
-                        break;
-                    case 'ping':
-                        appendTerminalLine(`Tunnel Latency: ${document.getElementById('ping-val').textContent}`);
-                        break;
-                    case 'info':
-                        appendTerminalLine(`Server IP: ${SERVER_IP} | Version: 26.1.2`);
-                        break;
-                    case 'clear':
-                        terminalBody.innerHTML = '';
-                        break;
-                    default:
-                        appendTerminalLine(`Command not found: '${cmd}'. Gõ 'help' để xem danh sách lệnh.`, 'error');
-                        break;
-                }
-            }
-        });
-    </script>
+</script>
 </body>
 </html>
