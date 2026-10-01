@@ -102,24 +102,6 @@
             transform: translateY(-2px);
         }
 
-        .btn-launch {
-            background-color: #2b000a;
-            border: 1px solid #ff0033;
-            color: #ff4d4d;
-        }
-
-        .btn-launch:hover {
-            background-color: #ff0033;
-            color: #ffffff;
-        }
-
-        select.btn {
-            background-color: #1a0507;
-            border: 1px solid #ff0033;
-            color: #ff4d4d;
-            outline: none;
-        }
-
         h2.restriction {
             font-size: 2rem;
             color: #ffffff;
@@ -206,12 +188,6 @@
 
         <div class="btn-group">
             <button class="btn" onclick="copyIP()">Sao chép IP Server</button>
-            <select class="btn" id="launcherSelect">
-                <option value="tlauncher">TLauncher</option>
-                <option value="tl_legacy">TL Legacy</option>
-                <option value="official">Official Launcher</option>
-            </select>
-            <button class="btn btn-launch" onclick="launchGame()">Mở Game</button>
         </div>
 
         <h2 class="restriction">Protocol Restriction Active</h2>
@@ -266,35 +242,17 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 3. THÔNG BÁO VÀ KÍCH HOẠT LAUNCHER
+        // 3. THÔNG BÁO VÀ SAO CHÉP IP
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.innerHTML = message;
             toast.className = 'show';
-            setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 4500);
+            setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 4000);
         }
 
         function copyIP() {
             navigator.clipboard.writeText(SERVER_IP);
             showToast('✅ Đã sao chép IP: <strong>' + SERVER_IP + '</strong>');
-        }
-
-        function launchGame() {
-            const launcher = document.getElementById('launcherSelect').value;
-            navigator.clipboard.writeText(SERVER_IP); // Luôn tự động copy IP
-
-            if (launcher === 'tlauncher') {
-                // Kích hoạt TLauncher qua Protocol tlauncher://
-                window.location.href = "tlauncher://";
-                showToast('🚀 Đang kích hoạt <strong>TLauncher</strong>...<br>Đã copy sẵn IP: <strong>' + SERVER_IP + '</strong>');
-            } else if (launcher === 'official') {
-                // Kích hoạt Official Launcher
-                window.location.href = "minecraft://";
-                showToast('🚀 Đang gọi <strong>Minecraft Official</strong>...<br>Đã copy sẵn IP: <strong>' + SERVER_IP + '</strong>');
-            } else {
-                // TL Legacy (nếu bản Portable chưa đăng ký URI)
-                showToast('🚀 Đã copy IP: <strong>' + SERVER_IP + '</strong><br>Vui lòng mở <strong>TL Legacy</strong> rồi dán vào game!');
-            }
         }
     </script>
 </body>
