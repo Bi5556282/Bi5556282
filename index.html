@@ -14,7 +14,6 @@
 
         body {
             background-color: #0b0203;
-            /* Hình nền mặc định lúc mới tải trang */
             background-image: 
                 linear-gradient(rgba(255, 20, 60, 0.08) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 20, 60, 0.08) 1px, transparent 1px),
@@ -24,7 +23,7 @@
             background-size: 25px 25px, 25px 25px, cover, cover;
             background-position: center center;
             background-attachment: fixed;
-            transition: background-image 1.5s ease-in-out; /* Hiệu ứng chuyển cảnh mượt */
+            transition: background-image 1.5s ease-in-out;
             
             color: #f5f5f5;
             padding: 40px 20px;
@@ -208,8 +207,8 @@
         <div class="btn-group">
             <button class="btn" onclick="copyIP()">Sao chép IP Server</button>
             <select class="btn" id="launcherSelect">
-                <option value="tl_legacy">TL Legacy</option>
                 <option value="tlauncher">TLauncher</option>
+                <option value="tl_legacy">TL Legacy</option>
                 <option value="official">Official Launcher</option>
             </select>
             <button class="btn btn-launch" onclick="launchGame()">Mở Game</button>
@@ -236,7 +235,7 @@
     <script>
         const SERVER_IP = 'carolyn-xr.tun.ply.gg';
 
-        // 1. HỆ THỐNG ĐỔI HÌNH NỀN TỰ ĐỘNG
+        // 1. TỰ ĐỘNG ĐỔI HÌNH NỀN
         const backgrounds = [
             'https://images.unsplash.com/photo-1605636362483-366a6db90382?q=80&w=1920&auto=format&fit=crop',
             'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1920&auto=format&fit=crop',
@@ -254,9 +253,9 @@
                 url('${backgrounds[bgIndex]}')
             `;
         }
-        setInterval(changeBackground, 5000); // Đổi hình mỗi 5 giây
+        setInterval(changeBackground, 5000);
 
-        // 2. HỆ THỐNG ĐỒNG HỒ
+        // 2. ĐỒNG HỒ THỜI GIAN THỰC
         function updateClock() {
             const now = new Date();
             const hours = String(now.getHours()).padStart(2, '0');
@@ -267,12 +266,12 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 3. HỆ THỐNG NÚT BẤM VÀ THÔNG BÁO
+        // 3. THÔNG BÁO VÀ KÍCH HOẠT LAUNCHER
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.innerHTML = message;
             toast.className = 'show';
-            setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 5000); // Tắt sau 5s
+            setTimeout(() => { toast.className = toast.className.replace('show', ''); }, 4500);
         }
 
         function copyIP() {
@@ -282,15 +281,19 @@
 
         function launchGame() {
             const launcher = document.getElementById('launcherSelect').value;
-            navigator.clipboard.writeText(SERVER_IP); // Luôn copy IP sẵn cho người dùng
+            navigator.clipboard.writeText(SERVER_IP); // Luôn tự động copy IP
 
-            if (launcher === 'official') {
-                // Thử gọi giao thức của Official Launcher (chỉ hoạt động nếu có cài bản quyền)
+            if (launcher === 'tlauncher') {
+                // Kích hoạt TLauncher qua Protocol tlauncher://
+                window.location.href = "tlauncher://";
+                showToast('🚀 Đang kích hoạt <strong>TLauncher</strong>...<br>Đã copy sẵn IP: <strong>' + SERVER_IP + '</strong>');
+            } else if (launcher === 'official') {
+                // Kích hoạt Official Launcher
                 window.location.href = "minecraft://";
-                showToast('🚀 Đang gọi <strong>Minecraft Official</strong>...<br>Đã copy sẵn IP: ' + SERVER_IP);
+                showToast('🚀 Đang gọi <strong>Minecraft Official</strong>...<br>Đã copy sẵn IP: <strong>' + SERVER_IP + '</strong>');
             } else {
-                // TL Legacy và TLauncher (Web bị chặn mở file .exe)
-                showToast('⚠️ Trình duyệt không có quyền mở ứng dụng ngoài.<br>Đã copy sẵn IP: <strong>' + SERVER_IP + '</strong><br>Vui lòng tự bật Launcher để chơi!');
+                // TL Legacy (nếu bản Portable chưa đăng ký URI)
+                showToast('🚀 Đã copy IP: <strong>' + SERVER_IP + '</strong><br>Vui lòng mở <strong>TL Legacy</strong> rồi dán vào game!');
             }
         }
     </script>
